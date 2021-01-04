@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PasswordManager</string>
+
+    <string name="registrate"><u>Registrate</u></string>
 </resources>
