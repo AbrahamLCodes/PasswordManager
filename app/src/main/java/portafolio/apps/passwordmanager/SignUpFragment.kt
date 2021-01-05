@@ -53,9 +53,14 @@ class SignUpFragment : AppCompatDialogFragment(), View.OnClickListener {
         if (pass1?.text.toString().equals(pass2?.text.toString())) {
             val db = DBController(dialog!!.context)
             db.insertUser(nombre?.text.toString(), pass1?.text.toString())
+            Toast.makeText(
+                    dialog!!.context,
+                    "El usuario '" + nombre?.text.toString() + "' ha sido agregado correctamente",
+                    Toast.LENGTH_LONG
+            ).show()
             dismiss()
         } else {
-            Toast.makeText(dialog?.context, "Las contrasenias no coinciden", Toast.LENGTH_SHORT).show()
+            Toast.makeText(dialog?.context, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -8,6 +8,7 @@ import android.util.Log
 
 class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null, 1) {
 
+    // This method will always be called when the App Starts. Here the DB is created
     override fun onCreate(db: SQLiteDatabase?) {
         val createUsuarios: String = "CREATE TABLE USUARIOS(" +
                 "NOMBRE TEXT PRIMARY KEY NOT NULL," +
@@ -32,6 +33,7 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         onCreate(db)
     }
 
+    //Method to insert a user. The name and password is passed by value in parameters
     fun insertUser(nombre: String, contrasenia: String) {
         val db = writableDatabase
         if (db != null) {
@@ -41,6 +43,7 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         }
     }
 
+    // Returns a MutableList of Usuario objects in order to get the info from USUARIOS rows in Kotlin
     fun usuariosList(): MutableList<Usuario> {
         val list: MutableList<Usuario> = ArrayList()
         val cursor: Cursor = readableDatabase.rawQuery(
@@ -59,29 +62,26 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         return list
     }
 
-    fun singleUser(name: String, password: String) {
+    // Returns true if a user is found or false if is not found
+    fun findUser(name: String, password: String): Boolean {
         val cursor: Cursor = readableDatabase.rawQuery(
                 "SELECT * FROM USUARIOS",
                 null
         )
+        var found = false
 
         if (cursor.moveToFirst()) {
-            var flag = false
             do {
-                if (!flag) {
-                    if (name.equals(cursor.getString(0)) && password.equals(cursor.getString(1))) {
-                        Log.d("ESTADO DE LA VALIDACION", "CHIDOOO WEEE")
-                        flag = true
-                        break
-                    }
+                if (name.equals(cursor.getString(0)) && password.equals(cursor.getString(1))) {
+                    Log.d("ESTADO DE LA VALIDACION", "CHIDOOO WEEE")
+                    found = true
                 }
-            } while (cursor.moveToNext())
-            if (!flag) {
-                Log.d("ESTADO DE LA VALIDACION", "VALIO VERGAAAA WEEE")
-            }
+            } while (cursor.moveToNext() && !found)
         }
+        return found
     }
 
+    // Inserts into the DB a new row in CONTRASENIAS table. It gets all the values by parameter
     fun insetContrasenia(
             asunto: String, cuenta: String, contra: String, nusuario: String, link: String) {
         writableDatabase?.execSQL("INSERT INTO CONTRASENIAS VALUES (" +
@@ -92,6 +92,7 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
                 + link + "')")
     }
 
+    // Returns a MutableList of Contrasenia object in order to get the CONTRASENIAS rows in Kotlin
     fun contraseniasList(): MutableList<Contrasenia> {
         val list: MutableList<Contrasenia> = ArrayList()
         val cursor: Cursor = readableDatabase.rawQuery(
@@ -111,11 +112,13 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         return list
     }
 
+    //Updates a row of any table
     fun update(tableName: String, set: String, where: String, like: String) {
         val db = writableDatabase
         db?.execSQL("UPDATE $tableName SET $set WHERE $where = '$like'")
     }
 
+    //Deletes any row from any table
     fun delete(tableName: String, where: String, like: String) {
         writableDatabase?.execSQL("DELETE FROM $tableName WHERE $where = '$like'")
     }

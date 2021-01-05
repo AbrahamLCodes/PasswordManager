@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -35,9 +36,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 R.id.loginBtn -> {
                     val db = DBController(applicationContext)
-                    db.singleUser(user?.text.toString(), pass?.text.toString())
+                    if (db.findUser(user?.text.toString(), pass?.text.toString())) {
+                        nextActivity()
+                    } else {
+                        incorrectUser()
+                    }
                 }
             }
         }
+    }
+
+    private fun nextActivity() {
+        Toast.makeText(
+                applicationContext,
+                "Usuario encontrado",
+                Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun incorrectUser() {
+        Toast.makeText(
+                applicationContext,
+                "Usuario o contraseña equivocados",
+                Toast.LENGTH_SHORT
+        ).show()
     }
 }
