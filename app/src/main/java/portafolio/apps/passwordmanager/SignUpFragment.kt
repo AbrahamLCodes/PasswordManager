@@ -5,11 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
 
 class SignUpFragment : AppCompatDialogFragment(), View.OnClickListener {
+
+    //nombre, pass1, pass2
+    private var nombre: EditText? = null
+    private var pass1: EditText? = null
+    private var pass2: EditText? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var color = ColorDrawable(android.graphics.Color.TRANSPARENT)
@@ -21,6 +27,11 @@ class SignUpFragment : AppCompatDialogFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         val accpet: TextView = view.findViewById(R.id.accept)
         val cancel: TextView = view.findViewById(R.id.cancel)
+
+        nombre = view.findViewById(R.id.usuario)
+        pass1 = view.findViewById(R.id.password1)
+        pass2 = view.findViewById(R.id.password2)
+
         accpet.setOnClickListener(this)
         cancel.setOnClickListener(this)
     }
@@ -29,16 +40,22 @@ class SignUpFragment : AppCompatDialogFragment(), View.OnClickListener {
         if (p0 != null) {
             when (p0.id) {
                 R.id.accept -> {
-                    Toast.makeText(
-                            dialog?.context,
-                            "Accion Registrar en Construccion",
-                            Toast.LENGTH_SHORT
-                    ).show()
+                    checkPasswords()
                 }
                 R.id.cancel -> {
                     dialog?.dismiss()
                 }
             }
+        }
+    }
+
+    private fun checkPasswords() {
+        if (pass1?.text.toString().equals(pass2?.text.toString())) {
+            val db = DBController(dialog!!.context)
+            db.insertUser(nombre?.text.toString(), pass1?.text.toString())
+            dismiss()
+        } else {
+            Toast.makeText(dialog?.context, "Las contrasenias no coinciden", Toast.LENGTH_SHORT).show()
         }
     }
 }

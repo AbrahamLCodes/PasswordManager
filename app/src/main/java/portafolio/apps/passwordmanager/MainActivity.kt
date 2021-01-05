@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+
+    var user: EditText? = null
+    var pass: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,6 +18,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         val loginBtn: Button = findViewById(R.id.loginBtn)
         val registerBtn: TextView = findViewById(R.id.registrarBtn)
+
+        user = findViewById(R.id.usuario)
+        pass = findViewById(R.id.contra)
 
         loginBtn.setOnClickListener(this)
         registerBtn.setOnClickListener(this)
@@ -28,11 +34,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     sf.show(supportFragmentManager, "Registrar")
                 }
                 R.id.loginBtn -> {
-                    Toast.makeText(
-                            applicationContext,
-                            "Accion Login en Construccion",
-                            Toast.LENGTH_SHORT
-                    ).show()
+                    val db = DBController(applicationContext)
+                    db.singleUser(user?.text.toString(), pass?.text.toString())
                 }
             }
         }

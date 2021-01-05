@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null, 1) {
 
@@ -34,7 +35,7 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
     fun insertUser(nombre: String, contrasenia: String) {
         val db = writableDatabase
         if (db != null) {
-            db.execSQL("INSERT INTO RECORDATORIOS VALUES (" +
+            db.execSQL("INSERT INTO USUARIOS VALUES (" +
                     "'" + nombre + "','"
                     + contrasenia + "')");
         }
@@ -58,9 +59,32 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         return list
     }
 
+    fun singleUser(name: String, password: String) {
+        val cursor: Cursor = readableDatabase.rawQuery(
+                "SELECT * FROM USUARIOS",
+                null
+        )
+
+        if (cursor.moveToFirst()) {
+            var flag = false
+            do {
+                if (!flag) {
+                    if (name.equals(cursor.getString(0)) && password.equals(cursor.getString(1))) {
+                        Log.d("ESTADO DE LA VALIDACION", "CHIDOOO WEEE")
+                        flag = true
+                        break
+                    }
+                }
+            } while (cursor.moveToNext())
+            if (!flag) {
+                Log.d("ESTADO DE LA VALIDACION", "VALIO VERGAAAA WEEE")
+            }
+        }
+    }
+
     fun insetContrasenia(
             asunto: String, cuenta: String, contra: String, nusuario: String, link: String) {
-        writableDatabase?.execSQL("INSERT INTO RECORDATORIOS VALUES (" +
+        writableDatabase?.execSQL("INSERT INTO CONTRASENIAS VALUES (" +
                 "'" + asunto + "','"
                 + cuenta + "','"
                 + contra + "','"
