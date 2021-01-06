@@ -3,10 +3,7 @@ package portafolio.apps.passwordmanager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -17,7 +14,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val loginBtn: Button = findViewById(R.id.loginBtn)
+        val loginBtn: ImageButton = findViewById(R.id.loginBtn)
         val registerBtn: TextView = findViewById(R.id.registrarBtn)
 
         user = findViewById(R.id.usuario)

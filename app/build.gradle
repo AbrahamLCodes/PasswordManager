@@ -33,7 +33,10 @@ android {
 }
 
 dependencies {
-
+    //<--material desing
+    api 'com.google.android.material:material:1.1.0-alpha06'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    //-->
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
