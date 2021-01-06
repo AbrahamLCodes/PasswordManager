@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -25,8 +26,8 @@ class SignUpFragment : AppCompatDialogFragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val accpet: TextView = view.findViewById(R.id.accept)
-        val cancel: TextView = view.findViewById(R.id.cancel)
+        val accpet: Button = view.findViewById(R.id.accept)
+        val cancel: Button = view.findViewById(R.id.cancel)
 
         nombre = view.findViewById(R.id.usuario)
         pass1 = view.findViewById(R.id.password1)

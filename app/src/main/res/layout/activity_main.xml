@@ -105,7 +105,8 @@
             android:fontFamily="@font/helvetica"
             android:gravity="center"
             android:padding="10dp"
+            android:textSize="20dp"
             android:text="@string/registrate"
-            android:textColor="@color/black" />
+            android:textColor="#0096C7" />
     </LinearLayout>
 </LinearLayout>

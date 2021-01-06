@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@layout/shape_dialog"
     android:orientation="vertical">
 
@@ -15,77 +16,107 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="Registro"
-        android:textColor="#000000"
+        android:text="Usuario Nuevo"
+        android:textColor="#0096C7"
+        android:layout_margin="10dp"
         android:textSize="30sp" />
 
-    <EditText
-        android:id="@+id/usuario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@layout/shape_input"
-        android:fontFamily="@font/helvetica"
-        android:hint="Usuario"
-        android:inputType="textCapSentences"
-        android:padding="10dp"
-        android:textColor="#000"
-        android:textColorHint="#554E4E"
-        android:textSize="17sp" />
 
-    <EditText
-        android:id="@+id/password1"
-        android:layout_width="match_parent"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@layout/shape_input"
-        android:fontFamily="@font/helvetica"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:textColor="#000"
-        android:textColorHint="#554E4E"
-        android:textSize="17sp" />
+        android:layout_margin="15dp"
+        android:layout_gravity="center"
+        android:hint="Nombre del usuario"
 
-    <EditText
-        android:id="@+id/password2"
-        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:inputType="text"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@layout/shape_input"
-        android:fontFamily="@font/helvetica"
+        android:layout_margin="15dp"
+        android:layout_gravity="center"
         android:hint="Contraseña"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:textColor="#000"
-        android:textColorHint="#554E4E"
-        android:textSize="17sp" />
+        app:endIconMode="password_toggle"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:inputType="textPassword"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_gravity="center"
+        android:hint="Confrimar contraseña"
+        app:endIconMode="password_toggle"
+
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:inputType="textPassword"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/cancel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="30dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/helvetica"
-            android:gravity="center"
-            android:text="Cancelar"
-            android:textSize="20sp" />
-
-        <TextView
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/accept"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="30dp"
             android:layout_weight="1"
-            android:fontFamily="@font/helvetica"
-            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
             android:text="Registrar"
-            android:textSize="20sp" />
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:layout_marginHorizontal="30dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            app:rippleColor="#0096C7"
+            android:backgroundTint="#023E8A"
+            android:layout_marginBottom="20dp"
+
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            style="?attr/materialButtonOutlinedStyle"
+            android:text="Cancelar"
+            android:gravity="center"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="20sp"
+            android:textColor="#f56042"
+            app:rippleColor="#f56042"
+            />
+
     </LinearLayout>
 </LinearLayout>
