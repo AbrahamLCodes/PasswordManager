@@ -1,9 +1,13 @@
-package portafolio.apps.passwordmanager
+package portafolio.apps.passwordmanager.Activitys
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import portafolio.apps.passwordmanager.DBController
+import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.SignUpFragment
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -13,7 +17,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val loginBtn: ImageButton = findViewById(R.id.loginBtn)
         val registerBtn: TextView = findViewById(R.id.registrarBtn)
 
@@ -49,6 +52,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 "Usuario encontrado",
                 Toast.LENGTH_SHORT
         ).show()
+        val intent = Intent(this, HomeScreen::class.java)
+
+        startActivity(intent)
     }
 
     private fun incorrectUser() {
