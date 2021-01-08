@@ -47,14 +47,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun nextActivity() {
-        Toast.makeText(
-                applicationContext,
-                "Usuario encontrado",
-                Toast.LENGTH_SHORT
-        ).show()
-        val intent = Intent(this, HomeScreen::class.java)
-
-        startActivity(intent)
+        startActivity(Intent(this, HomeScreen::class.java).apply {
+            putExtra("username", user?.text.toString())
+        })
     }
 
     private fun incorrectUser() {

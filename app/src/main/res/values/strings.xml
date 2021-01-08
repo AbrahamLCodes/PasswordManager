@@ -3,4 +3,7 @@
 
     <string name="usuario">Usuario</string>
     <string name="registrate"><u>Registrate</u></string>
+
+    <string name="open">Open Side Menu</string>
+    <string name="close">Close Side Menu</string>
 </resources>
