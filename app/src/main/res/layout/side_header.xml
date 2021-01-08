@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="#F44336"
+    android:background="#023E8A"
     android:gravity="bottom"
     android:orientation="vertical">
 
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/helvetica"
         android:padding="10dp"
-        android:text="www.google.com"
+        android:text="Usuario:"
         android:textColor="@color/white"
         android:textSize="13sp" />
 

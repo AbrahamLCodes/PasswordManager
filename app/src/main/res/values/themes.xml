@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.PasswordManager" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#343235</item>
+        <item name="colorPrimary">#023E8A</item>
         <item name="colorPrimaryVariant">#39383A</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
