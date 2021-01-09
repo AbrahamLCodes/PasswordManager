@@ -1,4 +1,4 @@
-package portafolio.apps.passwordmanager.Activitys
+package portafolio.apps.passwordmanager.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.*
 import portafolio.apps.passwordmanager.DBController
 import portafolio.apps.passwordmanager.R
-import portafolio.apps.passwordmanager.SignUpFragment
+import portafolio.apps.passwordmanager.fragments.SignUpFragment
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun nextActivity() {
-        startActivity(Intent(this, HomeScreen::class.java).apply {
+        startActivity(Intent(this, HomeActivity::class.java).apply {
             putExtra("username", user?.text.toString())
         })
     }

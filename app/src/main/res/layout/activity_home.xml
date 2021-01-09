@@ -5,7 +5,7 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activitys.HomeScreen">
+    tools:context=".activities.HomeActivity">
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/sideMenu"
@@ -55,6 +55,7 @@
             android:orientation="vertical">
 
             <SearchView
+                android:id="@+id/search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -65,20 +66,24 @@
             </SearchView>
 
             <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.tabs.TabItem
+                    android:id="@+id/allTab"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Todos los elementos" />
 
                 <com.google.android.material.tabs.TabItem
+                    android:id="@+id/passTab"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Contraseñas" />
 
                 <com.google.android.material.tabs.TabItem
+                    android:id="@+id/noteTab"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Notas" />
@@ -93,6 +98,7 @@
                 android:text="Mas Recientes" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="15dp">

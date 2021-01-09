@@ -2,9 +2,11 @@ package portafolio.apps.passwordmanager
 
 import android.content.Context
 import android.database.Cursor
+import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import java.lang.Exception
 
 class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null, 1) {
 
@@ -34,12 +36,12 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
     }
 
     //Method to insert a user. The name and password is passed by value in parameters
-    fun insertUser(nombre: String, contrasenia: String) {
+    fun insertUser(nombre: String, contrasenia: String){
         val db = writableDatabase
         if (db != null) {
             db.execSQL("INSERT INTO USUARIOS VALUES (" +
                     "'" + nombre + "','"
-                    + contrasenia + "')");
+                    + contrasenia + "')")
         }
     }
 

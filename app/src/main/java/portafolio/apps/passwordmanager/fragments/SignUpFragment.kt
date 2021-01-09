@@ -1,4 +1,4 @@
-package portafolio.apps.passwordmanager
+package portafolio.apps.passwordmanager.fragments
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
+import portafolio.apps.passwordmanager.DBController
+import portafolio.apps.passwordmanager.R
+import java.lang.Exception
 
 class SignUpFragment : AppCompatDialogFragment(), View.OnClickListener {
 
@@ -19,9 +21,8 @@ class SignUpFragment : AppCompatDialogFragment(), View.OnClickListener {
     private var pass2: EditText? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var color = ColorDrawable(android.graphics.Color.TRANSPARENT)
-        dialog?.window?.setBackgroundDrawable(color)
-        return inflater.inflate(R.layout.signup_fragmet, container, false)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+        return inflater.inflate(R.layout.fragment_signup, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,13 +54,31 @@ class SignUpFragment : AppCompatDialogFragment(), View.OnClickListener {
     private fun checkPasswords() {
         if (pass1?.text.toString().equals(pass2?.text.toString())) {
             val db = DBController(dialog!!.context)
-            db.insertUser(nombre?.text.toString(), pass1?.text.toString())
-            Toast.makeText(
-                    dialog!!.context,
-                    "El usuario '" + nombre?.text.toString() + "' ha sido agregado correctamente",
-                    Toast.LENGTH_LONG
-            ).show()
-            dismiss()
+            var flag = false
+
+            try {
+                db.insertUser(nombre?.text.toString(), pass1?.text.toString())
+            } catch (e: Exception) {
+                e.printStackTrace()
+                flag = true
+            }
+
+
+            if (!flag) {
+                Toast.makeText(
+                        dialog!!.context,
+                        "El usuario '" + nombre?.text.toString() + "' ha sido agregado correctamente",
+                        Toast.LENGTH_LONG
+                ).show()
+                dismiss()
+            } else {
+                Toast.makeText(
+                        dialog!!.context,
+                        "El usuario '" + nombre?.text.toString() + "' ya está registrado",
+                        Toast.LENGTH_LONG
+                ).show()
+            }
+
         } else {
             Toast.makeText(dialog?.context, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
         }
