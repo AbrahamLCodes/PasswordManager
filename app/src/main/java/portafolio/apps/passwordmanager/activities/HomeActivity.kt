@@ -1,5 +1,6 @@
 package portafolio.apps.passwordmanager.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -13,12 +14,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.forms.Form_correo
 import portafolio.apps.passwordmanager.fragments.PasswordFragment
 
 class HomeActivity : AppCompatActivity(),
         View.OnClickListener,
         NavigationView.OnNavigationItemSelectedListener,
         TabLayout.OnTabSelectedListener {
+
 
     var drawer: DrawerLayout? = null
     var sideMenu: NavigationView? = null
@@ -75,8 +78,10 @@ class HomeActivity : AppCompatActivity(),
     }
 
     private fun fabClicked() {
-        val pf = PasswordFragment()
-        pf.show(supportFragmentManager, "Nueva Contraseña")
+
+        val intent = Intent(this,Form_correo::class.java)
+        startActivity(intent)
+
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {

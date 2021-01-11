@@ -19,42 +19,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight=".2"
+            android:gravity="center"
             android:orientation="vertical"
             android:weightSum="1">
 
-            <TextView
+            <ImageView
+                android:id="@+id/imageView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_weight=".1"
-                android:background="@drawable/title"
-                android:fontFamily="@font/helvetica"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="22sp" />
+                android:layout_weight=".2"
+                android:scaleType="center"
+                app:srcCompat="@drawable/title" />
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight=".8"
-                android:scaleType="center"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/logo" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/carback"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:orientation="vertical">
+            android:layout_weight=".7"
+            android:background="@drawable/carback"
+            android:orientation="vertical"
+            android:weightSum="1">
 
 
             <TextView
@@ -72,8 +74,7 @@
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="10dp"
                 android:hint="Usuario"
-
-                >
+                app:boxBackgroundColor="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/usuario"
@@ -89,9 +90,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginVertical="20dp"
                 android:layout_marginHorizontal="50dp"
+                android:layout_marginVertical="20dp"
                 android:hint="Contraseña"
+                app:boxBackgroundColor="@color/white"
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -110,6 +112,15 @@
                 android:backgroundTint="#00FFFFFF"
                 app:srcCompat="@drawable/btn_login" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_weight=".1"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -121,7 +132,6 @@
                 android:id="@+id/registrarBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:fontFamily="@font/helvetica"
                 android:gravity="center"
                 android:padding="10dp"
