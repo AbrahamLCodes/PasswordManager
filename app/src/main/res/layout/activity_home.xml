@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/side_header"
-        app:menu="@menu/sidemenu" >
+        app:menu="@menu/sidemenu">
 
     </com.google.android.material.navigation.NavigationView>
 
@@ -95,34 +95,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
+                android:fontFamily="@font/helvetica"
                 android:text="Mas Recientes" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="15dp">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_marginHorizontal="15dp"></androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".1"
             android:gravity="bottom"
             android:orientation="vertical">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
+            <io.github.yavski.fabspeeddial.FabSpeedDial
+                android:id="@+id/fabSpeed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
-                android:layout_marginRight="25dp"
-                android:layout_marginBottom="25dp"
-                android:backgroundTint="#023E8A"
-                android:src="@drawable/ic_add_24px" />
-        </LinearLayout>
+                android:layout_gravity="bottom|end"
+                app:fabGravity="bottom_end"
+                app:fabMenu="@menu/fabmenu"
+                app:miniFabBackgroundTint="#3F51B5"
+                app:miniFabDrawableTint="#FFFFFF"
+                app:miniFabTitleTextColor="#3F51B5" />
+
+        </FrameLayout>
 
     </LinearLayout>
 

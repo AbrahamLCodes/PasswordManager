@@ -11,24 +11,25 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.internal.NavigationMenu
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
+import io.github.yavski.fabspeeddial.FabSpeedDial
 import portafolio.apps.passwordmanager.R
-import portafolio.apps.passwordmanager.forms.Form_correo
-import portafolio.apps.passwordmanager.fragments.PasswordFragment
+import portafolio.apps.passwordmanager.formactivities.FormCorreo
 
 class HomeActivity : AppCompatActivity(),
-        View.OnClickListener,
-        NavigationView.OnNavigationItemSelectedListener,
-        TabLayout.OnTabSelectedListener {
-
+    View.OnClickListener,
+    NavigationView.OnNavigationItemSelectedListener,
+    TabLayout.OnTabSelectedListener,
+    FabSpeedDial.MenuListener {
 
     var drawer: DrawerLayout? = null
     var sideMenu: NavigationView? = null
     var toolbar: androidx.appcompat.widget.Toolbar? = null
-    var fab: FloatingActionButton? = null
-    var state:Int = 0
-    var search:SearchView? = null
+    var state: Int = 0
+    var search: SearchView? = null
+    var fabSpeed: FabSpeedDial? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +40,6 @@ class HomeActivity : AppCompatActivity(),
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
-                R.id.fab -> {
-                    fabClicked()
-                }
             }
         }
     }
@@ -51,37 +49,30 @@ class HomeActivity : AppCompatActivity(),
             R.id.homeItem -> {
                 state = 0
                 Toast.makeText(
-                        applicationContext,
-                        "Home Item",
-                        Toast.LENGTH_SHORT
+                    applicationContext,
+                    "Home Item",
+                    Toast.LENGTH_SHORT
                 ).show()
 
             }
             R.id.infoItem -> {
                 state = 1
                 Toast.makeText(
-                        applicationContext,
-                        "Info Item",
-                        Toast.LENGTH_SHORT
+                    applicationContext,
+                    "Info Item",
+                    Toast.LENGTH_SHORT
                 ).show()
             }
             R.id.rateItem -> {
                 state = 2
                 Toast.makeText(
-                        applicationContext,
-                        "Rate Item",
-                        Toast.LENGTH_SHORT
+                    applicationContext,
+                    "Rate Item",
+                    Toast.LENGTH_SHORT
                 ).show()
             }
         }
         return true
-    }
-
-    private fun fabClicked() {
-
-        val intent = Intent(this,Form_correo::class.java)
-        startActivity(intent)
-
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -89,23 +80,23 @@ class HomeActivity : AppCompatActivity(),
             when (tab.position) {
                 0 -> {
                     Toast.makeText(
-                            applicationContext,
-                            "Todos los elementos",
-                            Toast.LENGTH_SHORT
+                        applicationContext,
+                        "Todos los elementos",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
                 1 -> {
                     Toast.makeText(
-                            applicationContext,
-                            "Contraseñas",
-                            Toast.LENGTH_SHORT
+                        applicationContext,
+                        "Contraseñas",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
                 2 -> {
                     Toast.makeText(
-                            applicationContext,
-                            "Notas",
-                            Toast.LENGTH_SHORT
+                        applicationContext,
+                        "Notas",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
             }
@@ -117,6 +108,30 @@ class HomeActivity : AppCompatActivity(),
     }
 
     override fun onTabReselected(tab: TabLayout.Tab?) {
+
+    }
+
+    override fun onPrepareMenu(p0: NavigationMenu?): Boolean {
+        return true
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem?): Boolean {
+        if (menuItem != null) {
+            when (menuItem.itemId) {
+                R.id.correoItem -> {
+                    startActivity(
+                        Intent(this, FormCorreo::class.java).apply {
+                            putExtra("username", intent.getStringExtra("username"))
+                        }
+                    )
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    override fun onMenuClosed() {
 
     }
 
@@ -132,17 +147,17 @@ class HomeActivity : AppCompatActivity(),
         drawer = findViewById(R.id.drawer)
         sideMenu = findViewById(R.id.sideMenu)
         toolbar = findViewById(R.id.toolbar)
-        fab = findViewById(R.id.fab)
         search = findViewById(R.id.search)
-        fab!!.setOnClickListener(this)
+        fabSpeed = findViewById(R.id.fabSpeed)
+        fabSpeed!!.setMenuListener(this)
 
         setSupportActionBar(toolbar)
         val toggle = ActionBarDrawerToggle(
-                this,
-                drawer,
-                toolbar,
-                R.string.open,
-                R.string.close
+            this,
+            drawer,
+            toolbar,
+            R.string.open,
+            R.string.close
         )
 
         drawer!!.addDrawerListener(toggle)

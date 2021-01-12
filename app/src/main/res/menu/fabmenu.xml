@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/correoItem"
+        android:icon="@drawable/fabcorreo"
+        android:title="Nuevo correo" />
+    <item
+        android:id="@+id/cuentaItem"
+        android:icon="@drawable/fabcuenta"
+        android:title="Nueva cuenta" />
+    <item
+        android:id="@+id/contraseniaItem"
+        android:icon="@drawable/fabpassword"
+        android:title="Nueva contraseña" />
+    <item
+        android:id="@+id/notaItem"
+        android:icon="@drawable/fabnotas"
+        android:title="Nueva nota" />
+    <item
+        android:id="@+id/tarjetaItem"
+        android:icon="@drawable/fabtarjetas"
+        android:title="Nueva tarjeta" />
+
+</menu>

@@ -5,17 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".forms.Form_correo">
+    tools:context=".formactivities.FormCorreo">
+
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#023E8A"
-        app:titleTextColor="@color/white"
-        app:title="Añade un Correo"
         app:navigationIcon="@drawable/ic_mail_24px"
-        >
+        app:title="Añade un Correo"
+        app:titleTextColor="@color/white">
+
 
     </com.google.android.material.appbar.MaterialToolbar>
+
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,133 +27,113 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:stretchColumns="1">
+
             <com.google.android.material.textview.MaterialTextView
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="23dp"
                 android:layout_marginTop="20dp"
-                android:text="Nombres" />
+                android:fontFamily="@font/helvetica"
+                android:text="Nombre o Asunto" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:hint="Nombres">
+                android:hint="Nombre o asunto">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/asunto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Apellido"
-                style="@style/TextAppearance.AppCompat"
-                android:layout_marginHorizontal="23dp"
 
-                />
-            <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Apellido"
-                android:layout_margin="20dp"
+                android:layout_marginHorizontal="23dp"
+                android:fontFamily="@font/helvetica"
+                android:text="Correo" />
+
+            <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                >
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Correo electronico">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/correo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    />
+                    android:fontFamily="@font/helvetica"
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Correo"
                 style="@style/TextAppearance.AppCompat"
-                android:layout_marginHorizontal="23dp"
-
-                />
-            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Correo electronico"
-                android:layout_margin="20dp"
+                android:layout_marginHorizontal="23dp"
+                android:fontFamily="@font/helvetica"
+                android:text="Contraseña " />
+
+            <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contraseña "
-                style="@style/TextAppearance.AppCompat"
-                android:layout_marginHorizontal="23dp"
-                />
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
                 android:hint="Contraseña"
-                android:layout_margin="20dp"
-                app:endIconMode="password_toggle"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                >
+                app:endIconMode="password_toggle">
+
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contrasenia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-
-                    />
+                    android:fontFamily="@font/helvetica"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Repetir Contraseña "
                 style="@style/TextAppearance.AppCompat"
-                android:layout_marginHorizontal="23dp"
-                />
-            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Contraseña"
-                app:endIconMode="password_toggle"
-                android:layout_margin="20dp"
+                android:layout_marginHorizontal="23dp"
+                android:fontFamily="@font/helvetica"
+                android:text="Repetir Contraseña " />
+
+            <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                >
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Contraseña"
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contrasenia1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    />
+                    android:fontFamily="@font/helvetica"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/guardarBtn"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="guardar"
-                >
-
-            </com.google.android.material.button.MaterialButton>
-
+                android:fontFamily="@font/helvetica"
+                android:text="guardar" />
         </TableLayout>
     </ScrollView>
-
-
-
-
 </LinearLayout>

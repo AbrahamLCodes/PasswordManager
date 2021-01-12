@@ -1,11 +1,12 @@
 package portafolio.apps.passwordmanager.activities
 
 import android.content.Intent
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import portafolio.apps.passwordmanager.DBController
+import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.fragments.SignUpFragment
 
@@ -22,7 +23,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         user = findViewById(R.id.usuario)
         pass = findViewById(R.id.contra)
-
         loginBtn.setOnClickListener(this)
         registerBtn.setOnClickListener(this)
     }
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 R.id.loginBtn -> {
                     val db = DBController(applicationContext)
-                    if (db.findUser(user?.text.toString(), pass?.text.toString())) {
+                    if (db.findUsuario(user?.text.toString(), pass?.text.toString())) {
                         nextActivity()
                     } else {
                         incorrectUser()
@@ -54,9 +54,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun incorrectUser() {
         Toast.makeText(
-                applicationContext,
-                "Usuario o contraseña equivocados",
-                Toast.LENGTH_SHORT
+            applicationContext,
+            "Usuario o contraseña equivocados",
+            Toast.LENGTH_SHORT
         ).show()
+    }
+
+    private fun screenWidth(): Int {
+        return Resources.getSystem().displayMetrics.widthPixels
+    }
+
+    private fun screenHeight(): Int {
+        return Resources.getSystem().displayMetrics.heightPixels
     }
 }

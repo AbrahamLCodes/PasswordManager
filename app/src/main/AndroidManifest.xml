@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordManager">
-        <activity android:name=".forms.Form_correo"></activity>
+        <activity android:name=".formactivities.FormCorreo"></activity>
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
