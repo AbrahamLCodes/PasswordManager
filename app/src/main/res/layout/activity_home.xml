@@ -28,13 +28,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_weight=".1"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="match_parent"
                 android:backgroundTint="#023E8A"
                 android:gravity="top">
 
@@ -51,7 +50,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".8"
+
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <SearchView
@@ -59,22 +59,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/field">
+                android:background="@drawable/field"
+                android:weightSum="1">
 
             </SearchView>
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:tabContentStart="20dp"
+                app:tabMode="scrollable">
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/allTab"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Todos los elementos" />
+                    android:text="Todo" />
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/passTab"
@@ -87,6 +91,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Notas" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/cuentaTab"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="cuentas" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tarjetaTab"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Pagos" />
 
             </com.google.android.material.tabs.TabLayout>
 
@@ -102,28 +118,25 @@
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="15dp"></androidx.recyclerview.widget.RecyclerView>
+                android:layout_marginHorizontal="15dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
         </LinearLayout>
 
-        <FrameLayout
+        <io.github.yavski.fabspeeddial.FabSpeedDial
+            android:id="@+id/fabSpeed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".1"
-            android:gravity="bottom"
-            android:orientation="vertical">
+            android:layout_gravity="bottom|end"
+            android:foregroundGravity="bottom"
+            app:fabBackgroundTint="#023E8A"
+            app:fabGravity="bottom_end"
+            app:fabMenu="@menu/fabmenu"
+            app:miniFabBackgroundTint="#0077B6"
+            app:miniFabDrawableTint="#FFFFFF"
+            app:miniFabTitleTextColor="@color/black" />
 
-            <io.github.yavski.fabspeeddial.FabSpeedDial
-                android:id="@+id/fabSpeed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                app:fabGravity="bottom_end"
-                app:fabMenu="@menu/fabmenu"
-                app:miniFabBackgroundTint="#3F51B5"
-                app:miniFabDrawableTint="#FFFFFF"
-                app:miniFabTitleTextColor="#3F51B5" />
-
-        </FrameLayout>
 
     </LinearLayout>
 

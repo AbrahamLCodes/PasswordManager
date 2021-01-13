@@ -12,17 +12,19 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.internal.NavigationMenu
+
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import io.github.yavski.fabspeeddial.FabSpeedDial
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.formactivities.FormCorreo
+import portafolio.apps.passwordmanager.fragments.PasswordFragment
 
 class HomeActivity : AppCompatActivity(),
-    View.OnClickListener,
-    NavigationView.OnNavigationItemSelectedListener,
-    TabLayout.OnTabSelectedListener,
-    FabSpeedDial.MenuListener {
+        View.OnClickListener,
+        NavigationView.OnNavigationItemSelectedListener,
+        TabLayout.OnTabSelectedListener ,
+        FabSpeedDial.MenuListener {
 
     var drawer: DrawerLayout? = null
     var sideMenu: NavigationView? = null
