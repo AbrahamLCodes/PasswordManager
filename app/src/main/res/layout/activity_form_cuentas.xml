@@ -5,190 +5,183 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".forms.Form_correo">
-  <com.google.android.material.appbar.MaterialToolbar
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="#023E8A"
-      app:titleTextColor="@color/white"
-      app:title="Añade una cuenta"
-      app:navigationIcon="@drawable/ic_account_circle_24px"
-      >
+    tools:context=".formactivities.FormCuenta">
 
-  </com.google.android.material.appbar.MaterialToolbar>
-  <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:fillViewport="true">
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#023E8A"
+        app:navigationIcon="@drawable/ic_account_circle_24px"
+        app:title="Añade una cuenta"
+        app:titleTextColor="@color/white" />
 
-    <TableLayout
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:stretchColumns="1">
+        android:fillViewport="true">
 
-      <com.google.android.material.textview.MaterialTextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="20dp"
-          android:text="Tipo de cuenta"
-          style="@style/TextAppearance.AppCompat"
-          android:layout_marginHorizontal="23dp"
-
-          />
-      <com.google.android.material.textfield.TextInputLayout
-          android:id="@+id/menuDrop"
-          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="20dp"
-          android:hint="Categoria">
-
-        <AutoCompleteTextView
-            android:id="@+id/autoComplete"
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none"
-            />
+            android:layout_height="match_parent"
+            android:stretchColumns="1">
 
-      </com.google.android.material.textfield.TextInputLayout>
-      <com.google.android.material.textview.MaterialTextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="23dp"
+                android:layout_marginTop="20dp"
+                android:text="Tipo de cuenta" />
 
-          android:text="Sitio Web"
-          style="@style/TextAppearance.AppCompat"
-          android:layout_marginHorizontal="23dp"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/categoriaDrop"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Categoria">
 
-          />
+                <AutoCompleteTextView
+                    android:id="@+id/autoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences" />
 
-      <com.google.android.material.textfield.TextInputLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:hint="Nombre del sitio web"
-          android:layout_margin="20dp"
-          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-          >
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            />
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="wrap_content"
 
-      </com.google.android.material.textfield.TextInputLayout>
-      <com.google.android.material.textview.MaterialTextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Usuario o nombre"
-          style="@style/TextAppearance.AppCompat"
-          android:layout_marginHorizontal="23dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="23dp"
+                android:text="Sitio" />
 
-          />
-      <com.google.android.material.textfield.TextInputLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:hint="Nombre del usuario"
-          android:layout_margin="20dp"
-          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-          >
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Nombre del sitio web/plataforma">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/website"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
 
-      </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="23dp"
+                android:text="Usuario o nombre" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Nombre del usuario">
 
-      <com.google.android.material.textview.MaterialTextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Contraseña "
-          style="@style/TextAppearance.AppCompat"
-          android:layout_marginHorizontal="23dp"
-          />
-      <com.google.android.material.textfield.TextInputLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:hint="Contraseña"
-          android:layout_margin="20dp"
-          app:endIconMode="password_toggle"
-          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-          >
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/cuentaName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
 
-            />
-
-      </com.google.android.material.textfield.TextInputLayout>
-      <com.google.android.material.textview.MaterialTextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Repetir Contraseña "
-          style="@style/TextAppearance.AppCompat"
-          android:layout_marginHorizontal="23dp"
-          />
-      <com.google.android.material.textfield.TextInputLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:hint="Contraseña"
-          app:endIconMode="password_toggle"
-          android:layout_margin="20dp"
-          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-          >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            />
-
-      </com.google.android.material.textfield.TextInputLayout>
-      <com.google.android.material.textview.MaterialTextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-
-          android:text="Correo de la cuenta"
-          style="@style/TextAppearance.AppCompat"
-          android:layout_marginHorizontal="23dp"
-
-          />
-      <com.google.android.material.textfield.TextInputLayout
-          android:id="@+id/menuDrop2"
-          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="20dp"
-          android:hint="Correo">
-
-        <AutoCompleteTextView
-            android:id="@+id/autoComplete2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none"
-            />
-
-      </com.google.android.material.textfield.TextInputLayout>
-      <com.google.android.material.button.MaterialButton
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_marginHorizontal="20dp"
-          android:padding="20dp"
-          android:layout_marginBottom="20dp"
-          android:text="guardar"
-
-          >
-
-      </com.google.android.material.button.MaterialButton>
-
-    </TableLayout>
-  </ScrollView>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="23dp"
+                android:text="Contraseña " />
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Contraseña"
+                app:endIconMode="password_toggle">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contrasenia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="23dp"
+                android:text="Repetir Contraseña " />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Contraseña"
+                app:endIconMode="password_toggle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contrasenia1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="23dp"
+                android:text="Correo de la cuenta" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/correoDrop"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Correo">
+
+                <AutoCompleteTextView
+                    android:id="@+id/correo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/guardarBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:padding="10dp"
+                android:text="Guardar"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancelarBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:text="Cancelar"/>
+        </TableLayout>
+    </ScrollView>
 </LinearLayout>

@@ -60,14 +60,17 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
     }
 
     //Method to insert a user. The name and password is passed by value in parameters
-    fun insertCuenta(correo: String, cuenta: String, contrasenia: String, nickname: String, fecha: String) {
+    fun insertCuenta(correo: String, cuenta: String, contrasenia: String, categoria: String,
+                     nickname: String, website: String, fecha: String) {
         val db = writableDatabase
         if (db != null) {
             db.execSQL("INSERT INTO CUENTAS VALUES (" +
                     "'" + correo + "'," +
                     "'" + cuenta + "'," +
                     "'" + contrasenia + "'," +
+                    "'" + categoria + "'," +
                     "'" + nickname + "'," +
+                    "'" + website + "'," +
                     "'" + fecha + "')"
             )
         }
@@ -220,6 +223,25 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
                         cursor.getString(6)
                 ))
             } while (cursor.moveToNext())
+        }
+        return list
+    }
+
+    fun customCorreoSelect(where: String, like: String ):MutableList<Correo>{
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM CORREOS WHERE $where = '$like'",null)
+        val list = mutableListOf<Correo>()
+        if(cursor.moveToFirst()){
+            do{
+                list.add(
+                    Correo(
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4)
+                    )
+                )
+            }while (cursor.moveToNext())
         }
         return list
     }

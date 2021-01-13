@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayout
 import io.github.yavski.fabspeeddial.FabSpeedDial
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.formactivities.FormCorreo
+import portafolio.apps.passwordmanager.formactivities.FormCuenta
 import portafolio.apps.passwordmanager.fragments.PasswordFragment
 
 class HomeActivity : AppCompatActivity(),
@@ -127,6 +128,13 @@ class HomeActivity : AppCompatActivity(),
                         }
                     )
                     return true
+                }
+                R.id.cuentaItem -> {
+                    startActivity(
+                        Intent(this, FormCuenta::class.java).apply {
+                            putExtra("username", intent.getStringExtra("username"))
+                        }
+                    )
                 }
             }
         }

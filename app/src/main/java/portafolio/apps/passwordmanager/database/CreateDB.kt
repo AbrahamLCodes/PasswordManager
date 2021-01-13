@@ -24,7 +24,9 @@ class CreateDB {
                     "CORREO TEXT NOT NULL REFERENCES CORREOS(CORREO)," +
                     "CUENTA TEXT NOT NULL," +
                     "CONTRASENIA TEXT NOT NULL," +
+                    "CATEGORIA TEXT NOT NULL," +
                     "NICKNAME TEXT NOT NULL," +
+                    "WEBSITE TEXT," +
                     "FECHA TEXT NOT NULL," +
                     "PRIMARY KEY(CORREO, CUENTA)" +
                     ")"
