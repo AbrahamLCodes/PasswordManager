@@ -119,7 +119,7 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initComponents() {
-        asunto = findViewById(R.id.asunto)
+        asunto = findViewById(R.id.nomUsuario)
         correo = findViewById(R.id.correo)
         contrasenia = findViewById(R.id.contrasenia)
         contrasenia1 = findViewById(R.id.contrasenia1)

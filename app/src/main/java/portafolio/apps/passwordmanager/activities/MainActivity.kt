@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val loginBtn: ImageButton = findViewById(R.id.loginBtn)
+        val loginBtn: Button = findViewById(R.id.loginBtn)
         val registerBtn: TextView = findViewById(R.id.registrarBtn)
 
         user = findViewById(R.id.usuario)
