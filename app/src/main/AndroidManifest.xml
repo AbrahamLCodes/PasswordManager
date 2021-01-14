@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordManager">
+        <activity android:name=".formactivities.FormNota"></activity>
+        <activity android:name=".formactivities.FormPagos" />
+        <activity android:name=".formactivities.FormContrasenia" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,4 +23,5 @@
         <activity android:name=".formactivities.FormCuenta" />
         <activity android:name=".formactivities.FormCorreo" />
     </application>
+
 </manifest>

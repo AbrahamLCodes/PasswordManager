@@ -17,8 +17,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import io.github.yavski.fabspeeddial.FabSpeedDial
 import portafolio.apps.passwordmanager.R
-import portafolio.apps.passwordmanager.formactivities.FormCorreo
-import portafolio.apps.passwordmanager.formactivities.FormCuenta
+import portafolio.apps.passwordmanager.formactivities.*
 import portafolio.apps.passwordmanager.fragments.PasswordFragment
 
 class HomeActivity : AppCompatActivity(),
@@ -132,6 +131,27 @@ class HomeActivity : AppCompatActivity(),
                 R.id.cuentaItem -> {
                     startActivity(
                         Intent(this, FormCuenta::class.java).apply {
+                            putExtra("username", intent.getStringExtra("username"))
+                        }
+                    )
+                }
+                R.id.contraseniaItem ->{
+                    startActivity(
+                        Intent(this, FormContrasenia::class.java).apply {
+                            putExtra("username", intent.getStringExtra("username"))
+                        }
+                    )
+                }
+                R.id.notaItem ->{
+                    startActivity(
+                        Intent(this, FormNota::class.java).apply {
+                            putExtra("username", intent.getStringExtra("username"))
+                        }
+                    )
+                }
+                R.id.tarjetaItem ->{
+                    startActivity(
+                        Intent(this, FormPagos::class.java).apply {
                             putExtra("username", intent.getStringExtra("username"))
                         }
                     )
