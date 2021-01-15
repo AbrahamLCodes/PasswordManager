@@ -6,135 +6,122 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".formactivities.FormContrasenia">
+
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#023E8A"
-        app:titleTextColor="@color/white"
-        app:title="Añade una Contraseña"
         app:navigationIcon="@drawable/key_24px"
-        >
-    </com.google.android.material.appbar.MaterialToolbar>
+        app:title="Añade una Contraseña"
+        app:titleTextColor="@color/white"></com.google.android.material.appbar.MaterialToolbar>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            android:layout_weight=".3"
-            android:stretchColumns="1">
-
-            <TextView
-                style="@style/TextAppearance.AppCompat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/helvetica"
-                android:gravity="center"
-                android:text="Ingresa el sitio o pagina web de donde es la contraseña">
-
-            </TextView>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:hint="Nombre o Asunto">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/nomUsuario"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.AppCompat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="Correo de la cuenta" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/correoDrop"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:hint="Correo">
-
-                <AutoCompleteTextView
-                    android:id="@+id/correo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.AppCompat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/helvetica"
-
-                android:text="Contraseña " />
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:hint="Contraseña"
-                app:endIconMode="password_toggle">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/contrasenia1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="textPassword" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </TableLayout>
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".7"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight=".5"
-                android:text="Guardar" />
+                android:layout_margin="15dp"
+                android:stretchColumns="1">
 
-            <com.google.android.material.button.MaterialButton
+                <TextView
+                    style="@style/TextAppearance.AppCompat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center"
+                    android:text="Ingresa el sitio o pagina web de donde es la contraseña" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:hint="Nombre o Asunto">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/nomUsuario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.AppCompat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/helvetica"
+                    android:text="Contraseña " />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:hint="Contraseña"
+                    app:endIconMode="password_toggle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/contrasenia"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="textPassword" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:hint="Contraseña"
+                    app:endIconMode="password_toggle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/contrasenia1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="textPassword" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </TableLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:layout_marginHorizontal="30dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="#8E8E8E"
-                android:layout_marginBottom="20dp"
-                android:backgroundTint="@color/white"
-                android:text="Cerrar"
-                android:textColor="@color/black" />
+                android:layout_height="match_parent"
+                android:gravity="center|bottom"
+                android:orientation="vertical">
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/guardarBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Guardar" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/cancelarBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:backgroundTint="@color/white"
+                    android:text="Cerrar"
+                    android:textColor="@color/black"
+                    app:strokeColor="#8E8E8E"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
+    </ScrollView>
 </LinearLayout>

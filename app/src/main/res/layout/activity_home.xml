@@ -81,25 +81,31 @@
                     android:text="Todo" />
 
                 <com.google.android.material.tabs.TabItem
-                    android:id="@+id/passTab"
+                    android:id="@+id/correoTab"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Contraseñas" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/noteTab"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Notas" />
+                    android:text="Correos" />
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/cuentaTab"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="cuentas" />
+                    android:text="Cuentas" />
 
                 <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tarjetaTab"
+                    android:id="@+id/contraseniaTab"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Contraseñas" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/notaTab"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Notas" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/pagosTab"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Pagos" />

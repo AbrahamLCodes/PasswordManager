@@ -60,6 +60,7 @@ class FormCuenta :
         var correcto = true
         try {
             db.insertCuenta(
+                intent.getStringExtra("username")!!,
                 correoDrop!!.editText!!.text.toString(),
                 cuentaName!!.text.toString(),
                 contrasenia!!.text.toString(),
@@ -150,10 +151,10 @@ class FormCuenta :
     }
 
     private fun checkPasswords(): Boolean {
-        var correcto:Boolean?
-        if(contrasenia!!.text.toString().equals(contrasenia1!!.text.toString())){
+        var correcto: Boolean?
+        if (contrasenia!!.text.toString().equals(contrasenia1!!.text.toString())) {
             correcto = true
-        }else{
+        } else {
             correcto = false
             Toast.makeText(
                 applicationContext,

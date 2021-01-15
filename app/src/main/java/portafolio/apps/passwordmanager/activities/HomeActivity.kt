@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.internal.NavigationMenu
 
@@ -17,21 +21,31 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import io.github.yavski.fabspeeddial.FabSpeedDial
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.adapters.*
+import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.formactivities.*
 import portafolio.apps.passwordmanager.fragments.PasswordFragment
+import javax.sql.DataSource
 
 class HomeActivity : AppCompatActivity(),
-        View.OnClickListener,
-        NavigationView.OnNavigationItemSelectedListener,
-        TabLayout.OnTabSelectedListener ,
-        FabSpeedDial.MenuListener {
+    View.OnClickListener,
+    NavigationView.OnNavigationItemSelectedListener,
+    TabLayout.OnTabSelectedListener,
+    FabSpeedDial.MenuListener {
 
-    var drawer: DrawerLayout? = null
-    var sideMenu: NavigationView? = null
-    var toolbar: androidx.appcompat.widget.Toolbar? = null
-    var state: Int = 0
-    var search: SearchView? = null
-    var fabSpeed: FabSpeedDial? = null
+    private lateinit var drawer: DrawerLayout
+    private lateinit var sideMenu: NavigationView
+    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
+    private var state: Int = 0
+    private lateinit var search: SearchView
+    private lateinit var fabSpeed: FabSpeedDial
+    private lateinit var recycler: RecyclerView
+    private lateinit var correoAdapter: CorreoAdapter
+    private lateinit var cuentaAdapter: CuentaAdapter
+    private lateinit var contraseniaAdapter: ContraseniaAdapter
+    private lateinit var notaAdapter: NotasAdapter
+    private lateinit var tarjetaAdatper: PagosAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +69,6 @@ class HomeActivity : AppCompatActivity(),
                     "Home Item",
                     Toast.LENGTH_SHORT
                 ).show()
-
             }
             R.id.infoItem -> {
                 state = 1
@@ -83,23 +96,24 @@ class HomeActivity : AppCompatActivity(),
                 0 -> {
                     Toast.makeText(
                         applicationContext,
-                        "Todos los elementos",
+                        "Todo",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
                 1 -> {
-                    Toast.makeText(
-                        applicationContext,
-                        "Contraseñas",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    setRecyclerAdapter("correos")
                 }
                 2 -> {
-                    Toast.makeText(
-                        applicationContext,
-                        "Notas",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    setRecyclerAdapter("cuentas")
+                }
+                3 -> {
+                    setRecyclerAdapter("contrasenias")
+                }
+                4 -> {
+                    setRecyclerAdapter("notas")
+                }
+                5 -> {
+                    setRecyclerAdapter("tarjetas")
                 }
             }
         }
@@ -135,21 +149,21 @@ class HomeActivity : AppCompatActivity(),
                         }
                     )
                 }
-                R.id.contraseniaItem ->{
+                R.id.contraseniaItem -> {
                     startActivity(
                         Intent(this, FormContrasenia::class.java).apply {
                             putExtra("username", intent.getStringExtra("username"))
                         }
                     )
                 }
-                R.id.notaItem ->{
+                R.id.notaItem -> {
                     startActivity(
                         Intent(this, FormNota::class.java).apply {
                             putExtra("username", intent.getStringExtra("username"))
                         }
                     )
                 }
-                R.id.tarjetaItem ->{
+                R.id.tarjetaItem -> {
                     startActivity(
                         Intent(this, FormPagos::class.java).apply {
                             putExtra("username", intent.getStringExtra("username"))
@@ -173,6 +187,85 @@ class HomeActivity : AppCompatActivity(),
         hu.setText("Usuario: " + intent.getStringExtra("username"))
     }
 
+    private fun setRecyclerAdapter(type: String) {
+        val db = DBController(applicationContext)
+        when (type) {
+            "correos" -> {
+                correoAdapter.submitList(
+                    db.customCorreoSelect(
+                        "NOMUSUARIO",
+                        intent.getStringExtra("username")!!
+                    )
+                )
+
+                recycler.apply {
+                    layoutManager = GridLayoutManager(applicationContext, 1)
+                    adapter = correoAdapter
+                }
+            }
+            "cuentas" -> {
+                cuentaAdapter.submitList(
+                    db.customMainCuentaSelect(
+                        "NOMUSUARIO",
+                        intent.getStringExtra("username")!!
+                    )
+                )
+
+                recycler.apply {
+                    adapter = cuentaAdapter
+                    layoutManager = GridLayoutManager(applicationContext, 1)
+                }
+            }
+            "contrasenias" -> {
+                contraseniaAdapter.submitList(
+                    db.customContraseniaSelect(
+                        "NOMUSUARIO",
+                        intent.getStringExtra("username")!!
+                    )
+                )
+
+                recycler.apply {
+                    adapter = contraseniaAdapter
+                    layoutManager = GridLayoutManager(applicationContext, 1)
+                }
+            }
+            "notas" -> {
+                notaAdapter.submitList(
+                    db.customNotaSelect(
+                        "NOMUSUARIO",
+                        intent.getStringExtra("username")!!
+                    )
+                )
+
+                recycler.apply {
+                    adapter = notaAdapter
+                    layoutManager = GridLayoutManager(applicationContext, 1)
+                }
+            }
+            "tarjetas" -> {
+                tarjetaAdatper.submitList(
+                    db.customTarjetaSelect(
+                        "NOMUSUARIO",
+                        intent.getStringExtra("username")!!
+                    )
+                )
+
+                recycler.apply {
+                    adapter = tarjetaAdatper
+                    layoutManager = GridLayoutManager(applicationContext, 1)
+                }
+            }
+        }
+    }
+
+    private fun initAdapters() {
+        correoAdapter = CorreoAdapter()
+        cuentaAdapter = CuentaAdapter()
+        contraseniaAdapter = ContraseniaAdapter()
+        notaAdapter = NotasAdapter()
+        tarjetaAdatper = PagosAdapter()
+    }
+
     private fun initComponents() {
         drawer = findViewById(R.id.drawer)
         sideMenu = findViewById(R.id.sideMenu)
@@ -180,6 +273,7 @@ class HomeActivity : AppCompatActivity(),
         search = findViewById(R.id.search)
         fabSpeed = findViewById(R.id.fabSpeed)
         fabSpeed!!.setMenuListener(this)
+        recycler = findViewById(R.id.recycler)
 
         setSupportActionBar(toolbar)
         val toggle = ActionBarDrawerToggle(
@@ -198,5 +292,8 @@ class HomeActivity : AppCompatActivity(),
         var tabs: TabLayout? = findViewById(R.id.tabs)
         tabs!!.addOnTabSelectedListener(this)
         userHeader()
+
+        initAdapters()
+        setRecyclerAdapter("correos")
     }
 }

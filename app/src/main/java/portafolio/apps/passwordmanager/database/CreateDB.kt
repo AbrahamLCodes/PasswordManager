@@ -21,6 +21,7 @@ class CreateDB {
 
         fun createCuentas(): String {
             return "CREATE TABLE CUENTAS (" +
+                    "NOMUSUARIO TEXT NOT NULL REFERENCES USUARIOS(NOMBRE)," +
                     "CORREO TEXT NOT NULL REFERENCES CORREOS(CORREO)," +
                     "CUENTA TEXT NOT NULL," +
                     "CONTRASENIA TEXT NOT NULL," +
@@ -54,9 +55,12 @@ class CreateDB {
             return "CREATE TABLE TARJETAS(" +
                     "NOMUSUARIO TEXT NOT NULL REFERENCES USUARIOS(NOMBRE)," +
                     "ASUNTO TEXT NOT NULL PRIMARY KEY," +
+                    "TITULAR TEXT NOT NULL ," +
                     "NTARJETA TEXT NOT NULL," +
-                    "CADUCIDAD TEXT NOT NULL," +
+                    "CADM TEXT NOT NULL," +
+                    "CADY TEXT NOT NULL," +
                     "CODSEG TEXT NOT NULL," +
+                    "BANCO TEXT NOT NULL," +
                     "NIP TEXT NOT NULL," +
                     "FECHA TEXT NOT NULL" +
                     ")"

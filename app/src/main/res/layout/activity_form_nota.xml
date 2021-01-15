@@ -11,9 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#023E8A"
+        app:menu="@menu/note_menu"
         app:navigationIcon="@drawable/arrow"
         app:title="Nota segura"
-        app:menu="@menu/note_menu"
         app:titleTextColor="@color/white" />
 
     <EditText
@@ -34,10 +34,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@android:color/transparent"
+        android:background="@layout/shape_input"
         android:ems="10"
+        android:gravity="top"
         android:hint="Contenido"
         android:inputType="textMultiLine"
+        android:lines="10"
+        android:padding="10dp"
         android:textSize="19sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|bottom"
+        android:orientation="vertical">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/guardarBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginBottom="10dp"
+            android:text="Guardar" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancelarBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/white"
+            android:text="Cerrar"
+            android:textColor="@color/black"
+            app:strokeColor="#8E8E8E"
+            app:strokeWidth="1dp" />
+    </LinearLayout>
 
 </LinearLayout>
