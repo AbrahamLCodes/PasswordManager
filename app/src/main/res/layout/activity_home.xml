@@ -5,6 +5,7 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activities.HomeActivity">
 
     <com.google.android.material.navigation.NavigationView
@@ -20,8 +21,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
         android:backgroundTintMode="add"
         android:orientation="vertical"
         android:weightSum="1">
@@ -41,7 +40,9 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:navigationIcon="@drawable/ic_menu_24px"
+                    app:navigationIcon="@drawable/ic_icons8_menu_1"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:title="Home"
                     app:titleTextColor="@color/white" />
             </com.google.android.material.appbar.AppBarLayout>
@@ -130,20 +131,30 @@
 
         </LinearLayout>
 
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <io.github.yavski.fabspeeddial.FabSpeedDial
             android:id="@+id/fabSpeed"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:foregroundGravity="bottom"
+            android:outlineProvider="none"
             app:fabBackgroundTint="#023E8A"
             app:fabGravity="bottom_end"
             app:fabMenu="@menu/fabmenu"
+            app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:miniFabBackgroundTint="#0077B6"
             app:miniFabDrawableTint="#FFFFFF"
             app:miniFabTitleTextColor="@color/black" />
 
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

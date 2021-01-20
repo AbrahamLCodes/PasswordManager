@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".forms_views_activities.ViewNotas">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:background="#023E8A"
+        app:navigationIcon="@drawable/arrow"
+        app:title="Nota"
+        app:titleTextColor="@color/white">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200sp"
+            android:backgroundTint="#00FFFFFF"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_border_color_black_18dp"
+            android:tint="@color/white" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".5"
+        android:fillViewport="true">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="23dp"
+            android:orientation="vertical"
+            android:stretchColumns="0">
+
+            <TableRow android:gravity="center">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.AppCompat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="1sp"
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center_vertical"
+                    android:text="Titulo"
+                    android:textIsSelectable="true"
+                    android:textSize="18sp"
+
+                    />
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="25sp"
+                    android:backgroundTint="#00FFFFFF"
+                    android:clickable="true"
+                    android:src="@drawable/ic_content_copy_24px" />
+
+
+            </TableRow>
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.AppCompat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:padding="10dp"
+                    android:layout_marginVertical="25sp"
+                    android:fontFamily="@font/helvetica"
+                    android:background="@layout/shape_input"
+                    android:text="BODY"
+                    android:textSize="15sp" />
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="10sp"
+                    android:backgroundTint="#00FFFFFF"
+                    android:clickable="true"
+                    android:src="@drawable/ic_content_copy_24px" />
+
+        </TableLayout>
+    </ScrollView>
+
+</LinearLayout>

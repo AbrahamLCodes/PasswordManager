@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="3"
+    android:orientation="vertical"
+    tools:context=".forms_views_activities.View_correo">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:background="#023E8A"
+        app:navigationIcon="@drawable/arrow"
+        app:title="Correo"
+        app:titleTextColor="@color/white">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200sp"
+            android:backgroundTint="#00FFFFFF"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_border_color_black_18dp"
+            android:tint="@color/white" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".5"
+        android:fillViewport="true">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="23dp"
+            android:stretchColumns="0">
+            <TableRow
+                android:gravity="center"
+                >
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.AppCompat"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textIsSelectable="true"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="25sp"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/helvetica"
+                    android:text="Nombre"
+
+                    />
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:layout_marginVertical="25sp"
+                    android:backgroundTint="#00FFFFFF"
+                    android:clickable="true"
+                    android:src="@drawable/ic_content_copy_24px" />
+
+
+
+
+            </TableRow>
+            <TableRow>
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.AppCompat"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textIsSelectable="true"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="25sp"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/helvetica"
+                    android:text="Correo"
+
+                    />
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:layout_marginVertical="25sp"
+                    android:backgroundTint="#00FFFFFF"
+                    android:clickable="true"
+                    android:src="@drawable/ic_content_copy_24px" />
+            </TableRow>
+            <TableRow>
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.AppCompat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="25sp"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/helvetica"
+                    android:text="Contraseña " />
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="25sp"
+                    android:backgroundTint="#00FFFFFF"
+                    android:clickable="true"
+                    android:src="@drawable/ic_content_copy_24px" />
+
+            </TableRow>
+
+
+        </TableLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>

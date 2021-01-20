@@ -5,15 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.SearchView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.internal.NavigationMenu
 
@@ -24,6 +22,7 @@ import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.adapters.*
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.formactivities.*
+import portafolio.apps.passwordmanager.forms_views_activities.View_correo
 import portafolio.apps.passwordmanager.fragments.PasswordFragment
 import javax.sql.DataSource
 
@@ -32,7 +31,6 @@ class HomeActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener,
     TabLayout.OnTabSelectedListener,
     FabSpeedDial.MenuListener {
-
     private lateinit var drawer: DrawerLayout
     private lateinit var sideMenu: NavigationView
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
@@ -136,7 +134,7 @@ class HomeActivity : AppCompatActivity(),
             when (menuItem.itemId) {
                 R.id.correoItem -> {
                     startActivity(
-                        Intent(this, FormCorreo::class.java).apply {
+                        Intent(this,FormCorreo::class.java).apply {
                             putExtra("username", intent.getStringExtra("username"))
                         }
                     )

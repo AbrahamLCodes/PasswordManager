@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".forms_views_activities.ViewPagos">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:background="#023E8A"
+        app:navigationIcon="@drawable/arrow"
+        app:title="Pagos"
+        app:titleTextColor="@color/white">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200sp"
+            android:backgroundTint="#00FFFFFF"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_border_color_black_18dp"
+            android:tint="@color/white" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="23dp"
+        android:orientation="vertical"
+        android:stretchColumns="0">
+
+        <TableRow android:gravity="center">
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center_vertical"
+                android:text="Asunto"
+                android:textIsSelectable="true"
+                android:textSize="15sp"
+
+                />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:backgroundTint="#00FFFFFF"
+                android:clickable="true"
+                android:src="@drawable/ic_content_copy_24px" />
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center_vertical"
+                android:text="Nombre del titular"
+                android:textIsSelectable="true"
+                android:textSize="15sp"
+
+                />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:backgroundTint="#00FFFFFF"
+                android:clickable="true"
+                android:src="@drawable/ic_content_copy_24px" />
+        </TableRow>
+
+        <TableRow>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center_vertical"
+                android:text="Numero de tarjeta"
+                android:textSize="15sp" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:backgroundTint="#00FFFFFF"
+                android:clickable="true"
+                android:src="@drawable/ic_content_copy_24px" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center_vertical"
+                android:text="Codigo de seguridad"
+                android:textSize="15sp" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:backgroundTint="#00FFFFFF"
+                android:clickable="true"
+                android:src="@drawable/ic_content_copy_24px" />
+
+        </TableRow>
+        <TableRow>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center_vertical"
+                android:text="Fecha de vencimiento"
+                android:textSize="15sp" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:backgroundTint="#00FFFFFF"
+                android:clickable="true"
+                android:src="@drawable/ic_content_copy_24px" />
+
+        </TableRow>
+        <TableRow>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center_vertical"
+                android:text="Banco"
+                android:textSize="15sp" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:backgroundTint="#00FFFFFF"
+                android:clickable="true"
+                android:src="@drawable/ic_content_copy_24px" />
+
+        </TableRow>
+        <TableRow>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center_vertical"
+                android:text="Nip"
+                android:textSize="15sp" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="25sp"
+                android:backgroundTint="#00FFFFFF"
+                android:clickable="true"
+                android:src="@drawable/ic_content_copy_24px" />
+
+        </TableRow>
+
+    </TableLayout>
+
+
+</LinearLayout>

@@ -5,12 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.datamodel.Correo
 
-class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<Correo> = ArrayList()
 
@@ -42,7 +40,7 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class CorreoViewHolder constructor(
         itemView: View
-    ) : RecyclerView.ViewHolder(itemView) {
+    ) : RecyclerView.ViewHolder(itemView){
         val asunto: TextView = itemView.findViewById(R.id.nomUsuario)
         val correo: TextView = itemView.findViewById(R.id.correo)
 

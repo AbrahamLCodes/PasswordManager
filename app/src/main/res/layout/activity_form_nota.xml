@@ -25,7 +25,7 @@
         android:background="@android:color/transparent"
         android:ems="10"
         android:hint="Titulo"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:textSize="30sp" />
 
     <EditText
@@ -38,7 +38,7 @@
         android:ems="10"
         android:gravity="top"
         android:hint="Contenido"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textCapSentences"
         android:lines="10"
         android:padding="10dp"
         android:textSize="19sp" />

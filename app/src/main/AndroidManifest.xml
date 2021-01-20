@@ -9,10 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordManager">
-        <activity android:name=".formactivities.FormNota"></activity>
+        <activity android:name=".forms_views_activities.ViewContrasenia"></activity>
+        <activity android:name=".forms_views_activities.ViewPagos" />
+        <activity android:name=".forms_views_activities.ViewNotas" />
+        <activity android:name=".forms_views_activities.ViewCuentas" />
+        <activity android:name=".forms_views_activities.View_correo" />
+        <activity android:name=".formactivities.FormNota" />
         <activity android:name=".formactivities.FormPagos" />
         <activity android:name=".formactivities.FormContrasenia" />
-        <activity android:name=".activities.MainActivity">
+        <activity
+            android:name=".activities.MainActivity"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
