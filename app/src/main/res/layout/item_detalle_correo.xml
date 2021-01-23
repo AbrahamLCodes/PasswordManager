@@ -2,16 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants">
 
     <com.google.android.material.card.MaterialCardView
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
         app:cardCornerRadius="10dp"
         app:cardElevation="1dp"
         app:strokeColor="#D7A5A0A0"
@@ -30,13 +28,13 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-
                 <ImageView
                     android:id="@+id/imgViewCard"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="6dp"
                     android:layout_weight=".6"
+                    android:clickable="false"
                     app:srcCompat="@drawable/mail_svg_black" />
 
                 <ImageView
@@ -44,8 +42,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".4"
                     android:scaleType="center"
-
-
                     android:src="@drawable/card_example" />
             </LinearLayout>
 
@@ -65,6 +61,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="3dp"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:fontFamily="@font/helvetica"
                     android:gravity="center|start"
                     android:text="Asunto" />
@@ -75,6 +72,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="3dp"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:fontFamily="@font/helvetica"
                     android:gravity="center|start"
                     android:text="Correo@hotmail.com" />

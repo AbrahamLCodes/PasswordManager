@@ -5,24 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".forms_views_activities.ViewPagos">
+    tools:context=".formviewsactivities.ViewPagos">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
-        android:layout_height="100sp"
-        android:background="#023E8A"
-        app:navigationIcon="@drawable/arrow"
-        app:title="Pagos"
-        app:titleTextColor="@color/white">
+        android:layout_height="wrap_content"
+        android:background="#023E8A">
 
         <ImageButton
+            android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="200sp"
-            android:backgroundTint="#00FFFFFF"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_border_color_black_18dp"
-            android:tint="@color/white" />
+            android:src="@drawable/arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:text="Pagos"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="23dp"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_border_color_black_18dp"
+                android:tint="@color/white" />
+        </LinearLayout>
+
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -36,6 +55,7 @@
         <TableRow android:gravity="center">
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/asunto"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -44,24 +64,22 @@
                 android:gravity="center_vertical"
                 android:text="Asunto"
                 android:textIsSelectable="true"
-                android:textSize="15sp"
-
-                />
+                android:textSize="15sp" />
 
             <ImageButton
+                android:id="@+id/asuntoBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="25sp"
                 android:backgroundTint="#00FFFFFF"
                 android:clickable="true"
                 android:src="@drawable/ic_content_copy_24px" />
-
-
         </TableRow>
 
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/titular"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -70,11 +88,10 @@
                 android:gravity="center_vertical"
                 android:text="Nombre del titular"
                 android:textIsSelectable="true"
-                android:textSize="15sp"
-
-                />
+                android:textSize="15sp" />
 
             <ImageButton
+                android:id="@+id/titularBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="25sp"
@@ -86,6 +103,7 @@
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/ntarjeta"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -96,18 +114,19 @@
                 android:textSize="15sp" />
 
             <ImageButton
+                android:id="@+id/ntarjetaBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="25sp"
                 android:backgroundTint="#00FFFFFF"
                 android:clickable="true"
                 android:src="@drawable/ic_content_copy_24px" />
-
         </TableRow>
 
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/codseg"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -118,6 +137,7 @@
                 android:textSize="15sp" />
 
             <ImageButton
+                android:id="@+id/codsegBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="25sp"
@@ -126,9 +146,11 @@
                 android:src="@drawable/ic_content_copy_24px" />
 
         </TableRow>
+
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fecha"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -139,6 +161,7 @@
                 android:textSize="15sp" />
 
             <ImageButton
+                android:id="@+id/fechaBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="25sp"
@@ -147,9 +170,11 @@
                 android:src="@drawable/ic_content_copy_24px" />
 
         </TableRow>
+
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/banco"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -160,6 +185,7 @@
                 android:textSize="15sp" />
 
             <ImageButton
+                android:id="@+id/bancoBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="25sp"
@@ -168,9 +194,11 @@
                 android:src="@drawable/ic_content_copy_24px" />
 
         </TableRow>
+
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/nip"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -181,16 +209,13 @@
                 android:textSize="15sp" />
 
             <ImageButton
+                android:id="@+id/nipBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="25sp"
                 android:backgroundTint="#00FFFFFF"
                 android:clickable="true"
                 android:src="@drawable/ic_content_copy_24px" />
-
         </TableRow>
-
     </TableLayout>
-
-
 </LinearLayout>

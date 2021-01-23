@@ -1,5 +1,7 @@
 package portafolio.apps.passwordmanager.datamodel
 
+import java.io.Serializable
+
 class Tarjeta(
     @JvmField private var nomusuario: String,
     @JvmField private var asunto: String,
@@ -11,7 +13,7 @@ class Tarjeta(
     @JvmField private var banco: String,
     @JvmField private var nip: String,
     @JvmField private var fecha: String
-) {
+) : Serializable {
 
     fun getNomusuario() = nomusuario
     fun getAsunto() = asunto

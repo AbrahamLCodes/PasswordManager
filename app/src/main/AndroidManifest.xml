@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordManager">
-        <activity android:name=".forms_views_activities.ViewContrasenia"></activity>
-        <activity android:name=".forms_views_activities.ViewPagos" />
-        <activity android:name=".forms_views_activities.ViewNotas" />
-        <activity android:name=".forms_views_activities.ViewCuentas" />
-        <activity android:name=".forms_views_activities.View_correo" />
+        <activity android:name=".formviewsactivities.ViewContrasenia"></activity>
+        <activity android:name=".formviewsactivities.ViewPagos" />
+        <activity android:name=".formviewsactivities.ViewNotas" />
+        <activity android:name=".formviewsactivities.ViewCuentas" />
+        <activity android:name=".formviewsactivities.ViewCorreo" />
         <activity android:name=".formactivities.FormNota" />
         <activity android:name=".formactivities.FormPagos" />
         <activity android:name=".formactivities.FormContrasenia" />

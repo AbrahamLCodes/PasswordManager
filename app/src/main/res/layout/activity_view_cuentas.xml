@@ -5,24 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".forms_views_activities.ViewCuentas">
+    tools:context=".formviewsactivities.ViewCuentas">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
-        android:layout_height="100sp"
+        android:layout_height="wrap_content"
         android:background="#023E8A"
-        app:navigationIcon="@drawable/arrow"
-        app:title="Cuenta"
         app:titleTextColor="@color/white">
 
         <ImageButton
+            android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="200sp"
-            android:backgroundTint="#00FFFFFF"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_border_color_black_18dp"
-            android:tint="@color/white" />
+            android:src="@drawable/arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/helvetica"
+            android:text="Cuenta"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_border_color_black_18dp"
+                android:tint="@color/white" />
+        </LinearLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -42,6 +61,7 @@
             <TableRow android:gravity="center">
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/sitio"
                     style="@style/TextAppearance.AppCompat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -55,6 +75,7 @@
                     />
 
                 <ImageButton
+                    android:id="@+id/sitioBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
@@ -68,6 +89,7 @@
             <TableRow>
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/usuario"
                     style="@style/TextAppearance.AppCompat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -81,6 +103,8 @@
                     />
 
                 <ImageButton
+
+                    android:id="@+id/usuarioBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
@@ -92,6 +116,7 @@
             <TableRow>
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/contrasenia"
                     style="@style/TextAppearance.AppCompat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -102,6 +127,7 @@
                     android:textSize="15sp" />
 
                 <ImageButton
+                    android:id="@+id/contraseniaBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
@@ -110,9 +136,11 @@
                     android:src="@drawable/ic_content_copy_24px" />
 
             </TableRow>
+
             <TableRow>
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/correo"
                     style="@style/TextAppearance.AppCompat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -123,6 +151,7 @@
                     android:textSize="15sp" />
 
                 <ImageButton
+                    android:id="@+id/correoBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"

@@ -5,24 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".forms_views_activities.ViewContrasenia">
+    tools:context=".formviewsactivities.ViewContrasenia">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
-        android:layout_height="100sp"
+        android:layout_height="wrap_content"
         android:background="#023E8A"
-        app:navigationIcon="@drawable/arrow"
-        app:title="Contraseña"
         app:titleTextColor="@color/white">
 
         <ImageButton
+            android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="140sp"
-            android:backgroundTint="#00FFFFFF"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_border_color_black_18dp"
-            android:tint="@color/white" />
+            android:src="@drawable/arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contraseña"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="23dp"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_border_color_black_18dp"
+                android:tint="@color/white" />
+
+        </LinearLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -39,22 +59,24 @@
             android:orientation="vertical"
             android:stretchColumns="0">
 
-            <TableRow >
+            <TableRow>
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/asunto"
                     style="@style/TextAppearance.AppCompat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
                     android:fontFamily="@font/helvetica"
                     android:gravity="fill_horizontal"
-                    android:text="Sitio"
+                    android:text="asunto"
                     android:textIsSelectable="true"
                     android:textSize="15sp"
 
                     />
 
                 <ImageButton
+                    android:id="@+id/asuntoBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
@@ -69,6 +91,7 @@
             <TableRow>
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/contrasenia"
                     style="@style/TextAppearance.AppCompat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -79,6 +102,7 @@
                     android:textSize="15sp" />
 
                 <ImageButton
+                    android:id="@+id/contraseniaBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
@@ -87,8 +111,6 @@
                     android:src="@drawable/ic_content_copy_24px" />
 
             </TableRow>
-
-
 
         </TableLayout>
     </ScrollView>

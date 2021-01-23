@@ -6,24 +6,51 @@
     android:layout_height="match_parent"
     android:layout_weight="3"
     android:orientation="vertical"
-    tools:context=".forms_views_activities.View_correo">
+    tools:context=".formviewsactivities.ViewCorreo">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
-        android:layout_height="100sp"
+        android:layout_height="wrap_content"
         android:background="#023E8A"
-        app:navigationIcon="@drawable/arrow"
-        app:title="Correo"
         app:titleTextColor="@color/white">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="200sp"
-            android:backgroundTint="#00FFFFFF"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_border_color_black_18dp"
-            android:tint="@color/white" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/arrow" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Correo"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:paddingHorizontal="23dp">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#00FFFFFF"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_border_color_black_18dp"
+                    android:tint="@color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
+
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -36,79 +63,80 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_marginHorizontal="23dp"
+            android:orientation="vertical"
             android:stretchColumns="0">
-            <TableRow
-                android:gravity="center"
-                >
+
+            <TableRow android:gravity="center">
+
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/nombre"
                     style="@style/TextAppearance.AppCompat"
                     android:layout_width="match_parent"
-                    android:gravity="center_vertical"
-                    android:textIsSelectable="true"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
-                    android:textSize="15sp"
                     android:fontFamily="@font/helvetica"
+                    android:gravity="center_vertical"
                     android:text="Nombre"
-
-                    />
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" android:layout_marginVertical="25sp"
-                    android:backgroundTint="#00FFFFFF"
-                    android:clickable="true"
-                    android:src="@drawable/ic_content_copy_24px" />
-
-
-
-
-            </TableRow>
-            <TableRow>
-                <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.AppCompat"
-                    android:layout_width="match_parent"
-                    android:gravity="center_vertical"
                     android:textIsSelectable="true"
+                    android:textSize="15sp" />
+
+                <ImageButton
+                    android:id="@+id/nombreBtn"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/helvetica"
-                    android:text="Correo"
-
-                    />
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" android:layout_marginVertical="25sp"
                     android:backgroundTint="#00FFFFFF"
                     android:clickable="true"
                     android:src="@drawable/ic_content_copy_24px" />
             </TableRow>
+
             <TableRow>
+
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/correo"
                     style="@style/TextAppearance.AppCompat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
-                    android:textSize="15sp"
-                    android:gravity="center_vertical"
                     android:fontFamily="@font/helvetica"
-                    android:text="Contraseña " />
+                    android:gravity="center_vertical"
+                    android:text="Correo"
+                    android:textIsSelectable="true"
+                    android:textSize="15sp" />
+
                 <ImageButton
+                    android:id="@+id/correoBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
                     android:backgroundTint="#00FFFFFF"
                     android:clickable="true"
                     android:src="@drawable/ic_content_copy_24px" />
-
             </TableRow>
 
+            <TableRow>
 
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/contrasenia"
+                    style="@style/TextAppearance.AppCompat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="25sp"
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center_vertical"
+                    android:text="Contraseña "
+                    android:textSize="15sp" />
+
+                <ImageButton
+                    android:id="@+id/contrasniaBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="25sp"
+                    android:backgroundTint="#00FFFFFF"
+                    android:clickable="true"
+                    android:src="@drawable/ic_content_copy_24px" />
+            </TableRow>
         </TableLayout>
     </ScrollView>
-
-
-
 </LinearLayout>

@@ -9,10 +9,7 @@ import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.internal.NavigationMenu
 
 import com.google.android.material.navigation.NavigationView
@@ -22,15 +19,12 @@ import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.adapters.*
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.formactivities.*
-import portafolio.apps.passwordmanager.forms_views_activities.View_correo
-import portafolio.apps.passwordmanager.fragments.PasswordFragment
-import javax.sql.DataSource
 
 class HomeActivity : AppCompatActivity(),
     View.OnClickListener,
     NavigationView.OnNavigationItemSelectedListener,
     TabLayout.OnTabSelectedListener,
-    FabSpeedDial.MenuListener {
+    FabSpeedDial.MenuListener{
     private lateinit var drawer: DrawerLayout
     private lateinit var sideMenu: NavigationView
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
@@ -43,12 +37,39 @@ class HomeActivity : AppCompatActivity(),
     private lateinit var contraseniaAdapter: ContraseniaAdapter
     private lateinit var notaAdapter: NotasAdapter
     private lateinit var tarjetaAdatper: PagosAdapter
+    private lateinit var tabs: TabLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         initComponents()
+    }
+
+    override fun onBackPressed() {
+        Toast.makeText(applicationContext, "No le des para atras", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        when(tabs.selectedTabPosition){
+            1 -> {
+                setRecyclerAdapter("correos")
+            }
+            2 -> {
+                setRecyclerAdapter("cuentas")
+            }
+            3 -> {
+                setRecyclerAdapter("contrasenias")
+            }
+            4 -> {
+                setRecyclerAdapter("notas")
+            }
+            5 -> {
+                setRecyclerAdapter("tarjetas")
+            }
+        }
     }
 
     override fun onClick(v: View?) {
@@ -199,6 +220,7 @@ class HomeActivity : AppCompatActivity(),
                 recycler.apply {
                     layoutManager = GridLayoutManager(applicationContext, 1)
                     adapter = correoAdapter
+
                 }
             }
             "cuentas" -> {
@@ -287,7 +309,7 @@ class HomeActivity : AppCompatActivity(),
         toggle.syncState()
         sideMenu!!.setNavigationItemSelectedListener(this)
 
-        var tabs: TabLayout? = findViewById(R.id.tabs)
+        tabs = findViewById(R.id.tabs)
         tabs!!.addOnTabSelectedListener(this)
         userHeader()
 

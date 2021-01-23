@@ -40,9 +40,9 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:navigationIcon="@drawable/ic_icons8_menu_1"
                     android:clickable="true"
                     android:focusable="true"
+                    app:navigationIcon="@drawable/ic_icons8_menu_1"
                     app:title="Home"
                     app:titleTextColor="@color/white" />
             </com.google.android.material.appbar.AppBarLayout>
@@ -125,7 +125,8 @@
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="15dp">
+                android:layout_marginHorizontal="15dp"
+                android:descendantFocusability="blocksDescendants">
 
             </androidx.recyclerview.widget.RecyclerView>
 

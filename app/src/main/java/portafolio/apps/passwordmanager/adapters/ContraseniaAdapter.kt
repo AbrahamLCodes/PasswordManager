@@ -1,12 +1,16 @@
 package portafolio.apps.passwordmanager.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.datamodel.Contrasenia
+import portafolio.apps.passwordmanager.formviewsactivities.ViewContrasenia
+import portafolio.apps.passwordmanager.formviewsactivities.ViewCorreo
 
 class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -38,11 +42,21 @@ class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         items = correoList
     }
 
-    class ContraseniaViewHolder constructor(
-        itemView: View
-    ) : RecyclerView.ViewHolder(itemView) {
+    inner class ContraseniaViewHolder constructor(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
         val asunto: TextView = itemView.findViewById(R.id.nomUsuario)
         val contrasenia: TextView = itemView.findViewById(R.id.contrasenia)
+
+        init {
+            itemView.setOnClickListener { v: View ->
+                val position: Int = adapterPosition
+                val intent = Intent(itemView.context, ViewContrasenia::class.java)
+                intent.apply {
+                    putExtra("contrasenia", items.get(position))
+                }
+                itemView.context.startActivity(intent)
+            }
+        }
 
         fun bind(contrasenia: Contrasenia) {
             asunto.setText(contrasenia.getAsunto())

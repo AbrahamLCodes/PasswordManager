@@ -1,5 +1,7 @@
 package portafolio.apps.passwordmanager.datamodel
 
+import java.io.Serializable
+
 class Cuenta(
     @JvmField private var nomusuario: String,
     @JvmField private var correo: String,
@@ -9,7 +11,7 @@ class Cuenta(
     @JvmField private var nickname: String,
     @JvmField private var website: String,
     @JvmField private var fecha: String
-) {
+) : Serializable{
     fun getNomUsuario() = nomusuario
     fun getCorreo() = correo
     fun getCuenta() = cuenta
