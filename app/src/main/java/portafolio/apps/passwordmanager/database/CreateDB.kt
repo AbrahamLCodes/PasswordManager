@@ -13,9 +13,10 @@ class CreateDB {
             return "CREATE TABLE CORREOS(" +
                     "NOMUSUARIO TEXT NOT NULL REFERENCES USUARIOS(NOMBRE)," +
                     "ASUNTO TEXT NOT NULL," +
-                    "CORREO TEXT PRIMARY KEY NOT NULL," +
+                    "CORREO TEXT NOT NULL," +
                     "CONTRASENIA TEXT NOT NULL," +
-                    "FECHA TEXT NOT NULL" +
+                    "FECHA TEXT NOT NULL," +
+                    "PRIMARY KEY (NOMUSUARIO, CORREO)" +
                     ")"
         }
 

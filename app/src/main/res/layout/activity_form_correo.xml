@@ -8,6 +8,7 @@
     tools:context=".formactivities.FormCorreo">
 
     <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#023E8A"
@@ -131,7 +132,7 @@
                 android:text="guardar" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/cerrarBtn"
+                android:id="@+id/cancelarBtn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

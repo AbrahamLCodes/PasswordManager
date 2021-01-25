@@ -1,24 +1,30 @@
 package portafolio.apps.passwordmanager.formactivities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.google.android.material.appbar.MaterialToolbar
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.database.DBController
+import portafolio.apps.passwordmanager.datamodel.Correo
+import portafolio.apps.passwordmanager.formviewsactivities.ViewCorreo
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
 class FormCorreo : AppCompatActivity(), View.OnClickListener {
 
-    var asunto: EditText? = null
-    var correo: EditText? = null
-    var contrasenia: EditText? = null
-    var contrasenia1: EditText? = null
-    var guardar: Button? = null
+    private lateinit var asunto: EditText
+    private lateinit var correo: EditText
+    private lateinit var contrasenia: EditText
+    private lateinit var contrasenia1: EditText
+    private lateinit var guardar: Button
+    private lateinit var cancelar: Button
+    private var insert = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,24 +32,103 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
         initComponents()
     }
 
+    override fun onBackPressed() {
+        if (insert) {
+            super.onBackPressed()
+        } else {
+            val co = intent.getSerializableExtra("correo") as? Correo
+            val co2 = intent.getSerializableExtra("correoupdated") as? Correo
+            if(co == null){
+                goToView(co2!!)
+            }else if(co2 == null){
+                goToView(co!!)
+            }
+        }
+    }
+
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
                 R.id.guardarBtn -> {
-                    if (checkFields()) {
-                        if (checkPasswords()) {
+                    if (checkFields() && checkPasswords()) {
+                        if (insert) {
                             insert()
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Las contraseñas no coinciden",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            update()
                         }
+                    } else {
+                        Toast.makeText(
+                            applicationContext,
+                            "Las contraseñas no coinciden",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
+                }
+                R.id.cancelarBtn -> {
+                    onBackPressed()
                 }
             }
         }
+    }
+
+    private fun update() {
+        val db = DBController(applicationContext)
+        val co = intent.getSerializableExtra("correo") as? Correo
+        val co2 = intent.getSerializableExtra("correoupdated") as? Correo
+        var good = true
+        try {
+            if(co == null){
+                db.updateCorreo(
+                    co2!!.getNomusuario(),
+                    asunto.text.toString(),
+                    correo.text.toString(),
+                    co2.getCorreo(),
+                    contrasenia.text.toString()
+                )
+            }else if(co2 == null){
+                db.updateCorreo(
+                    co!!.getNomusuario(),
+                    asunto.text.toString(),
+                    correo.text.toString(),
+                    co.getCorreo(),
+                    contrasenia.text.toString()
+                )
+            }
+
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            good = false
+        }
+
+        if (good) {
+            Toast.makeText(
+                applicationContext,
+                "El correo '" + correo!!.text.toString() + "' ha sido actualizado correctamente",
+                Toast.LENGTH_SHORT
+            ).show()
+            if(co == null){
+                goToView(co2!!)
+            }else if(co2 == null){
+                goToView(co)
+            }
+        }
+    }
+
+    private fun goToView(co: Correo) {
+        val intent = Intent(this, ViewCorreo::class.java)
+        intent.apply {
+            putExtra(
+                "correoupdated", Correo(
+                    co.getNomusuario(),
+                    asunto.text.toString(),
+                    correo.text.toString(),
+                    contrasenia.text.toString(),
+                    co.getFecha()
+                )
+            )
+        }
+        startActivity(intent)
+        finish()
     }
 
     private fun insert() {
@@ -80,29 +165,29 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkFields(): Boolean {
-        if (asunto!!.text.toString().equals("")) {
+        if (asunto.text.toString().equals("")) {
             Toast.makeText(applicationContext, "Introduce un asunto/nombre", Toast.LENGTH_SHORT)
                 .show()
-            asunto!!.requestFocus()
+            asunto.requestFocus()
             return false
-        } else if (correo!!.text.toString().equals("")) {
+        } else if (correo.text.toString().equals("")) {
             Toast.makeText(applicationContext, "Introduce un correo", Toast.LENGTH_SHORT)
                 .show()
-            correo!!.requestFocus()
+            correo.requestFocus()
             return false
-        } else if (contrasenia!!.text.toString().equals("")) {
+        } else if (contrasenia.text.toString().equals("")) {
             Toast.makeText(applicationContext, "Introduce una contraseña", Toast.LENGTH_SHORT)
                 .show()
-            contrasenia!!.requestFocus()
+            contrasenia.requestFocus()
             return false
-        } else if (contrasenia1!!.text.toString().equals("")) {
+        } else if (contrasenia1.text.toString().equals("")) {
             Toast.makeText(
                 applicationContext,
                 "Vuelve a introducir la contraseña",
                 Toast.LENGTH_SHORT
             )
                 .show()
-            contrasenia1!!.requestFocus()
+            contrasenia1.requestFocus()
             return false
         } else {
             return true
@@ -110,7 +195,27 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkPasswords(): Boolean {
-        return contrasenia!!.text.toString().equals(contrasenia1!!.text.toString())
+        if (contrasenia.text.toString().equals(contrasenia1.text.toString())) {
+            return true
+        } else {
+            Toast.makeText(
+                applicationContext,
+                "Las contraseñas no coinciden",
+                Toast.LENGTH_SHORT
+            ).show()
+            return false
+        }
+
+    }
+
+    private fun setComponents(co: Correo) {
+        asunto.setText(co.getNombre())
+        correo.setText(co.getCorreo())
+        contrasenia.setText(co.getContrasenia())
+        contrasenia1.setText(co.getContrasenia())
+        guardar.text = "EDITAR"
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar.setTitle("Editar Correo")
     }
 
     private fun getStringDate(): String {
@@ -124,6 +229,22 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
         contrasenia = findViewById(R.id.contrasenia)
         contrasenia1 = findViewById(R.id.contrasenia1)
         guardar = findViewById(R.id.guardarBtn)
-        guardar!!.setOnClickListener(this)
+        guardar.setOnClickListener(this)
+        cancelar = findViewById(R.id.cancelarBtn)
+        cancelar.setOnClickListener(this)
+
+        val co = intent.getSerializableExtra("correo") as? Correo
+        val co2 = intent.getSerializableExtra("correoupdated") as? Correo
+        if (co != null || co2 != null) {
+            insert = false
+            if(co == null){
+                setComponents(co2!!)
+            }else if(co2 == null){
+                setComponents(co)
+            }
+
+        } else {
+            insert = true
+        }
     }
 }

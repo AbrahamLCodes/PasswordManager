@@ -38,41 +38,52 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
     fun insertUsuario(nombre: String, contrasenia: String) {
         val db = writableDatabase
         if (db != null) {
-            db.execSQL("INSERT INTO USUARIOS VALUES (" +
-                    "'" + nombre + "','"
-                    + contrasenia + "')"
+            db.execSQL(
+                "INSERT INTO USUARIOS VALUES (" +
+                        "'" + nombre + "','"
+                        + contrasenia + "')"
             )
         }
     }
 
     //Method to insert a user. The name and password is passed by value in parameters
-    fun insertCorreo(nomusuario: String, asunto: String, correo: String, contrasenia: String, fecha: String) {
+    fun insertCorreo(
+        nomusuario: String,
+        asunto: String,
+        correo: String,
+        contrasenia: String,
+        fecha: String
+    ) {
         val db = writableDatabase
         if (db != null) {
-            db.execSQL("INSERT INTO CORREOS VALUES (" +
-                    "'" + nomusuario + "'," +
-                    "'" + asunto + "'," +
-                    "'" + correo + "'," +
-                    "'" + contrasenia + "'," +
-                    "'" + fecha + "')"
+            db.execSQL(
+                "INSERT INTO CORREOS VALUES (" +
+                        "'" + nomusuario + "'," +
+                        "'" + asunto + "'," +
+                        "'" + correo + "'," +
+                        "'" + contrasenia + "'," +
+                        "'" + fecha + "')"
             )
         }
     }
 
     //Method to insert a user. The name and password is passed by value in parameters
-    fun insertCuenta(nomusuario: String, correo: String, cuenta: String, contrasenia: String, categoria: String,
-                     nickname: String, website: String, fecha: String) {
+    fun insertCuenta(
+        nomusuario: String, correo: String, cuenta: String, contrasenia: String, categoria: String,
+        nickname: String, website: String, fecha: String
+    ) {
         val db = writableDatabase
         if (db != null) {
-            db.execSQL("INSERT INTO CUENTAS VALUES (" +
-                    "'" + nomusuario + "'," +
-                    "'" + correo + "'," +
-                    "'" + cuenta + "'," +
-                    "'" + contrasenia + "'," +
-                    "'" + categoria + "'," +
-                    "'" + nickname + "'," +
-                    "'" + website + "'," +
-                    "'" + fecha + "')"
+            db.execSQL(
+                "INSERT INTO CUENTAS VALUES (" +
+                        "'" + nomusuario + "'," +
+                        "'" + correo + "'," +
+                        "'" + cuenta + "'," +
+                        "'" + contrasenia + "'," +
+                        "'" + categoria + "'," +
+                        "'" + nickname + "'," +
+                        "'" + website + "'," +
+                        "'" + fecha + "')"
             )
         }
     }
@@ -80,11 +91,12 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
     fun insertContrasenia(nomusuario: String, asunto: String, contrasenia: String, fecha: String) {
         val db = writableDatabase
         if (db != null) {
-            db.execSQL("INSERT INTO CONTRASENIAS VALUES (" +
-                    "'" + nomusuario + "'," +
-                    "'" + asunto + "'," +
-                    "'" + contrasenia + "'," +
-                    "'" + fecha + "')"
+            db.execSQL(
+                "INSERT INTO CONTRASENIAS VALUES (" +
+                        "'" + nomusuario + "'," +
+                        "'" + asunto + "'," +
+                        "'" + contrasenia + "'," +
+                        "'" + fecha + "')"
             )
         }
     }
@@ -92,11 +104,12 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
     fun insertNota(nomusuario: String, asunto: String, nota: String, fecha: String) {
         val db = writableDatabase
         if (db != null) {
-            db.execSQL("INSERT INTO NOTAS VALUES (" +
-                    "'" + nomusuario + "'," +
-                    "'" + asunto + "'," +
-                    "'" + nota + "'," +
-                    "'" + fecha + "')"
+            db.execSQL(
+                "INSERT INTO NOTAS VALUES (" +
+                        "'" + nomusuario + "'," +
+                        "'" + asunto + "'," +
+                        "'" + nota + "'," +
+                        "'" + fecha + "')"
             )
         }
     }
@@ -111,122 +124,52 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         codseg: String,
         banco: String,
         nip: String,
-        fecha: String) {
+        fecha: String
+    ) {
         val db = writableDatabase
         if (db != null) {
-            db.execSQL("INSERT INTO TARJETAS VALUES (" +
-                    "'" + nomusuario + "'," +
-                    "'" + asunto + "'," +
-                    "'" + titular + "'," +
-                    "'" + ntarjeta + "'," +
-                    "'" + cadm + "'," +
-                    "'" + cady + "'," +
-                    "'" + codseg + "'," +
-                    "'" + banco + "'," +
-                    "'" + nip + "'," +
-                    "'" + fecha + "')"
+            db.execSQL(
+                "INSERT INTO TARJETAS VALUES (" +
+                        "'" + nomusuario + "'," +
+                        "'" + asunto + "'," +
+                        "'" + titular + "'," +
+                        "'" + ntarjeta + "'," +
+                        "'" + cadm + "'," +
+                        "'" + cady + "'," +
+                        "'" + codseg + "'," +
+                        "'" + banco + "'," +
+                        "'" + nip + "'," +
+                        "'" + fecha + "')"
             )
         }
     }
 
-    fun usuariosList(): MutableList<Usuario> {
-        val list: MutableList<Usuario> = ArrayList()
-        val cursor: Cursor = readableDatabase.rawQuery(
-                "SELECT * FROM USUARIOS",
-                null
-        )
-
-        if (cursor.moveToFirst()) {
-            do {
-                list.add(Usuario(
-                        cursor.getString(0),
-                        cursor.getString(1)
-                ))
-            } while (cursor.moveToNext())
-        }
-        return list
-    }
-
-    fun correosList(): MutableList<Correo> {
-        val list: MutableList<Correo> = ArrayList()
-        val cursor: Cursor = readableDatabase.rawQuery(
-                "SELECT * FROM CORREOS",
-                null)
-        if (cursor.moveToFirst()) {
-            do {
-                list.add(Correo(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3)
-                ))
-            } while (cursor.moveToNext())
-        }
-        return list
-    }
-
-
-    fun contraseniasList(): MutableList<Contrasenia> {
-        val list: MutableList<Contrasenia> = ArrayList()
-        val cursor: Cursor = readableDatabase.rawQuery(
-                "SELECT * FROM CONTRASENIAS",
-                null)
-        if (cursor.moveToFirst()) {
-            do {
-                list.add(Contrasenia(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3)
-                ))
-            } while (cursor.moveToNext())
-        }
-        return list
-    }
-
-    fun notasList(): MutableList<Nota> {
-        val list: MutableList<Nota> = ArrayList()
-        val cursor: Cursor = readableDatabase.rawQuery(
-                "SELECT * FROM NOTAS",
-                null)
-        if (cursor.moveToFirst()) {
-            do {
-                list.add(Nota(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3)
-                ))
-            } while (cursor.moveToNext())
-        }
-        return list
-    }
-
-    fun customCorreoSelect(where: String, like: String ):MutableList<Correo>{
+    fun customCorreoSelect(where: String, like: String): MutableList<Correo> {
         val db = readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM CORREOS WHERE $where = '$like'",null)
+        val cursor = db.rawQuery("SELECT * FROM CORREOS WHERE $where = '$like'", null)
         val list = mutableListOf<Correo>()
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 list.add(
                     Correo(
+                        cursor.getString(0),
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
                         cursor.getString(4)
                     )
                 )
-            }while (cursor.moveToNext())
+            } while (cursor.moveToNext())
         }
         return list
     }
 
-    fun customMainCuentaSelect(where: String, like: String):MutableList<Cuenta>{
+    fun customMainCuentaSelect(where: String, like: String): MutableList<Cuenta> {
         val db = readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM CUENTAS WHERE $where = '$like'",null)
+        val cursor = db.rawQuery("SELECT * FROM CUENTAS WHERE $where = '$like'", null)
         val list = mutableListOf<Cuenta>()
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 list.add(
                     Cuenta(
                         cursor.getString(0),
@@ -239,17 +182,17 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
                         cursor.getString(7)
                     )
                 )
-            }while (cursor.moveToNext())
+            } while (cursor.moveToNext())
         }
         return list
     }
 
-    fun customContraseniaSelect(where: String, like: String ):MutableList<Contrasenia>{
+    fun customContraseniaSelect(where: String, like: String): MutableList<Contrasenia> {
         val db = readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM CONTRASENIAS WHERE $where = '$like'",null)
+        val cursor = db.rawQuery("SELECT * FROM CONTRASENIAS WHERE $where = '$like'", null)
         val list = mutableListOf<Contrasenia>()
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 list.add(
                     Contrasenia(
                         cursor.getString(0),
@@ -258,17 +201,17 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
                         cursor.getString(3)
                     )
                 )
-            }while (cursor.moveToNext())
+            } while (cursor.moveToNext())
         }
         return list
     }
 
-    fun customNotaSelect(where: String, like: String ):MutableList<Nota>{
+    fun customNotaSelect(where: String, like: String): MutableList<Nota> {
         val db = readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM NOTAS WHERE $where = '$like'",null)
+        val cursor = db.rawQuery("SELECT * FROM NOTAS WHERE $where = '$like'", null)
         val list = mutableListOf<Nota>()
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 list.add(
                     Nota(
                         cursor.getString(0),
@@ -277,17 +220,17 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
                         cursor.getString(3)
                     )
                 )
-            }while (cursor.moveToNext())
+            } while (cursor.moveToNext())
         }
         return list
     }
 
-    fun customTarjetaSelect(where: String, like: String ):MutableList<Tarjeta>{
+    fun customTarjetaSelect(where: String, like: String): MutableList<Tarjeta> {
         val db = readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM TARJETAS WHERE $where = '$like'",null)
+        val cursor = db.rawQuery("SELECT * FROM TARJETAS WHERE $where = '$like'", null)
         val list = mutableListOf<Tarjeta>()
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 list.add(
                     Tarjeta(
                         cursor.getString(0),
@@ -302,7 +245,7 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
                         cursor.getString(9),
                     )
                 )
-            }while (cursor.moveToNext())
+            } while (cursor.moveToNext())
         }
         return list
     }
@@ -310,8 +253,8 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
     // Returns true if a user is found or false if is not found
     fun findUsuario(name: String, password: String): Boolean {
         val cursor: Cursor = readableDatabase.rawQuery(
-                "SELECT * FROM USUARIOS",
-                null
+            "SELECT * FROM USUARIOS",
+            null
         )
         var found = false
 
@@ -324,6 +267,11 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
             } while (cursor.moveToNext() && !found)
         }
         return found
+    }
+
+    fun updateCorreo(nomusuario: String, asunto: String, correoNew: String, correoOld: String, contrasenia: String) {
+        val db = writableDatabase
+        db?.execSQL("UPDATE CORREOS SET ASUNTO = '$asunto', CORREO = '$correoNew', CONTRASENIA = '$contrasenia' WHERE (NOMUSUARIO = '$nomusuario' AND CORREO = '$correoOld')")
     }
 
     //Updates a row of any table
