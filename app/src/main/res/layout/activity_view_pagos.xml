@@ -8,6 +8,7 @@
     tools:context=".formviewsactivities.ViewPagos">
 
     <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#023E8A">
@@ -33,6 +34,7 @@
             android:gravity="end">
 
             <ImageButton
+                android:id="@+id/editar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="23dp"

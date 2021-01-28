@@ -1,12 +1,17 @@
 package portafolio.apps.passwordmanager.formactivities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputLayout
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.database.DBController
+import portafolio.apps.passwordmanager.datamodel.Contrasenia
+import portafolio.apps.passwordmanager.datamodel.Tarjeta
+import portafolio.apps.passwordmanager.formviewsactivities.ViewPagos
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,24 +20,26 @@ class FormPagos :
     AppCompatActivity(),
     View.OnClickListener {
 
-    private var asunto: EditText? = null
-    private var titular: EditText? = null
-    private var ntarjeta: EditText? = null
-    private var mesDrop: TextInputLayout? = null
-    private var anio: EditText? = null
-    private var codseg: EditText? = null
-    private var banco: EditText? = null
-    private var nip: EditText? = null
+    private lateinit var asunto: EditText
+    private lateinit var titular: EditText
+    private lateinit var ntarjeta: EditText
+    private lateinit var mesDrop: TextInputLayout
+    private lateinit var anio: EditText
+    private lateinit var codseg: EditText
+    private lateinit var banco: EditText
+    private lateinit var nip: EditText
+    private lateinit var guardarBtn: Button
+    private var insert = false
     private val meses = listOf(
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
         "10",
         "11",
         "12",
@@ -44,19 +51,112 @@ class FormPagos :
         initComponents()
     }
 
+    override fun onBackPressed() {
+        if (insert) {
+            super.onBackPressed()
+        } else {
+            val ta = intent.getSerializableExtra("tarjeta") as? Tarjeta
+            val taUpdated = intent.getSerializableExtra("tarjetaupdated") as? Tarjeta
+            if (ta == null) {
+                goToView(taUpdated!!)
+            } else if (taUpdated == null) {
+                goToView(ta)
+            }
+        }
+    }
+
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
                 R.id.guardarBtn -> {
                     if (checkFields()) {
-                        save()
+                        if (insert) {
+                            save()
+                        } else {
+                            update()
+                        }
                     }
                 }
                 R.id.cancelarBtn -> {
-                    finish()
+                    onBackPressed()
                 }
             }
         }
+    }
+
+    private fun update() {
+        val db = DBController(applicationContext)
+        val ta = intent.getSerializableExtra("tarjeta") as? Tarjeta
+        val taUpdated = intent.getSerializableExtra("tarjetaupdated") as? Tarjeta
+        var good = true
+
+        try {
+            if (ta == null) {
+                db.updateTarjeta(
+                    taUpdated!!.getNomusuario(),
+                    taUpdated.getAsunto(),
+                    asunto.text.toString(),
+                    titular.text.toString(),
+                    ntarjeta.text.toString(),
+                    mesDrop.editText!!.text.toString(),
+                    anio.text.toString(),
+                    codseg.text.toString(),
+                    banco.text.toString(),
+                    nip.text.toString(),
+                )
+            } else if (taUpdated == null) {
+                db.updateTarjeta(
+                    ta.getNomusuario(),
+                    ta.getAsunto(),
+                    asunto.text.toString(),
+                    titular.text.toString(),
+                    ntarjeta.text.toString(),
+                    mesDrop.editText!!.text.toString(),
+                    anio.text.toString(),
+                    codseg.text.toString(),
+                    banco.text.toString(),
+                    nip.text.toString(),
+                )
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            good = false
+        }
+
+        if (good) {
+            Toast.makeText(
+                applicationContext,
+                "La tarjeta ha sido actualizada correctamente",
+                Toast.LENGTH_SHORT
+            ).show()
+            if (ta == null) {
+                goToView(taUpdated!!)
+            } else if (taUpdated == null) {
+                goToView(ta)
+            }
+        }
+    }
+
+    private fun goToView(t: Tarjeta) {
+        val intent = Intent(this, ViewPagos::class.java)
+        intent.apply {
+            putExtra(
+                "tarjetaupdated", Tarjeta(
+                    t.getNomusuario(),
+                    asunto.text.toString(),
+                    titular.text.toString(),
+                    ntarjeta.text.toString(),
+                    mesDrop.editText!!.text.toString(),
+                    anio.text.toString(),
+                    codseg.text.toString(),
+                    banco.text.toString(),
+                    nip.text.toString(),
+                    t.getFecha()
+                )
+            )
+        }
+        startActivity(intent)
+        finish()
     }
 
     private fun save() {
@@ -163,8 +263,22 @@ class FormPagos :
         return sdf.format(Date()).replace("/", "-")
     }
 
+    private fun setComponents(t: Tarjeta) {
+        asunto.setText(t.getAsunto())
+        titular.setText(t.getTitular())
+        ntarjeta.setText(t.getNtarjeta())
+        mesDrop.editText!!.setText(t.getCadM())
+        anio.setText(t.getCadY())
+        codseg.setText(t.getCodseg())
+        banco.setText(t.getBanco())
+        nip.setText(t.getNip())
+        guardarBtn.setText("Editar")
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar.setTitle("Editar tarjeta")
+    }
+
     private fun initComponents() {
-        val guardarBtn = findViewById<Button>(R.id.guardarBtn)
+        guardarBtn = findViewById(R.id.guardarBtn)
         val cancelarBtn = findViewById<Button>(R.id.cancelarBtn)
 
         asunto = findViewById(R.id.asunto)
@@ -185,5 +299,18 @@ class FormPagos :
 
         guardarBtn.setOnClickListener(this)
         cancelarBtn.setOnClickListener(this)
+
+        val ta = intent.getSerializableExtra("tarjeta") as? Tarjeta
+        val taUpdated = intent.getSerializableExtra("tarjetaupdated") as? Tarjeta
+        if (ta != null || taUpdated != null) {
+            insert = false
+            if (ta == null) {
+                setComponents(taUpdated!!)
+            } else {
+                setComponents(ta)
+            }
+        } else {
+            insert = true
+        }
     }
 }

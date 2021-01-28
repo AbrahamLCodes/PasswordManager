@@ -8,11 +8,12 @@
     tools:context=".formactivities.FormNota">
 
     <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#023E8A"
         app:menu="@menu/note_menu"
-        app:navigationIcon="@drawable/arrow"
+        app:navigationIcon="@drawable/note_icon"
         app:title="Nota segura"
         app:titleTextColor="@color/white" />
 

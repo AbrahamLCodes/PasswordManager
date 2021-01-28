@@ -1,13 +1,17 @@
 package portafolio.apps.passwordmanager.formactivities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.google.android.material.appbar.MaterialToolbar
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.database.DBController
+import portafolio.apps.passwordmanager.datamodel.Nota
+import portafolio.apps.passwordmanager.formviewsactivities.ViewNotas
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,8 +20,9 @@ class FormNota :
     AppCompatActivity(),
     View.OnClickListener {
 
-    private var title: EditText? = null
-    private var body: EditText? = null
+    private lateinit var title: EditText
+    private lateinit var body: EditText
+    private var insert = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,19 +30,94 @@ class FormNota :
         initComponents()
     }
 
+    override fun onBackPressed() {
+        if (insert) {
+            super.onBackPressed()
+        } else {
+            val no = intent.getSerializableExtra("nota") as? Nota
+            val noUpdated = intent.getSerializableExtra("notaupdated") as? Nota
+            if (no == null) {
+                goToView(noUpdated!!)
+            } else if (noUpdated == null) {
+                goToView(no)
+            }
+        }
+    }
+
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
                 R.id.guardarBtn -> {
                     if (checkFields()) {
-                        save()
+                        if (insert) {
+                            save()
+                        } else {
+                            update()
+                        }
                     }
                 }
                 R.id.cancelarBtn -> {
-                    finish()
+                    onBackPressed()
                 }
             }
         }
+    }
+
+    private fun update() {
+        val db = DBController(applicationContext)
+        val no = intent.getSerializableExtra("nota") as? Nota
+        val noUpdated = intent.getSerializableExtra("notaupdated") as? Nota
+        var good = true
+        try {
+            if (no == null) {
+                db.updateNota(
+                    noUpdated!!.getNomusuario(),
+                    noUpdated.getAsunto(),
+                    title.text.toString(),
+                    body.text.toString()
+                )
+            } else if (noUpdated == null) {
+                db.updateNota(
+                    no.getNomusuario(),
+                    no.getAsunto(),
+                    title.text.toString(),
+                    body.text.toString()
+                )
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            good = false
+        }
+
+        if (good) {
+            Toast.makeText(
+                applicationContext,
+                "La nota ha sido actualizada correctamente",
+                Toast.LENGTH_SHORT
+            ).show()
+            if (no == null) {
+                goToView(noUpdated!!)
+            } else if (noUpdated == null) {
+                goToView(no)
+            }
+        }
+
+    }
+
+    private fun goToView(n: Nota) {
+        val intent = Intent(this, ViewNotas::class.java)
+        intent.apply {
+            putExtra(
+                "notaupdated", Nota(
+                    n.getNomusuario(),
+                    title.text.toString(),
+                    body.text.toString(),
+                    n.getFecha()
+                )
+            )
+        }
+        startActivity(intent)
+        finish()
     }
 
     private fun save() {
@@ -98,6 +178,13 @@ class FormNota :
         return sdf.format(Date()).replace("/", "-")
     }
 
+    private fun setComponents(n: Nota) {
+        title.setText(n.getAsunto())
+        body.setText(n.getNota())
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar.setTitle("Editar Nota")
+    }
+
     private fun initComponents() {
         title = findViewById(R.id.title)
         body = findViewById(R.id.body)
@@ -106,5 +193,19 @@ class FormNota :
         val cerrarBtn = findViewById<Button>(R.id.cancelarBtn)
         guardarBtn.setOnClickListener(this)
         cerrarBtn.setOnClickListener(this)
+
+        val no = intent.getSerializableExtra("nota") as? Nota
+        val noUpdated = intent.getSerializableExtra("notaupdated") as? Nota
+
+        if (no != null || noUpdated != null) {
+            insert = false
+            if (no == null) {
+                setComponents(noUpdated!!)
+            } else if (noUpdated == null) {
+                setComponents(no)
+            }
+        } else {
+            insert = true
+        }
     }
 }

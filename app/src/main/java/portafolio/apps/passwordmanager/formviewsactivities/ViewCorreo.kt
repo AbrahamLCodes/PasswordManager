@@ -40,12 +40,12 @@ class ViewCorreo :
                     onBackPressed()
                 }
                 R.id.editar -> {
-                    if(intent.getSerializableExtra("correoupdated") != null){
-                        startActivity(Intent(this, FormCorreo::class.java). apply {
+                    if (intent.getSerializableExtra("correoupdated") != null) {
+                        startActivity(Intent(this, FormCorreo::class.java).apply {
                             putExtra("correoupdated", intent.getSerializableExtra("correoupdated"))
                         })
-                    }else{
-                        startActivity(Intent(this, FormCorreo::class.java). apply {
+                    } else {
+                        startActivity(Intent(this, FormCorreo::class.java).apply {
                             putExtra("correo", intent.getSerializableExtra("correo"))
                         })
                     }
@@ -73,7 +73,7 @@ class ViewCorreo :
         }
 
         val correoUpdated = intent.getSerializableExtra("correoupdated") as? Correo
-        if(correoUpdated != null){
+        if (correoUpdated != null) {
             nombre.text = correoUpdated.getNombre()
             correo.text = correoUpdated.getCorreo()
             contrasenia.text = correoUpdated.getContrasenia()

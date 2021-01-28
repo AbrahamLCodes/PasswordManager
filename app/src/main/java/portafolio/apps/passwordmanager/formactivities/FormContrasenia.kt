@@ -1,5 +1,6 @@
 package portafolio.apps.passwordmanager.formactivities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,9 +9,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputLayout
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.database.DBController
+import portafolio.apps.passwordmanager.datamodel.Contrasenia
+import portafolio.apps.passwordmanager.formviewsactivities.ViewContrasenia
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,9 +23,11 @@ class FormContrasenia :
     AppCompatActivity(),
     View.OnClickListener {
 
-    private var nomUsuario: EditText? = null
-    private var contrasenia: EditText? = null
-    private var contrasenia1: EditText? = null
+    private lateinit var nomUsuario: EditText
+    private lateinit var contrasenia: EditText
+    private lateinit var contrasenia1: EditText
+    private lateinit var guardarBtn: Button
+    private var insert = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,21 +35,94 @@ class FormContrasenia :
         initComponents()
     }
 
+    override fun onBackPressed() {
+        if (insert) {
+            super.onBackPressed()
+        } else {
+            val co = intent.getSerializableExtra("contrasenia") as? Contrasenia
+            val coUpdated = intent.getSerializableExtra("contraseniaupdated") as? Contrasenia
+            if (co == null) {
+                goToView(coUpdated!!)
+            } else if (coUpdated == null) {
+                goToView(co)
+            }
+        }
+    }
+
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
                 R.id.guardarBtn -> {
-                    if (checkFields()) {
-                        if (checkPasswords()) {
+                    if (checkFields() && checkPasswords()) {
+                        if (insert) {
                             save()
+                        } else {
+                            update()
                         }
                     }
                 }
                 R.id.cancelarBtn -> {
-                    finish()
+                    onBackPressed()
                 }
             }
         }
+    }
+
+    private fun update() {
+        val db = DBController(applicationContext)
+        val co = intent.getSerializableExtra("contrasenia") as? Contrasenia
+        val coUpdated = intent.getSerializableExtra("contraseniaupdated") as? Contrasenia
+        var good = true
+
+        try {
+            if (co == null) {
+                db.updateContrasenia(
+                    coUpdated!!.getNomusuario(),
+                    coUpdated.getAsunto(),
+                    nomUsuario.text.toString(),
+                    contrasenia.text.toString()
+                )
+            } else if (coUpdated == null) {
+                db.updateContrasenia(
+                    co.getNomusuario(),
+                    co.getAsunto(),
+                    nomUsuario.text.toString(),
+                    contrasenia.text.toString()
+                )
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            good = false
+        }
+
+        if (good) {
+            Toast.makeText(
+                applicationContext,
+                "La contraseña ha sido actualizada correctamente",
+                Toast.LENGTH_SHORT
+            ).show()
+            if (co == null) {
+                goToView(coUpdated!!)
+            } else if (coUpdated == null) {
+                goToView(co)
+            }
+        }
+    }
+
+    private fun goToView(c: Contrasenia) {
+        val intent = Intent(this, ViewContrasenia::class.java)
+        intent.apply {
+            putExtra(
+                "contraseniaupdated", Contrasenia(
+                    c.getNomusuario(),
+                    nomUsuario.text.toString(),
+                    contrasenia.text.toString(),
+                    c.getFecha()
+                )
+            )
+        }
+        startActivity(intent)
+        finish()
     }
 
     private fun save() {
@@ -119,16 +198,37 @@ class FormContrasenia :
         return sdf.format(Date()).replace("/", "-")
     }
 
+    private fun setComponents(c: Contrasenia) {
+        nomUsuario.setText(c.getAsunto())
+        contrasenia.setText(c.getContrasenia())
+        contrasenia1.setText(c.getContrasenia())
+        guardarBtn.setText("Editar")
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar.setTitle("Editar Contraseña")
+    }
+
     private fun initComponents() {
         nomUsuario = findViewById(R.id.nomUsuario)
         contrasenia = findViewById(R.id.contrasenia)
         contrasenia1 = findViewById(R.id.contrasenia1)
-
-        val guardarBtn = findViewById<Button>(R.id.guardarBtn)
+        guardarBtn = findViewById(R.id.guardarBtn)
         val cancelarBtn = findViewById<Button>(R.id.cancelarBtn)
 
         guardarBtn.setOnClickListener(this)
         cancelarBtn.setOnClickListener(this)
+
+        val co = intent.getSerializableExtra("contrasenia") as? Contrasenia
+        val coUpdated = intent.getSerializableExtra("contraseniaupdated") as? Contrasenia
+        if (co != null || coUpdated != null) {
+            insert = false
+            if (co == null) {
+                setComponents(coUpdated!!)
+            } else if (coUpdated == null) {
+                setComponents(co)
+            }
+        } else {
+            insert = true
+        }
     }
 
 }

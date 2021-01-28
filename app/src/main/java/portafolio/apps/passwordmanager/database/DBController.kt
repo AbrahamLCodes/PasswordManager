@@ -69,8 +69,8 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
 
     //Method to insert a user. The name and password is passed by value in parameters
     fun insertCuenta(
-        nomusuario: String, correo: String, cuenta: String, contrasenia: String, categoria: String,
-        nickname: String, website: String, fecha: String
+        nomusuario: String, correo: String, website: String, contrasenia: String, categoria: String,
+        nickname: String, fecha: String
     ) {
         val db = writableDatabase
         if (db != null) {
@@ -78,11 +78,10 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
                 "INSERT INTO CUENTAS VALUES (" +
                         "'" + nomusuario + "'," +
                         "'" + correo + "'," +
-                        "'" + cuenta + "'," +
+                        "'" + website + "'," +
                         "'" + contrasenia + "'," +
                         "'" + categoria + "'," +
                         "'" + nickname + "'," +
-                        "'" + website + "'," +
                         "'" + fecha + "')"
             )
         }
@@ -178,8 +177,7 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
                         cursor.getString(3),
                         cursor.getString(4),
                         cursor.getString(5),
-                        cursor.getString(6),
-                        cursor.getString(7)
+                        cursor.getString(6)
                     )
                 )
             } while (cursor.moveToNext())
@@ -269,19 +267,60 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         return found
     }
 
-    fun updateCorreo(nomusuario: String, asunto: String, correoNew: String, correoOld: String, contrasenia: String) {
+    fun updateCorreo(
+        nomusuario: String,
+        asunto: String,
+        correoNew: String,
+        correoOld: String,
+        contrasenia: String
+    ) {
         val db = writableDatabase
         db?.execSQL("UPDATE CORREOS SET ASUNTO = '$asunto', CORREO = '$correoNew', CONTRASENIA = '$contrasenia' WHERE (NOMUSUARIO = '$nomusuario' AND CORREO = '$correoOld')")
     }
 
-    //Updates a row of any table
-    fun update(tableName: String, set: String, where: String, like: String) {
+    fun updateCuenta(
+        nomusuario: String,
+        correoOld: String,
+        correoNew: String,
+        websiteOld: String,
+        websiteNew: String,
+        contrasenia: String,
+        categoria: String,
+        nickname: String
+    ) {
         val db = writableDatabase
-        db?.execSQL("UPDATE $tableName SET $set WHERE $where = '$like'")
+        db?.execSQL("UPDATE CUENTAS SET CORREO = '$correoNew', CUENTA = '$websiteNew', CONTRASENIA = '$contrasenia', CATEGORIA = '$categoria', NICKNAME = '$nickname' WHERE (NOMUSUARIO = '$nomusuario' AND CORREO = '$correoOld' AND CUENTA = '$websiteOld')")
     }
 
-    //Deletes any row from any table
-    fun delete(tableName: String, where: String, like: String) {
-        writableDatabase?.execSQL("DELETE FROM $tableName WHERE $where = '$like'")
+    fun updateContrasenia(
+        nomusuario: String,
+        asuntoOld: String,
+        asuntoNew: String,
+        contrasenia: String
+    ) {
+        val db = writableDatabase
+        db?.execSQL("UPDATE CONTRASENIAS SET ASUNTO = '$asuntoNew', CONTRASENIA = '$contrasenia' WHERE (NOMUSUARIO = '$nomusuario' AND ASUNTO = '$asuntoOld')")
     }
+
+    fun updateNota(nomusuario: String, tituloOld: String, tituloNew: String, body: String) {
+        val db = writableDatabase
+        db?.execSQL("UPDATE NOTAS SET ASUNTO = '$tituloNew', NOTA = '$body' WHERE (NOMUSUARIO = '$nomusuario' AND ASUNTO = '$tituloOld')")
+    }
+
+    fun updateTarjeta(
+        nomusuario: String,
+        asuntoOld: String,
+        asuntoNew: String,
+        titular: String,
+        ntarjeta: String,
+        cadm: String,
+        cady: String,
+        codseg: String,
+        banco: String,
+        nip: String
+    ) {
+        val db = writableDatabase
+        db?.execSQL("UPDATE TARJETAS SET ASUNTO = '$asuntoNew', TITULAR = '$titular', NTARJETA = '$ntarjeta', NTARJETA = '$ntarjeta', CADM = '$cadm', CADY = '$cady', CODSEG = '$codseg', BANCO = '$banco', NIP = '$nip' WHERE (NOMUSUARIO = '$nomusuario' AND ASUNTO = '$asuntoOld')")
+    }
+
 }

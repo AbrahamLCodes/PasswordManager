@@ -1,5 +1,6 @@
 package portafolio.apps.passwordmanager.formviewsactivities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,7 +8,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.datamodel.Contrasenia
-import portafolio.apps.passwordmanager.datamodel.Correo
+import portafolio.apps.passwordmanager.formactivities.FormContrasenia
 
 class ViewContrasenia :
     AppCompatActivity(),
@@ -31,8 +32,29 @@ class ViewContrasenia :
                 R.id.back -> {
                     onBackPressed()
                 }
+                R.id.editar -> {
+                    if (intent.getSerializableExtra("contraseniaupdated") != null) {
+                        val c = intent.getSerializableExtra("contraseniaupdated") as? Contrasenia
+                        startActivity(Intent(this, FormContrasenia::class.java).apply {
+                            putExtra("contraseniaupdated", c)
+                            putExtra("username", c!!.getNomusuario())
+                        })
+                    } else {
+                        val c = intent.getSerializableExtra("contrasenia") as? Contrasenia
+                        startActivity(Intent(this, FormContrasenia::class.java).apply {
+                            putExtra("contrasenia", c)
+                            putExtra("username", c!!.getNomusuario())
+                        })
+                    }
+                    finish()
+                }
             }
         }
+    }
+
+    private fun setComponents(c: Contrasenia) {
+        asunto.text = c.getAsunto()
+        contrasenia.text = c.getContrasenia()
     }
 
     private fun initComponents() {
@@ -41,16 +63,19 @@ class ViewContrasenia :
         asuntoBtn = findViewById(R.id.asuntoBtn)
         contraseniaBtn = findViewById(R.id.contraseniaBtn)
         back = findViewById(R.id.back)
+        val editar = findViewById<ImageButton>(R.id.editar)
 
-        val contra = intent.getSerializableExtra("contrasenia") as? Contrasenia
-
-        if (contra != null) {
-            asunto.text = contra.getAsunto()
-            contrasenia.text = contra.getContrasenia()
+        val co = intent.getSerializableExtra("contrasenia") as? Contrasenia
+        if (co != null) {
+            setComponents(co)
         }
-
+        val coUpdated = intent.getSerializableExtra("contraseniaupdated") as? Contrasenia
+        if (coUpdated != null) {
+            setComponents(coUpdated)
+        }
         asuntoBtn.setOnClickListener(this)
         contraseniaBtn.setOnClickListener(this)
         back.setOnClickListener(this)
+        editar.setOnClickListener(this)
     }
 }

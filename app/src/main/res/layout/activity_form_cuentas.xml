@@ -8,13 +8,13 @@
     tools:context=".formactivities.FormCuenta">
 
     <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#023E8A"
         app:navigationIcon="@drawable/ic_account_circle_24px"
         app:title="Añade una cuenta"
         app:titleTextColor="@color/white" />
-
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

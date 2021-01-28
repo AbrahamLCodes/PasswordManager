@@ -25,12 +25,11 @@ class CreateDB {
                     "NOMUSUARIO TEXT NOT NULL REFERENCES USUARIOS(NOMBRE)," +
                     "CORREO TEXT NOT NULL REFERENCES CORREOS(CORREO)," +
                     "CUENTA TEXT NOT NULL," +
-                    "CONTRASENIA TEXT NOT NULL," +
+                    "CONTRASENIA TEXT NOT NULL," +//website
                     "CATEGORIA TEXT NOT NULL," +
                     "NICKNAME TEXT NOT NULL," +
-                    "WEBSITE TEXT," +
                     "FECHA TEXT NOT NULL," +
-                    "PRIMARY KEY(CORREO, CUENTA)" +
+                    "PRIMARY KEY(NOMUSUARIO, CORREO, CUENTA)" +
                     ")"
         }
 
@@ -39,7 +38,8 @@ class CreateDB {
                     "NOMUSUARIO TEXT NOT NULL REFERENCES USUARIOS(NOMBRE)," +
                     "ASUNTO TEXT NOT NULL," +
                     "CONTRASENIA TEXT NOT NULL," +
-                    "FECHA TEXT NOT NULL" +
+                    "FECHA TEXT NOT NULL," +
+                    "PRIMARY KEY (NOMUSUARIO, ASUNTO)" +
                     ")"
         }
 
@@ -48,14 +48,15 @@ class CreateDB {
                     "NOMUSUARIO TEXT NOT NULL REFERENCES USUARIOS(USUARIO)," +
                     "ASUNTO TEXT NOT NULL," +
                     "NOTA TEXT NOT NULL," +
-                    "FECHA TEXT NOT NULL" +
+                    "FECHA TEXT NOT NULL," +
+                    "PRIMARY KEY (NOMUSUARIO, ASUNTO)" +
                     ")"
         }
 
         fun createTarjetas(): String {
             return "CREATE TABLE TARJETAS(" +
                     "NOMUSUARIO TEXT NOT NULL REFERENCES USUARIOS(NOMBRE)," +
-                    "ASUNTO TEXT NOT NULL PRIMARY KEY," +
+                    "ASUNTO TEXT NOT NULL," +
                     "TITULAR TEXT NOT NULL ," +
                     "NTARJETA TEXT NOT NULL," +
                     "CADM TEXT NOT NULL," +
@@ -63,7 +64,8 @@ class CreateDB {
                     "CODSEG TEXT NOT NULL," +
                     "BANCO TEXT NOT NULL," +
                     "NIP TEXT NOT NULL," +
-                    "FECHA TEXT NOT NULL" +
+                    "FECHA TEXT NOT NULL," +
+                    "PRIMARY KEY (NOMUSUARIO, ASUNTO)" +
                     ")"
         }
     }

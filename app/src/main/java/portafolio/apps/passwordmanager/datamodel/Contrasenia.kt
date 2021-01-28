@@ -12,5 +12,5 @@ class Contrasenia(
     fun getNomusuario() = nomusuario
     fun getAsunto() = asunto
     fun getContrasenia() = contrasenia
-    fun fetFecha() = fecha
+    fun getFecha() = fecha
 }

@@ -8,12 +8,13 @@
     tools:context=".formactivities.FormContrasenia">
 
     <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#023E8A"
         app:navigationIcon="@drawable/key_24px"
         app:title="Añade una Contraseña"
-        app:titleTextColor="@color/white"></com.google.android.material.appbar.MaterialToolbar>
+        app:titleTextColor="@color/white" />
 
     <ScrollView
         android:layout_width="match_parent"

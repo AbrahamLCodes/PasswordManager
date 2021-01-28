@@ -1,30 +1,34 @@
 package portafolio.apps.passwordmanager.formactivities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputLayout
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.database.DBController
-import portafolio.apps.passwordmanager.datamodel.Correo
+import portafolio.apps.passwordmanager.datamodel.Cuenta
+import portafolio.apps.passwordmanager.formviewsactivities.ViewCuentas
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class FormCuenta :
     AppCompatActivity(),
     View.OnClickListener {
 
-    var categoriaDrop: TextInputLayout? = null
-    var correoDrop: TextInputLayout? = null
-    var website: EditText? = null
-    var cuentaName: EditText? = null
-    var contrasenia: EditText? = null
-    var contrasenia1: EditText? = null
-    val categoriaItems = listOf(
+    private lateinit var categoriaDrop: TextInputLayout
+    private lateinit var correoDrop: TextInputLayout
+    private lateinit var website: EditText
+    private lateinit var cuentaName: EditText
+    private lateinit var contrasenia: EditText
+    private lateinit var contrasenia1: EditText
+    private lateinit var guardarBtn: Button
+    private var insert = false
+    private val categoriaItems = listOf(
         "Red Social",
         "Plataforma de Gaming",
         "Tienda Online",
@@ -40,19 +44,106 @@ class FormCuenta :
         initComponents()
     }
 
+    override fun onBackPressed() {
+        if (insert) {
+            super.onBackPressed()
+        } else {
+            val co = intent.getSerializableExtra("cuenta") as? Cuenta
+            val co2 = intent.getSerializableExtra("cuentaupdated") as? Cuenta
+            if (co == null) {
+                goToView(co2!!)
+            } else if (co2 == null) {
+                goToView(co)
+            }
+
+        }
+    }
+
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
                 R.id.guardarBtn -> {
                     if (checkFields() && checkPasswords()) {
-                        save()
+                        if (insert) {
+                            save()
+                        } else {
+                            update()
+                        }
                     }
                 }
                 R.id.cancelarBtn -> {
-                    finish()
+                    onBackPressed()
                 }
             }
         }
+    }
+
+    private fun update() {
+        val db = DBController(applicationContext)
+        val co = intent.getSerializableExtra("cuenta") as? Cuenta
+        val co2 = intent.getSerializableExtra("cuentaupdated") as? Cuenta
+        var good = true
+
+        try {
+            if (co == null) {
+                db.updateCuenta(
+                    co2!!.getNomUsuario(),
+                    co2.getCorreo(),
+                    correoDrop.editText!!.text.toString(),
+                    co2.getWebsite(),
+                    website.text.toString(),
+                    contrasenia.text.toString(),
+                    categoriaDrop.editText?.text.toString(),
+                    cuentaName.text.toString()
+                )
+            } else if (co2 == null) {
+                db.updateCuenta(
+                    co.getNomUsuario(),
+                    co.getCorreo(),
+                    correoDrop.editText!!.text.toString(),
+                    co.getWebsite(),
+                    website.text.toString(),
+                    contrasenia.text.toString(),
+                    categoriaDrop.editText!!.text.toString(),
+                    cuentaName.text.toString()
+                )
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            good = false
+        }
+
+        if (good) {
+            Toast.makeText(
+                applicationContext,
+                "La cuenta ha sido actualizada correctamente",
+                Toast.LENGTH_SHORT
+            ).show()
+            if (co == null) {
+                goToView(co2!!)
+            } else if (co2 == null) {
+                goToView(co)
+            }
+        }
+    }
+
+    private fun goToView(c: Cuenta) {
+        val intent = Intent(this, ViewCuentas::class.java)
+        intent.apply {
+            putExtra(
+                "cuentaupdated", Cuenta(
+                    c.getNomUsuario(),
+                    correoDrop.editText!!.text.toString(),
+                    website.text.toString(),
+                    contrasenia.text.toString(),
+                    categoriaDrop.editText!!.text.toString(),
+                    cuentaName.text.toString(),
+                    c.getFecha()
+                )
+            )
+        }
+        startActivity(intent)
+        finish()
     }
 
     private fun save() {
@@ -61,12 +152,11 @@ class FormCuenta :
         try {
             db.insertCuenta(
                 intent.getStringExtra("username")!!,
-                correoDrop!!.editText!!.text.toString(),
-                cuentaName!!.text.toString(),
-                contrasenia!!.text.toString(),
-                categoriaDrop!!.editText!!.text.toString(),
-                cuentaName!!.text.toString(),
-                website!!.text.toString(),
+                correoDrop.editText!!.text.toString(),
+                website.text.toString(),
+                contrasenia.text.toString(),
+                categoriaDrop.editText!!.text.toString(),
+                cuentaName.text.toString(),
                 getStringDate(),
             )
 
@@ -94,14 +184,14 @@ class FormCuenta :
     }
 
     private fun checkFields(): Boolean {
-        if (categoriaDrop!!.editText!!.text.toString().equals("")) {
+        if (categoriaDrop.editText!!.text.toString().equals("")) {
             Toast.makeText(
                 applicationContext,
                 "Elige una categoría",
                 Toast.LENGTH_SHORT
             ).show()
             return false
-        } else if (website!!.text.toString().equals("")) {
+        } else if (website.text.toString().equals("")) {
             Toast.makeText(
                 applicationContext,
                 "Introduce el sitio/plataforma",
@@ -109,13 +199,13 @@ class FormCuenta :
             ).show()
             website!!.requestFocus()
             return false
-        } else if (cuentaName!!.text.toString().equals("")) {
+        } else if (cuentaName.text.toString().equals("")) {
             Toast.makeText(
                 applicationContext,
                 "Introduce el nombre de la cuenta",
                 Toast.LENGTH_SHORT
             ).show()
-            cuentaName!!.requestFocus()
+            cuentaName.requestFocus()
             return false
         } else if (contrasenia!!.text.toString().equals("")) {
             Toast.makeText(
@@ -151,8 +241,8 @@ class FormCuenta :
     }
 
     private fun checkPasswords(): Boolean {
-        var correcto: Boolean?
-        if (contrasenia!!.text.toString().equals(contrasenia1!!.text.toString())) {
+        val correcto: Boolean?
+        if (contrasenia.text.toString().equals(contrasenia1.text.toString())) {
             correcto = true
         } else {
             correcto = false
@@ -165,6 +255,19 @@ class FormCuenta :
         return correcto
     }
 
+    private fun setComponents(c: Cuenta) {
+        categoriaDrop.editText!!.setText(c.getCategoria())
+        website.setText(c.getWebsite())
+        cuentaName.setText(c.getNickname())
+        contrasenia.setText(c.getContrasenia())
+        contrasenia1.setText(c.getContrasenia())
+        correoDrop.editText!!.setText(c.getCorreo())
+        guardarBtn.setText("Editar")
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar.setTitle("Editar Cuenta")
+
+    }
+
     private fun initComponents() {
         categoriaDrop = findViewById(R.id.categoriaDrop)
         website = findViewById(R.id.website)
@@ -172,15 +275,15 @@ class FormCuenta :
         contrasenia = findViewById(R.id.contrasenia)
         contrasenia1 = findViewById(R.id.contrasenia1)
         correoDrop = findViewById(R.id.correoDrop)
-        val guardarBtn: Button = findViewById(R.id.guardarBtn)
+        guardarBtn = findViewById(R.id.guardarBtn)
         val cancelarBtn: Button = findViewById(R.id.cancelarBtn)
         guardarBtn.setOnClickListener(this)
         cancelarBtn.setOnClickListener(this)
 
         //Adapter for categoriaDrop
         val adapter = ArrayAdapter(this, R.layout.item_dropdown_menu, categoriaItems)
-        (categoriaDrop!!.editText as? AutoCompleteTextView)?.setAdapter(adapter)
-        categoriaDrop!!.editText!!.isEnabled = false
+        (categoriaDrop.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        categoriaDrop.editText!!.isEnabled = false
 
         //Adapter for correoDrop
         // Getting rows from CORREOS database table
@@ -195,8 +298,24 @@ class FormCuenta :
             i++
         }
         val adapterCorreo = ArrayAdapter(this, R.layout.item_dropdown_menu, correoItems)
-        (correoDrop!!.editText as? AutoCompleteTextView)?.setAdapter(adapterCorreo)
-        correoDrop!!.editText!!.isEnabled = false
-        Log.wtf("text", "" + adapter.getPosition("red social"))
+        (correoDrop.editText as? AutoCompleteTextView)?.setAdapter(adapterCorreo)
+        correoDrop.editText!!.isEnabled = false
+
+        val cu = intent.getSerializableExtra("cuenta") as? Cuenta
+        val cu2 = intent.getSerializableExtra("cuentaupdated") as? Cuenta
+
+        if (cu != null || cu2 != null) {
+            insert = false
+            categoriaDrop.editText!!.isEnabled = true
+            correoDrop.editText!!.isEnabled = true
+            if (cu == null) {
+                setComponents(cu2!!)
+            } else if (cu2 == null) {
+                setComponents(cu)
+            }
+        } else {
+            insert = true
+        }
+
     }
 }

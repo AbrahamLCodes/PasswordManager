@@ -1,13 +1,14 @@
 package portafolio.apps.passwordmanager.formviewsactivities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import portafolio.apps.passwordmanager.R
-import portafolio.apps.passwordmanager.datamodel.Correo
 import portafolio.apps.passwordmanager.datamodel.Cuenta
+import portafolio.apps.passwordmanager.formactivities.FormCuenta
 
 class ViewCuentas :
     AppCompatActivity(),
@@ -35,6 +36,22 @@ class ViewCuentas :
                 R.id.back -> {
                     onBackPressed()
                 }
+                R.id.editar -> {
+                    if (intent.getSerializableExtra("cuentaupdated") != null) {
+                        val c = intent.getSerializableExtra("cuentaupdated") as? Cuenta
+                        startActivity(Intent(this, FormCuenta::class.java).apply {
+                            putExtra("cuentaupdated", c)
+                            putExtra("username", c!!.getNomUsuario())
+                        })
+                    } else {
+                        val c = intent.getSerializableExtra("cuenta") as? Cuenta
+                        startActivity(Intent(this, FormCuenta::class.java).apply {
+                            putExtra("cuenta", c)
+                            putExtra("username", c!!.getNomUsuario())
+                        })
+                    }
+                    finish()
+                }
             }
         }
     }
@@ -49,6 +66,7 @@ class ViewCuentas :
         correo = findViewById(R.id.correo)
         correoBtn = findViewById(R.id.correoBtn)
         back = findViewById(R.id.back)
+        val editar = findViewById<ImageButton>(R.id.editar)
 
         val cuenta = intent.getSerializableExtra("cuenta") as? Cuenta
         if (cuenta != null) {
@@ -58,11 +76,20 @@ class ViewCuentas :
             correo.text = cuenta.getCorreo()
         }
 
+        val cuentaUpdated = intent.getSerializableExtra("cuentaupdated") as? Cuenta
+        if (cuentaUpdated != null) {
+            sitio.text = cuentaUpdated.getWebsite()
+            usuario.text = cuentaUpdated.getNickname()
+            contrasenia.text = cuentaUpdated.getContrasenia()
+            correo.text = cuentaUpdated.getCorreo()
+        }
+
         sitioBtn.setOnClickListener(this)
         usuarioBtn.setOnClickListener(this)
         contraseniaBtn.setOnClickListener(this)
         correoBtn.setOnClickListener(this)
         back.setOnClickListener(this)
+        editar.setOnClickListener(this)
     }
 
 }

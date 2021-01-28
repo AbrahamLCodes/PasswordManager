@@ -38,9 +38,9 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
         } else {
             val co = intent.getSerializableExtra("correo") as? Correo
             val co2 = intent.getSerializableExtra("correoupdated") as? Correo
-            if(co == null){
+            if (co == null) {
                 goToView(co2!!)
-            }else if(co2 == null){
+            } else if (co2 == null) {
                 goToView(co!!)
             }
         }
@@ -77,7 +77,7 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
         val co2 = intent.getSerializableExtra("correoupdated") as? Correo
         var good = true
         try {
-            if(co == null){
+            if (co == null) {
                 db.updateCorreo(
                     co2!!.getNomusuario(),
                     asunto.text.toString(),
@@ -85,7 +85,7 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
                     co2.getCorreo(),
                     contrasenia.text.toString()
                 )
-            }else if(co2 == null){
+            } else if (co2 == null) {
                 db.updateCorreo(
                     co!!.getNomusuario(),
                     asunto.text.toString(),
@@ -106,9 +106,9 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
                 "El correo '" + correo!!.text.toString() + "' ha sido actualizado correctamente",
                 Toast.LENGTH_SHORT
             ).show()
-            if(co == null){
+            if (co == null) {
                 goToView(co2!!)
-            }else if(co2 == null){
+            } else if (co2 == null) {
                 goToView(co)
             }
         }
@@ -237,9 +237,9 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
         val co2 = intent.getSerializableExtra("correoupdated") as? Correo
         if (co != null || co2 != null) {
             insert = false
-            if(co == null){
+            if (co == null) {
                 setComponents(co2!!)
-            }else if(co2 == null){
+            } else if (co2 == null) {
                 setComponents(co)
             }
 
