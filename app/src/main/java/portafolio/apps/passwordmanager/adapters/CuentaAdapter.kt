@@ -8,10 +8,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.activities.HomeActivity
+import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Cuenta
 import portafolio.apps.passwordmanager.formactivities.FormContrasenia
 import portafolio.apps.passwordmanager.formactivities.FormCuenta
@@ -84,7 +87,26 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         itemView.context.startActivity(intent2)
                     }
                 }.setNegativeButton("elminar"){
-                        dialog, which -> Toast.makeText(itemView.context,"negative"+position, Toast.LENGTH_SHORT).show()
+                        dialog, which ->
+                    // Eliminar
+                    val db = DBController(itemView.context)
+                    db.deleteCuenta(
+                        items[position].getNomUsuario(),
+                        items[position].getCorreo(),
+                        items[position].getWebsite()
+                    )
+
+                    HomeActivity.cuentaAdapter.submitList(
+                        db.customMainCuentaSelect(
+                            "NOMUSUARIO",
+                            HomeActivity.user
+                        )
+                    )
+                    HomeActivity.recycler.apply {
+                        layoutManager = GridLayoutManager(itemView.context, 1)
+                        adapter = HomeActivity.cuentaAdapter
+
+                    }
                 }.
                 show()
                 return@setOnLongClickListener true

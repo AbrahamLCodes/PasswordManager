@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.activities.HomeActivity
+import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Tarjeta
 import portafolio.apps.passwordmanager.formactivities.FormCuenta
 import portafolio.apps.passwordmanager.formactivities.FormPagos
@@ -64,28 +67,41 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
                 itemView.context.startActivity(intent)
             }
-            itemView.setOnLongClickListener{ v: View->
+            itemView.setOnLongClickListener { v: View ->
                 val position: Int = adapterPosition
-                MaterialAlertDialogBuilder(itemView.context).
-                setTitle("Cuenta: "+titular.text.toString().toUpperCase()).
-                setMessage("Que desea hacer?").
-                setNeutralButton("Ver"){
-                        dialog, which -> val intent = Intent(itemView.context, ViewPagos::class.java)
+                MaterialAlertDialogBuilder(itemView.context).setTitle(
+                    "Cuenta: " + titular.text.toString().toUpperCase()
+                ).setMessage("Que desea hacer?").setNeutralButton("Ver") { dialog, which ->
+                    val intent = Intent(itemView.context, ViewPagos::class.java)
                     intent.apply {
                         putExtra("tarjeta", items.get(position))
                     }
                     itemView.context.startActivity(intent)
-                }.setPositiveButton("editar"){
-                        dialog, which ->
+                }.setPositiveButton("editar") { dialog, which ->
                     val intent2 = Intent(itemView.context, FormPagos::class.java)
-                    intent2. apply {
+                    intent2.apply {
                         putExtra("tarjetaupdated", items.get(position))
                         itemView.context.startActivity(intent2)
                     }
-                }.setNegativeButton("elminar"){
-                        dialog, which -> Toast.makeText(itemView.context,"negative"+position, Toast.LENGTH_SHORT).show()
-                }.
-                show()
+                }.setNegativeButton("elminar") { dialog, which ->
+                    // Eliminar
+                    val db = DBController(itemView.context)
+                    db.deleteTarjetas(
+                        items[position].getNomusuario(),
+                        items[position].getAsunto()
+                    )
+
+                    HomeActivity.tarjetaAdatper.submitList(
+                        db.customTarjetaSelect(
+                            "NOMUSUARIO",
+                            HomeActivity.user
+                        )
+                    )
+                    HomeActivity.recycler.apply {
+                        layoutManager = GridLayoutManager(itemView.context, 1)
+                        adapter = HomeActivity.tarjetaAdatper
+                    }
+                }.show()
                 return@setOnLongClickListener true
             }
         }

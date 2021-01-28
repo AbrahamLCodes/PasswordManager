@@ -24,20 +24,24 @@ class HomeActivity : AppCompatActivity(),
     View.OnClickListener,
     NavigationView.OnNavigationItemSelectedListener,
     TabLayout.OnTabSelectedListener,
-    FabSpeedDial.MenuListener{
+    FabSpeedDial.MenuListener {
     private lateinit var drawer: DrawerLayout
     private lateinit var sideMenu: NavigationView
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
     private var state: Int = 0
     private lateinit var search: SearchView
     private lateinit var fabSpeed: FabSpeedDial
-    private lateinit var recycler: RecyclerView
-    private lateinit var correoAdapter: CorreoAdapter
-    private lateinit var cuentaAdapter: CuentaAdapter
-    private lateinit var contraseniaAdapter: ContraseniaAdapter
-    private lateinit var notaAdapter: NotasAdapter
-    private lateinit var tarjetaAdatper: PagosAdapter
     private lateinit var tabs: TabLayout
+
+    companion object {
+        lateinit var recycler: RecyclerView
+        lateinit var correoAdapter: CorreoAdapter
+        lateinit var user: String
+        lateinit var cuentaAdapter: CuentaAdapter
+        lateinit var contraseniaAdapter: ContraseniaAdapter
+        lateinit var notaAdapter: NotasAdapter
+        lateinit var tarjetaAdatper: PagosAdapter
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +57,7 @@ class HomeActivity : AppCompatActivity(),
     override fun onResume() {
         super.onResume()
 
-        when(tabs.selectedTabPosition){
+        when (tabs.selectedTabPosition) {
             1 -> {
                 setRecyclerAdapter("correos")
             }
@@ -155,7 +159,7 @@ class HomeActivity : AppCompatActivity(),
             when (menuItem.itemId) {
                 R.id.correoItem -> {
                     startActivity(
-                        Intent(this,FormCorreo::class.java).apply {
+                        Intent(this, FormCorreo::class.java).apply {
                             putExtra("username", intent.getStringExtra("username"))
                         }
                     )
@@ -312,6 +316,8 @@ class HomeActivity : AppCompatActivity(),
         tabs = findViewById(R.id.tabs)
         tabs!!.addOnTabSelectedListener(this)
         userHeader()
+
+        user = (intent.getStringExtra("username")).toString()
 
         initAdapters()
         setRecyclerAdapter("correos")

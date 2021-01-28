@@ -323,4 +323,35 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         db?.execSQL("UPDATE TARJETAS SET ASUNTO = '$asuntoNew', TITULAR = '$titular', NTARJETA = '$ntarjeta', NTARJETA = '$ntarjeta', CADM = '$cadm', CADY = '$cady', CODSEG = '$codseg', BANCO = '$banco', NIP = '$nip' WHERE (NOMUSUARIO = '$nomusuario' AND ASUNTO = '$asuntoOld')")
     }
 
+    fun deleteCorreo(correo: String, nomusuario: String){
+        val db = writableDatabase
+        db?.execSQL("DELETE FROM CORREOS WHERE (CORREO = '$correo' AND NOMUSUARIO = '$nomusuario')")
+        deleteCuentaFromCorreo(nomusuario,correo)
+    }
+
+    private fun deleteCuentaFromCorreo(nomusuario: String, correo: String){
+        val db = writableDatabase
+        db?.execSQL("DELETE FROM CUENTAS WHERE (CORREO = '$correo' AND NOMUSUARIO = '$nomusuario')")
+    }
+
+    fun deleteCuenta(nomusuario: String, correo: String, cuenta: String){
+        val db = writableDatabase
+        db?.execSQL("DELETE FROM CUENTAS WHERE (NOMUSUARIO = '$nomusuario' AND CORREO = '$correo' AND CUENTA = '$cuenta')")
+    }
+
+    fun deleteContrasenia(nomusuario: String, asunto: String){
+        val db = writableDatabase
+        db?.execSQL("DELETE FROM CONTRASENIAS WHERE (NOMUSUARIO = '$nomusuario' AND ASUNTO = '$asunto')")
+    }
+
+    fun deleteNotas(nomusuario: String, asunto: String){
+        val db = writableDatabase
+        db?.execSQL("DELETE FROM NOTAS WHERE (NOMUSUARIO = '$nomusuario' AND ASUNTO = '$asunto')")
+    }
+
+    fun deleteTarjetas(nomusuario: String, asunto: String){
+        val db = writableDatabase
+        db?.execSQL("DELETE FROM TARJETAS WHERE (NOMUSUARIO = '$nomusuario' AND ASUNTO = '$asunto')")
+    }
+
 }

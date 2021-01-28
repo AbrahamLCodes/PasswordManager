@@ -1,19 +1,16 @@
 package portafolio.apps.passwordmanager.adapters
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.dialog.MaterialDialogs
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.activities.HomeActivity
+import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Correo
 import portafolio.apps.passwordmanager.formactivities.FormCorreo
 import portafolio.apps.passwordmanager.formviewsactivities.ViewCorreo
@@ -63,29 +60,43 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
                 itemView.context.startActivity(intent)
             }
-            itemView.setOnLongClickListener{ v: View->
+
+
+            itemView.setOnLongClickListener { v: View ->
                 val position: Int = adapterPosition
-                MaterialAlertDialogBuilder(itemView.context).
-                setTitle("Correo: "+asunto.text.toString().toUpperCase()).
-                setMessage("Que desea hacer?").
-                setNeutralButton("Ver"){
-                 dialog, which -> val intent = Intent(itemView.context, ViewCorreo::class.java)
+                MaterialAlertDialogBuilder(itemView.context).setTitle(
+                    "Correo: " + asunto.text.toString().toUpperCase()
+                ).setMessage("Que desea hacer?").setNeutralButton("Ver") { dialog, which ->
+                    val intent = Intent(itemView.context, ViewCorreo::class.java)
                     intent.apply {
                         putExtra("correo", items.get(position))
                     }
                     itemView.context.startActivity(intent)
-                }.setPositiveButton("editar"){
-                        dialog, which ->
-                        val intent2 = Intent(itemView.context, FormCorreo::class.java)
-                            intent2. apply {
+                }.setPositiveButton("editar") { dialog, which ->
+                    val intent2 = Intent(itemView.context, FormCorreo::class.java)
+                    intent2.apply {
                         putExtra("correoupdated", items.get(position))
-                            itemView.context.startActivity(intent2)
+                        itemView.context.startActivity(intent2)
                     }
-                }.setNegativeButton("elminar"){
-                        dialog, which -> Toast.makeText(itemView.context,"negative"+position,Toast.LENGTH_SHORT).show()
-                }.
-                show()
-                 return@setOnLongClickListener true
+                }.setNegativeButton("elminar") { dialog, which ->
+
+                    // Eliminar
+                    val db = DBController(itemView.context)
+                    db.deleteCorreo(items[position].getCorreo(), items[position].getNomusuario())
+                    HomeActivity.correoAdapter.submitList(
+                        db.customCorreoSelect(
+                            "NOMUSUARIO",
+                            HomeActivity.user
+                        )
+                    )
+                    HomeActivity.recycler.apply {
+                        layoutManager = GridLayoutManager(itemView.context, 1)
+                        adapter = HomeActivity.correoAdapter
+
+                    }
+
+                }.show()
+                return@setOnLongClickListener true
             }
 
         }
