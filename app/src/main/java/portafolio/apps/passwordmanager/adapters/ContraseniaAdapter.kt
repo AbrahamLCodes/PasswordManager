@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.datamodel.Contrasenia
+import portafolio.apps.passwordmanager.formactivities.FormContrasenia
+import portafolio.apps.passwordmanager.formactivities.FormCorreo
 import portafolio.apps.passwordmanager.formviewsactivities.ViewContrasenia
 import portafolio.apps.passwordmanager.formviewsactivities.ViewCorreo
 
@@ -55,6 +58,30 @@ class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     putExtra("contrasenia", items.get(position))
                 }
                 itemView.context.startActivity(intent)
+            }
+            itemView.setOnLongClickListener{ v: View->
+                val position: Int = adapterPosition
+                MaterialAlertDialogBuilder(itemView.context).
+                setTitle("Contraseña: "+asunto.text.toString().toUpperCase()).
+                setMessage("Que desea hacer?").
+                setNeutralButton("Ver"){
+                        dialog, which -> val intent = Intent(itemView.context, ViewContrasenia::class.java)
+                    intent.apply {
+                        putExtra("contrasenia", items.get(position))
+                    }
+                    itemView.context.startActivity(intent)
+                }.setPositiveButton("editar"){
+                        dialog, which ->
+                    val intent2 = Intent(itemView.context, FormContrasenia::class.java)
+                    intent2. apply {
+                        putExtra("contraseniaupdated", items.get(position))
+                        itemView.context.startActivity(intent2)
+                    }
+                }.setNegativeButton("elminar"){
+                        dialog, which -> Toast.makeText(itemView.context,"negative"+position,Toast.LENGTH_SHORT).show()
+                }.
+                show()
+                return@setOnLongClickListener true
             }
         }
 

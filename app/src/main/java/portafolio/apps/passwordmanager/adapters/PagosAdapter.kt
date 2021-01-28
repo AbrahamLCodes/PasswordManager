@@ -7,9 +7,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.datamodel.Tarjeta
+import portafolio.apps.passwordmanager.formactivities.FormCuenta
+import portafolio.apps.passwordmanager.formactivities.FormPagos
 import portafolio.apps.passwordmanager.formviewsactivities.ViewCorreo
+import portafolio.apps.passwordmanager.formviewsactivities.ViewCuentas
 import portafolio.apps.passwordmanager.formviewsactivities.ViewPagos
 
 class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -59,6 +63,30 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     putExtra("tarjeta", items.get(position))
                 }
                 itemView.context.startActivity(intent)
+            }
+            itemView.setOnLongClickListener{ v: View->
+                val position: Int = adapterPosition
+                MaterialAlertDialogBuilder(itemView.context).
+                setTitle("Cuenta: "+titular.text.toString().toUpperCase()).
+                setMessage("Que desea hacer?").
+                setNeutralButton("Ver"){
+                        dialog, which -> val intent = Intent(itemView.context, ViewPagos::class.java)
+                    intent.apply {
+                        putExtra("tarjeta", items.get(position))
+                    }
+                    itemView.context.startActivity(intent)
+                }.setPositiveButton("editar"){
+                        dialog, which ->
+                    val intent2 = Intent(itemView.context, FormPagos::class.java)
+                    intent2. apply {
+                        putExtra("tarjetaupdated", items.get(position))
+                        itemView.context.startActivity(intent2)
+                    }
+                }.setNegativeButton("elminar"){
+                        dialog, which -> Toast.makeText(itemView.context,"negative"+position, Toast.LENGTH_SHORT).show()
+                }.
+                show()
+                return@setOnLongClickListener true
             }
         }
 
