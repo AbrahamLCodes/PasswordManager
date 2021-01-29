@@ -6,19 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textfield.TextInputLayout
 import portafolio.apps.passwordmanager.R
-import portafolio.apps.passwordmanager.activities.HomeActivity
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
+import portafolio.apps.passwordmanager.activities.tabfragments.CuentasFragment
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Cuenta
-import portafolio.apps.passwordmanager.formactivities.FormContrasenia
 import portafolio.apps.passwordmanager.formactivities.FormCuenta
-import portafolio.apps.passwordmanager.formviewsactivities.ViewContrasenia
 import portafolio.apps.passwordmanager.formviewsactivities.ViewCuentas
 
 class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -96,15 +93,15 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         items[position].getWebsite()
                     )
 
-                    HomeActivity.cuentaAdapter.submitList(
+                    CuentasFragment.cuentaAdapter.submitList(
                         db.customMainCuentaSelect(
                             "NOMUSUARIO",
-                            HomeActivity.user
+                            HomeTabActivity.username
                         )
                     )
-                    HomeActivity.recycler.apply {
+                    CuentasFragment.recycler.apply {
                         layoutManager = GridLayoutManager(itemView.context, 1)
-                        adapter = HomeActivity.cuentaAdapter
+                        adapter = CuentasFragment.cuentaAdapter
 
                     }
                 }.

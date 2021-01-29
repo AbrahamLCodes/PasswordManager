@@ -5,19 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import portafolio.apps.passwordmanager.R
-import portafolio.apps.passwordmanager.activities.HomeActivity
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
+import portafolio.apps.passwordmanager.activities.tabfragments.NotasFragment
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Nota
-import portafolio.apps.passwordmanager.formactivities.FormContrasenia
 import portafolio.apps.passwordmanager.formactivities.FormNota
-import portafolio.apps.passwordmanager.formviewsactivities.ViewContrasenia
-import portafolio.apps.passwordmanager.formviewsactivities.ViewCorreo
-import portafolio.apps.passwordmanager.formviewsactivities.ViewCuentas
 import portafolio.apps.passwordmanager.formviewsactivities.ViewNotas
 
 class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -89,15 +85,15 @@ class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         items[position].getAsunto()
                     )
 
-                    HomeActivity.notaAdapter.submitList(
+                    NotasFragment.notasAdapter.submitList(
                         db.customNotaSelect(
                             "NOMUSUARIO",
-                            HomeActivity.user
+                            HomeTabActivity.username
                         )
                     )
-                    HomeActivity.recycler.apply {
+                    NotasFragment.recycler.apply {
                         layoutManager = GridLayoutManager(itemView.context, 1)
-                        adapter = HomeActivity.notaAdapter
+                        adapter = NotasFragment.notasAdapter
 
                     }
                 }.show()

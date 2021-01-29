@@ -5,18 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import portafolio.apps.passwordmanager.R
-import portafolio.apps.passwordmanager.activities.HomeActivity
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
+import portafolio.apps.passwordmanager.activities.tabfragments.ContraseniasFragment
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Contrasenia
 import portafolio.apps.passwordmanager.formactivities.FormContrasenia
-import portafolio.apps.passwordmanager.formactivities.FormCorreo
 import portafolio.apps.passwordmanager.formviewsactivities.ViewContrasenia
-import portafolio.apps.passwordmanager.formviewsactivities.ViewCorreo
 
 class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -87,15 +85,15 @@ class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         items[position].getAsunto()
                     )
 
-                    HomeActivity.contraseniaAdapter.submitList(
+                    ContraseniasFragment.contraseniaAdapter.submitList(
                         db.customContraseniaSelect(
                             "NOMUSUARIO",
-                            HomeActivity.user
+                            HomeTabActivity.username
                         )
                     )
-                    HomeActivity.recycler.apply {
+                    ContraseniasFragment.recycler.apply {
                         layoutManager = GridLayoutManager(itemView.context, 1)
-                        adapter = HomeActivity.contraseniaAdapter
+                        adapter = ContraseniasFragment.contraseniaAdapter
                     }
                 }.show()
                 return@setOnLongClickListener true

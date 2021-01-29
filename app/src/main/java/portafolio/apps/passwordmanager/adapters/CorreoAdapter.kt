@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import portafolio.apps.passwordmanager.R
-import portafolio.apps.passwordmanager.activities.HomeActivity
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
+import portafolio.apps.passwordmanager.activities.tabfragments.CorreosFragment
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Correo
 import portafolio.apps.passwordmanager.formactivities.FormCorreo
@@ -83,15 +84,15 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     // Eliminar
                     val db = DBController(itemView.context)
                     db.deleteCorreo(items[position].getCorreo(), items[position].getNomusuario())
-                    HomeActivity.correoAdapter.submitList(
+                    CorreosFragment.correoAdapter.submitList(
                         db.customCorreoSelect(
                             "NOMUSUARIO",
-                            HomeActivity.user
+                            HomeTabActivity.username
                         )
                     )
-                    HomeActivity.recycler.apply {
+                    CorreosFragment.recycler.apply {
                         layoutManager = GridLayoutManager(itemView.context, 1)
-                        adapter = HomeActivity.correoAdapter
+                        adapter = CorreosFragment.correoAdapter
 
                     }
 

@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun nextActivity() {
-        startActivity(Intent(this, HomeActivity::class.java).apply {
+        startActivity(Intent(this, HomeTabActivity::class.java).apply {
             putExtra("username", user?.text.toString())
         })
     }
