@@ -37,7 +37,7 @@
                     android:layout_margin="6dp"
                     android:layout_weight=".6"
                     app:srcCompat="@drawable/mail_svg_black"
-                    app:tint="#FFC107" />
+                    />
 
                 <ImageView
                     android:layout_width="3dp"

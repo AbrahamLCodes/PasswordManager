@@ -32,8 +32,8 @@
                     android:layout_height="match_parent"
                     android:layout_margin="6dp"
                     android:layout_weight=".6"
-                    app:srcCompat="@drawable/key_24px"
-                    app:tint="@color/black" />
+                    app:srcCompat="@drawable/ic_llave"
+                     />
 
                 <ImageView
                     android:layout_width="3dp"

@@ -36,8 +36,8 @@
                     android:layout_margin="6dp"
                     android:layout_weight=".6"
                     android:clickable="false"
-                    app:srcCompat="@drawable/ic_account_circle_24px"
-                    app:tint="@color/black" />
+                    app:srcCompat="@drawable/ic_cuenta"
+                     />
 
                 <ImageView
                     android:layout_width="3dp"

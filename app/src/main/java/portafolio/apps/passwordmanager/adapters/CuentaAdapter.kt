@@ -5,6 +5,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
@@ -54,6 +55,8 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val asunto: TextView = itemView.findViewById(R.id.nomUsuario)
         val username: TextView = itemView.findViewById(R.id.correo)
         val contrasenia: TextView = itemView.findViewById(R.id.contrasenia)
+        val image: ImageView = itemView.findViewById(R.id.imgViewCard)
+
 
         init {
             itemView.setOnClickListener { v: View ->
@@ -115,6 +118,28 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             asunto.setText(cuenta.getWebsite())
             username.setText(cuenta.getNickname())
             contrasenia.setText(cuenta.getContrasenia())
+            if(cuenta.getWebsite().contains("youtube",ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_youtube)
+            }
+            if(cuenta.getWebsite().contains("steam",ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_steam_logo)
+            }
+            if(cuenta.getWebsite().contains("facebook",ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_facebook)
+            }
+            if(cuenta.getWebsite().contains("playstation",ignoreCase = true) ||cuenta.getWebsite().contains("psn",ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_playstation)
+            }
+            if(cuenta.getWebsite().contains("xbox",ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_xbox)
+            }
+            if(cuenta.getWebsite().contains("twitch",ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_twitch)
+            }
+            if(cuenta.getWebsite().contains("league",ignoreCase = true)|| cuenta.getWebsite().contains("lol",ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_league)
+            }
+
 
         }
     }

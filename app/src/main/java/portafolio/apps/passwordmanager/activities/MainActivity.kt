@@ -27,6 +27,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         registerBtn.setOnClickListener(this)
     }
 
+    override fun onBackPressed() {
+        Toast.makeText(
+            applicationContext,
+            "uy kieto",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {

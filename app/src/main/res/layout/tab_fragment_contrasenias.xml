@@ -9,12 +9,13 @@
     tools:context=".activities.ui.main.PlaceholderFragment">
 
     <TextView
-        android:text="Contraseñas"
-        android:textSize="20sp"
         android:layout_width="match_parent"
-        android:padding="10dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_height="wrap_content"/>
+        android:padding="10dp"
+        android:text="Contraseñas"
+        android:textColor="#1D1B1B"
+        android:textSize="20sp" />
 
     <SearchView
         android:id="@+id/search"

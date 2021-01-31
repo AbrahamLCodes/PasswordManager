@@ -1,9 +1,11 @@
 package portafolio.apps.passwordmanager.adapters
 
 import android.content.Intent
+import android.opengl.Matrix
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,6 +56,7 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val ntarjeta: TextView = itemView.findViewById(R.id.cuentaNum)
         val nip: TextView = itemView.findViewById(R.id.nip)
         val cad: TextView = itemView.findViewById(R.id.cad)
+        val image: ImageView = itemView.findViewById(R.id.imgViewCard)
 
         init {
             itemView.setOnClickListener { v: View ->
@@ -108,6 +111,34 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             ntarjeta.setText(tarjeta.getNtarjeta())
             nip.setText(tarjeta.getCodseg())
             cad.setText(tarjeta.getCadM() + "/" + tarjeta.getCadY())
+            if(tarjeta.getBanco().contains("santander", ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_icons8_santander)
+            }
+            if(tarjeta.getBanco().contains("citibanamex", ignoreCase = true)||tarjeta.getBanco().contains("banamex", ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_citibanamex)
+            }
+            if(tarjeta.getBanco().contains("HSBC", ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_hsbc_icon_icons_com_60512)
+            }
+            if(tarjeta.getBanco().contains("paypal", ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_paypal_39_icon_icons_com_60555)
+            }
+            if(tarjeta.getBanco().contains("american", ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_american)
+            }
+            if(tarjeta.getBanco().contains("scotiabank", ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_scotiabank_4)
+            }
+            if(tarjeta.getBanco().contains("BBVA", ignoreCase = true)||tarjeta.getBanco().contains("bancomer", ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_bbva_2019)
+                image.scaleType = ImageView.ScaleType.CENTER_INSIDE
+            }
+            if(tarjeta.getBanco().contains("banorte", ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_banorte_73512)
+
+                image.scaleType = ImageView.ScaleType.CENTER_CROP
+
+            }
         }
     }
 }

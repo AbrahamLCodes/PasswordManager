@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -51,6 +52,7 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         val asunto: TextView = itemView.findViewById(R.id.nomUsuario)
         val correo: TextView = itemView.findViewById(R.id.correo)
+        val image: ImageView = itemView.findViewById(R.id.imgViewCard)
 
         init {
             itemView.setOnClickListener { v: View ->
@@ -105,6 +107,20 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(correo: Correo) {
             asunto.setText(correo.getNombre())
             this.correo.setText(correo.getCorreo())
+           if(correo.getCorreo().contains("gmail",ignoreCase = true)){
+               image.setImageResource(R.drawable.ic_gmail)
+           }
+            if(correo.getCorreo().contains("yahoo",ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_yahoo)
+            }
+            if(correo.getCorreo().contains("outlook",ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_outlook)
+            }
+            if(correo.getCorreo().contains("hotmail",ignoreCase = true)){
+                image.setImageResource(R.drawable.ic_email)
+            }
+
+
         }
     }
 

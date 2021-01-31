@@ -31,8 +31,8 @@
                     android:layout_height="match_parent"
                     android:layout_margin="6dp"
                     android:layout_weight=".6"
-                    app:srcCompat="@drawable/credit_card"
-                    app:tint="@color/black" />
+                    app:srcCompat="@drawable/ic_tarjeta_de_credito"
+                    />
 
                 <ImageView
                     android:layout_width="3dp"

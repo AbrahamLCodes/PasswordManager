@@ -9,7 +9,8 @@
         android:layout_margin="8dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="1dp"
-        app:strokeColor="#D7A5A0A0"
+        app:strokeColor="#D7939292"
+        android:id="@+id/card_view"
         app:strokeWidth="1dp">
 
         <LinearLayout
@@ -32,15 +33,17 @@
                     android:layout_height="match_parent"
                     android:layout_margin="6dp"
                     android:layout_weight=".6"
-                    app:srcCompat="@drawable/note_icon"
-                    app:tint="@color/black" />
+                    app:srcCompat="@drawable/ic_nota"
+
+                    />
 
                 <ImageView
                     android:layout_width="3dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".4"
                     android:scaleType="center"
-                    android:src="@drawable/card_example" />
+                    android:src="@drawable/card_example"
+                    />
             </LinearLayout>
 
             <LinearLayout

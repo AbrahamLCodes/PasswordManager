@@ -1,12 +1,15 @@
 package portafolio.apps.passwordmanager.adapters
 
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.activities.HomeTabActivity
@@ -51,6 +54,7 @@ class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     ) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.title)
         val body: TextView = itemView.findViewById(R.id.body)
+        val card: MaterialCardView = itemView.findViewById(R.id.card_view)
 
         init {
             itemView.setOnClickListener { v: View ->
@@ -104,6 +108,7 @@ class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(nota: Nota) {
             title.setText(nota.getAsunto())
             body.setText(nota.getNota())
+            card.strokeColor =  Color.parseColor("#ec4646")
         }
     }
 }
