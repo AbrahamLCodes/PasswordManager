@@ -1,25 +1,28 @@
 package portafolio.apps.passwordmanager.formactivities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputLayout
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.database.DBController
-import portafolio.apps.passwordmanager.datamodel.Contrasenia
 import portafolio.apps.passwordmanager.datamodel.Tarjeta
 import portafolio.apps.passwordmanager.formviewsactivities.ViewPagos
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
 class FormPagos :
     AppCompatActivity(),
     View.OnClickListener {
-
+    private val space = ' '
     private lateinit var asunto: EditText
     private lateinit var titular: EditText
     private lateinit var ntarjeta: EditText
@@ -49,6 +52,7 @@ class FormPagos :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_pagos)
         initComponents()
+
     }
 
     override fun onBackPressed() {
@@ -312,5 +316,70 @@ class FormPagos :
         } else {
             insert = true
         }
+        anio.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                var working = s.toString()
+                var isValid = true
+                if (working.length == 2 && before == 0) {
+                    if (Integer.parseInt(working) < 1 || Integer.parseInt(working) > 12) {
+                        isValid = false
+                    } else {
+
+                        anio.setText(working)
+                        anio.setSelection(working.length)
+                    }
+                } else if (working.length == 4 && before == 0) {
+                    val enteredYear = working
+                    val currentYear = Calendar.getInstance().get(Calendar.YEAR) //getting last 2 digits of current year i.e. 2018 % 100 = 18
+                    if (Integer.parseInt(enteredYear) < currentYear) {
+                        isValid = false
+                    }
+                } else if (working.length != 4) {
+                    isValid = false
+                }
+
+                if (!isValid) {
+                    anio.error = getString(R.string.error)
+                } else {
+                    anio.error = null
+                }
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+        ntarjeta.addTextChangedListener(object : TextWatcher {
+            private var current = ""
+            private val nonDigits = Regex("[^\\d]")
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.wtf("",""+s!!.length)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString() != current) {
+                    val userInput = s.toString().replace(nonDigits,"")
+                    if (userInput.length <= 16) {
+                        current = userInput.chunked(4).joinToString(" ")
+                        s!!.filters = arrayOfNulls<InputFilter>(0)
+                    }
+                    s!!.replace(0, s.length, current, 0, current.length)
+                }
+            }
+
+
+        }
+        )
+
     }
 }

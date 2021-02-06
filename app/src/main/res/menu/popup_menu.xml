@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/option_1"
+        android:icon="@drawable/ic_clipboard"
+        android:title="A-Z" />
+    <item android:id="@+id/option_2"
+        android:title="Z-A" />
+    <item android:id="@+id/option_3"
+        android:title="New" />
+</menu>

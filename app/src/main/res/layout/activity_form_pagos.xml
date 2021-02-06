@@ -93,7 +93,10 @@
                     android:id="@+id/ntarjeta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:digits="01234 57689"
+                    android:maxLength="19"
+                    android:inputType="number" />
+
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,7 +119,9 @@
                     android:id="@+id/codseg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:digits="0123 5768"
+                    android:maxLength="3"
+                    android:inputType="phone" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -138,6 +143,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
+
                     android:layout_weight="1"
                     android:hint="Mes">
 
@@ -145,7 +151,7 @@
                         android:id="@+id/mes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapSentences" />
+                        android:inputType="none" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -155,13 +161,14 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_weight="1"
-                    android:hint="Año">
+                    android:hint="YYYY">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/anio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number|date" />
+                        android:maxLength="4"
+                        android:inputType="number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -206,6 +213,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/nip"
+                    android:maxLength="4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberPassword" />

@@ -14,6 +14,7 @@
         android:background="#023E8A">
 
         <ImageButton
+            android:backgroundTint="#00000000"
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,12 +53,15 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="23dp"
         android:orientation="vertical"
-        android:stretchColumns="0">
+        android:stretchColumns="0,1">
 
         <TableRow android:gravity="center">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/asunto"
+                android:drawableStart="@drawable/ic_clipboard"
+                android:drawablePadding="10dp"
+                app:drawableTint="@color/black"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -77,10 +81,18 @@
                 android:clickable="true"
                 android:src="@drawable/ic_content_copy_24px" />
         </TableRow>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/grey_font"
+            />
 
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
+                android:drawableStart="@drawable/ic_face_detection"
+                android:drawablePadding="10dp"
+                app:drawableTint="@color/black"
                 android:id="@+id/titular"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
@@ -101,10 +113,18 @@
                 android:clickable="true"
                 android:src="@drawable/ic_content_copy_24px" />
         </TableRow>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/grey_font"
+            />
 
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
+                android:drawableStart="@drawable/fabtarjetas"
+                android:drawablePadding="10dp"
+                app:drawableTint="@color/black"
                 android:id="@+id/ntarjeta"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
@@ -124,10 +144,18 @@
                 android:clickable="true"
                 android:src="@drawable/ic_content_copy_24px" />
         </TableRow>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/grey_font"
+            />
 
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
+                android:drawableStart="@drawable/key_24px"
+                android:drawablePadding="10dp"
+                app:drawableTint="@color/black"
                 android:id="@+id/codseg"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
@@ -148,10 +176,18 @@
                 android:src="@drawable/ic_content_copy_24px" />
 
         </TableRow>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/grey_font"
+            />
 
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
+                android:drawableStart="@drawable/ic_calendario"
+                android:drawablePadding="10dp"
+                app:drawableTint="@color/black"
                 android:id="@+id/fecha"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
@@ -172,10 +208,18 @@
                 android:src="@drawable/ic_content_copy_24px" />
 
         </TableRow>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/grey_font"
+            />
 
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
+                android:drawableStart="@drawable/ic_banco"
+                android:drawablePadding="10dp"
+                app:drawableTint="@color/black"
                 android:id="@+id/banco"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
@@ -196,10 +240,18 @@
                 android:src="@drawable/ic_content_copy_24px" />
 
         </TableRow>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/grey_font"
+            />
 
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
+                android:drawableStart="@drawable/ic_pin_code"
+                android:drawablePadding="10dp"
+                app:drawableTint="@color/black"
                 android:id="@+id/nip"
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
@@ -219,5 +271,10 @@
                 android:clickable="true"
                 android:src="@drawable/ic_content_copy_24px" />
         </TableRow>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/grey_font"
+            />
     </TableLayout>
 </LinearLayout>

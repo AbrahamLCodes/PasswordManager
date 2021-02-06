@@ -2,10 +2,13 @@ package portafolio.apps.passwordmanager.activities.tabfragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
+import android.widget.*
+import androidx.annotation.MenuRes
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +25,7 @@ class CorreosFragment(username: String) : Fragment() {
     companion object {
         lateinit var recycler: RecyclerView
         lateinit var correoAdapter: CorreoAdapter
+        lateinit var button: ImageButton
     }
 
     override fun onCreateView(
@@ -56,7 +60,25 @@ class CorreosFragment(username: String) : Fragment() {
     private fun initComponents(v: View) {
         search = v.findViewById(R.id.search)
         recycler = v.findViewById(R.id.recycler)
+        button = v.findViewById(R.id.btnDrop)
+        button.setOnClickListener { v: View ->
+            showMenu(v, R.menu.popup_menu)
+        }
         setRecyclerData()
+    }
+
+    private fun showMenu(v: View, @MenuRes menuRes: Int) {
+        val popup = PopupMenu(context!!, v)
+        popup.menuInflater.inflate(menuRes, popup.menu)
+
+        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
+            true
+        }
+        popup.setOnDismissListener {
+            // Respond to popup being dismissed.
+        }
+        // Show the popup menu.
+        popup.show()
     }
 
     private fun setRecyclerData() {

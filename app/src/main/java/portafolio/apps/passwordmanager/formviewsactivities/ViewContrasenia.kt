@@ -15,9 +15,9 @@ class ViewContrasenia :
     View.OnClickListener {
 
     private lateinit var asunto: TextView
-    private lateinit var asuntoBtn: ImageButton
+    //private lateinit var asuntoBtn: ImageButton
     private lateinit var contrasenia: TextView
-    private lateinit var contraseniaBtn: ImageButton
+   // private lateinit var contraseniaBtn: ImageButton
     private lateinit var back: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,8 +60,8 @@ class ViewContrasenia :
     private fun initComponents() {
         asunto = findViewById(R.id.asunto)
         contrasenia = findViewById(R.id.contrasenia)
-        asuntoBtn = findViewById(R.id.asuntoBtn)
-        contraseniaBtn = findViewById(R.id.contraseniaBtn)
+       // asuntoBtn = findViewById(R.id.asuntoBtn)
+       // contraseniaBtn = findViewById(R.id.contraseniaBtn)
         back = findViewById(R.id.back)
         val editar = findViewById<ImageButton>(R.id.editar)
 
@@ -73,8 +73,8 @@ class ViewContrasenia :
         if (coUpdated != null) {
             setComponents(coUpdated)
         }
-        asuntoBtn.setOnClickListener(this)
-        contraseniaBtn.setOnClickListener(this)
+        //asuntoBtn.setOnClickListener(this)
+        //contraseniaBtn.setOnClickListener(this)
         back.setOnClickListener(this)
         editar.setOnClickListener(this)
     }

@@ -68,12 +68,12 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/body"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_margin="3dp"
                     android:layout_weight=".2"
                     android:ellipsize="end"
                     android:fontFamily="@font/helvetica"
-                    android:maxLength="70"
+
                     android:maxLines="3"
                     android:text="Lorem ipsum dolor sit amet consectetur adipiscing elit aptent penatibus, volutpat sodales integer dictumst montes scelerisque fames rutrum tellus, dis maecenas blandit placerat mollis quis ac ultrices. Eget diam mus nulla penatibus leo dignissim facilisi faucibus, vestibulum primis viverra condimentum habitasse tortor suspendisse, venenatis blandit pretium nec augue auctor ultrices. Himenaeos tempor nostra taciti etiam porttitor quisque risus natoque felis, placerat potenti dictum praesent sed urna turpis curabitur tellus ullamcorper, odio torquent malesuada luctus proin congue primis ac." />
 
