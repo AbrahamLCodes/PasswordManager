@@ -107,7 +107,7 @@
                         android:text="BODY"
                         android:textSize="15sp" />
                     <ImageButton
-                        android:id="@+id/tituloBtn"
+                        android:id="@+id/bodyBtn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginVertical="25sp"

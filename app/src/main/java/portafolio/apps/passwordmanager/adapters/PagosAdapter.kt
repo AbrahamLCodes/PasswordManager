@@ -5,6 +5,8 @@ import android.opengl.Matrix
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,10 +19,12 @@ import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Tarjeta
 import portafolio.apps.passwordmanager.formactivities.FormPagos
 import portafolio.apps.passwordmanager.formviewsactivities.ViewPagos
+import java.util.ArrayList
 
-class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
-    private var items: List<Tarjeta> = ArrayList()
+    private lateinit var items: MutableList<Tarjeta>
+    private lateinit var itemsCopy : MutableList<Tarjeta>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return PagosViewHolder(
@@ -46,7 +50,40 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun submitList(notasList: List<Tarjeta>) {
-        items = notasList
+        items = ArrayList(notasList)
+        itemsCopy = ArrayList(notasList)
+    }
+
+    override fun getFilter(): Filter {
+        return object  : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+               var filteredList : MutableList<Tarjeta> = ArrayList()
+
+               if(constraint == null || constraint.isEmpty()){
+                   filteredList.addAll(itemsCopy)
+               } else {
+                   val filterPattern = constraint.toString().toLowerCase().trim()
+                   for (item: Tarjeta in itemsCopy) {
+                       if (
+                           item.getBanco().toLowerCase().contains(filterPattern)
+                           || item.getAsunto().toLowerCase().contains(filterPattern)
+                           || item.getTitular().toLowerCase().contains(filterPattern)) {
+                           filteredList.add(item)
+                       }
+                   }
+               }
+
+                val results = FilterResults()
+                results.values = filteredList
+                return  results
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                items.clear()
+                items.addAll(results!!.values as ArrayList<Tarjeta>)
+                notifyDataSetChanged()
+            }
+        }
     }
 
     inner class PagosViewHolder constructor(
@@ -101,6 +138,7 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         layoutManager = GridLayoutManager(itemView.context, 1)
                         adapter = TarjetasFragment.tarjetasAdapter
                     }
+                    db.close()
                 }.show()
                 return@setOnLongClickListener true
             }

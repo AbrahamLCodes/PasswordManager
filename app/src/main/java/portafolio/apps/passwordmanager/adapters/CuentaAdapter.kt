@@ -2,9 +2,12 @@ package portafolio.apps.passwordmanager.adapters
 
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -18,10 +21,12 @@ import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Cuenta
 import portafolio.apps.passwordmanager.formactivities.FormCuenta
 import portafolio.apps.passwordmanager.formviewsactivities.ViewCuentas
+import java.util.ArrayList
 
-class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
-    private var items: List<Cuenta> = ArrayList()
+    private lateinit var items: MutableList<Cuenta>
+    private lateinit var itemsCopy : MutableList<Cuenta>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return CuentaViewHolder(
@@ -46,7 +51,39 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun submitList(cuentaList: List<Cuenta>) {
-        items = cuentaList
+        items = ArrayList(cuentaList)
+        itemsCopy = ArrayList(cuentaList)
+    }
+
+    override fun getFilter(): Filter {
+        return object  : Filter(){
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                var filteredList: MutableList<Cuenta> = ArrayList()
+
+                if(constraint == null || constraint.isEmpty()){
+                    filteredList.addAll(itemsCopy)
+                } else {
+                    val filterPattern = constraint.toString().toLowerCase().trim()
+                    for (item: Cuenta in itemsCopy){
+                        if (
+                            item.getWebsite().toLowerCase().contains(filterPattern)
+                            || item.getCorreo().toLowerCase().contains(filterPattern)){
+                            filteredList.add(item)
+                        }
+                    }
+                }
+
+                val results = FilterResults()
+                results.values = filteredList
+                return  results
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                items.clear()
+                items.addAll(results!!.values as ArrayList<Cuenta>)
+                notifyDataSetChanged()
+            }
+        }
     }
 
     inner class CuentaViewHolder constructor(
@@ -65,6 +102,7 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 intent.apply {
                     putExtra("cuenta", items.get(position))
                 }
+                Log.d("CUENTA FECHA", items.get(position).getFecha())
                 itemView.context.startActivity(intent)
             }
             itemView.setOnLongClickListener{ v: View->
@@ -107,6 +145,7 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         adapter = CuentasFragment.cuentaAdapter
 
                     }
+                    db.close()
                 }.
                 show()
                 return@setOnLongClickListener true

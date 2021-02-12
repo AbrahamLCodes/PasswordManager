@@ -112,6 +112,7 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
                 goToView(co)
             }
         }
+        db.close()
     }
 
     private fun goToView(co: Correo) {
@@ -127,6 +128,7 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
                 )
             )
         }
+
         startActivity(intent)
         finish()
     }
@@ -219,7 +221,7 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getStringDate(): String {
-        val sdf = SimpleDateFormat("yyyy/MM/dd")
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         return sdf.format(Date()).replace("/", "-")
     }
 

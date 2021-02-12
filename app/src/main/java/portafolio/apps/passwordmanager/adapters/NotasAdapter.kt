@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,10 +20,12 @@ import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Nota
 import portafolio.apps.passwordmanager.formactivities.FormNota
 import portafolio.apps.passwordmanager.formviewsactivities.ViewNotas
+import java.util.ArrayList
 
-class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
-    private var items: List<Nota> = ArrayList()
+    private lateinit var items: MutableList<Nota>
+    private lateinit var itemsCopy: MutableList<Nota>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return NotasViewHolder(
@@ -46,7 +50,36 @@ class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun submitList(notasList: List<Nota>) {
-        items = notasList
+        items = ArrayList(notasList)
+        itemsCopy = ArrayList(notasList)
+    }
+
+    override fun getFilter(): Filter {
+        return object  : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                var filteredList: MutableList<Nota> = ArrayList()
+
+                if(constraint == null || constraint.isEmpty()){
+                    filteredList.addAll(itemsCopy)
+                } else {
+                    val filterPattern = constraint.toString().toLowerCase().trim()
+                    for (item: Nota in itemsCopy) {
+                        if (item.getAsunto().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item)
+                        }
+                    }
+                }
+                val results = FilterResults()
+                results.values = filteredList
+                return results
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                items.clear()
+                items.addAll(results!!.values as ArrayList<Nota>)
+                notifyDataSetChanged()
+            }
+        }
     }
 
     inner class NotasViewHolder constructor(
@@ -100,6 +133,7 @@ class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         adapter = NotasFragment.notasAdapter
 
                     }
+                    db.close()
                 }.show()
                 return@setOnLongClickListener true
             }

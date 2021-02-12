@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.fragments.SignUpFragment
@@ -28,12 +30,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onBackPressed() {
-        Toast.makeText(
-            applicationContext,
-            "uy kieto",
-            Toast.LENGTH_SHORT
-        ).show()
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Salir de la App")
+        builder.setMessage("¿Seguro que desea salir de la App?")
+
+        builder.setPositiveButton("Salir") { dialog, which ->
+            moveTaskToBack(true)
+        }
+
+        builder.setNegativeButton("Cancelar") { dialog, which ->
+            //Do no thing
+        }
+
+        builder.show()
     }
+
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
@@ -48,6 +59,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     } else {
                         incorrectUser()
                     }
+                    db.close()
                 }
             }
         }

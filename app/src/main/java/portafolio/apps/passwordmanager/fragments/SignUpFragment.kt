@@ -82,7 +82,7 @@ class SignUpFragment : AppCompatDialogFragment(), View.OnClickListener {
                     Toast.LENGTH_LONG
                 ).show()
             }
-
+            db.close()
         } else {
             Toast.makeText(dialog?.context, "Las contraseñas no coinciden", Toast.LENGTH_SHORT)
                 .show()

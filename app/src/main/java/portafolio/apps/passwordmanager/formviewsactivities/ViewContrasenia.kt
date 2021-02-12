@@ -1,11 +1,15 @@
 package portafolio.apps.passwordmanager.formviewsactivities
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.datamodel.Contrasenia
 import portafolio.apps.passwordmanager.formactivities.FormContrasenia
@@ -15,9 +19,9 @@ class ViewContrasenia :
     View.OnClickListener {
 
     private lateinit var asunto: TextView
-    //private lateinit var asuntoBtn: ImageButton
+    private lateinit var asuntoBtn: ImageButton
     private lateinit var contrasenia: TextView
-   // private lateinit var contraseniaBtn: ImageButton
+   private lateinit var contraseniaBtn: ImageButton
     private lateinit var back: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +52,25 @@ class ViewContrasenia :
                     }
                     finish()
                 }
+                R.id.asuntoBtn -> {
+                    copy(asunto.text.toString())
+                }
+                R.id.contraseniaBtn -> {
+                    copy(contrasenia.text.toString())
+                }
             }
         }
+    }
+
+    private fun copy(text: String){
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip: ClipData = ClipData.newPlainText("simple text",text)
+        Toast.makeText(
+            applicationContext,
+            "'"+text+"' copiado en el clipboard",
+            Toast.LENGTH_SHORT
+        ).show()
+        clipboard.setPrimaryClip(clip)
     }
 
     private fun setComponents(c: Contrasenia) {
@@ -60,8 +81,8 @@ class ViewContrasenia :
     private fun initComponents() {
         asunto = findViewById(R.id.asunto)
         contrasenia = findViewById(R.id.contrasenia)
-       // asuntoBtn = findViewById(R.id.asuntoBtn)
-       // contraseniaBtn = findViewById(R.id.contraseniaBtn)
+        asuntoBtn = findViewById(R.id.asuntoBtn)
+        contraseniaBtn = findViewById(R.id.contraseniaBtn)
         back = findViewById(R.id.back)
         val editar = findViewById<ImageButton>(R.id.editar)
 
@@ -73,8 +94,8 @@ class ViewContrasenia :
         if (coUpdated != null) {
             setComponents(coUpdated)
         }
-        //asuntoBtn.setOnClickListener(this)
-        //contraseniaBtn.setOnClickListener(this)
+        asuntoBtn.setOnClickListener(this)
+        contraseniaBtn.setOnClickListener(this)
         back.setOnClickListener(this)
         editar.setOnClickListener(this)
     }

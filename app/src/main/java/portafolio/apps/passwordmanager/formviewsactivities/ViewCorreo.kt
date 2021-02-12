@@ -1,5 +1,8 @@
 package portafolio.apps.passwordmanager.formviewsactivities
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +11,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.datamodel.Contrasenia
 import portafolio.apps.passwordmanager.datamodel.Correo
@@ -51,8 +55,28 @@ class ViewCorreo :
                     }
                     finish()
                 }
+                R.id.nombreBtn -> {
+                    copy(nombre.text.toString())
+                }
+                R.id.correoBtn -> {
+                    copy(correo.text.toString())
+                }
+                R.id.contraseniaBtn -> {
+                    copy(contrasenia.text.toString())
+                }
             }
         }
+    }
+
+    private fun copy(text: String){
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip: ClipData = ClipData.newPlainText("simple text",text)
+        Toast.makeText(
+            applicationContext,
+            "'"+text+"' copiado en el clipboard",
+            Toast.LENGTH_SHORT
+        ).show()
+        clipboard.setPrimaryClip(clip)
     }
 
     private fun initComponents() {

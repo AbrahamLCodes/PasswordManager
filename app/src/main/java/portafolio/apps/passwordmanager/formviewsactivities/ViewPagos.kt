@@ -1,12 +1,16 @@
 package portafolio.apps.passwordmanager.formviewsactivities
 
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.datamodel.Contrasenia
 import portafolio.apps.passwordmanager.datamodel.Tarjeta
@@ -61,8 +65,40 @@ class ViewPagos :
                     }
                     finish()
                 }
+                R.id.asuntoBtn -> {
+                    copy(asunto.text.toString())
+                }
+                R.id.titularBtn -> {
+                    copy(titular.text.toString())
+                }
+                R.id.ntarjetaBtn -> {
+                    copy(ntarjeta.text.toString())
+                }
+                R.id.codsegBtn -> {
+                    copy(codseg.text.toString())
+                }
+                R.id.fechaBtn -> {
+                    copy(fecha.text.toString())
+                }
+                R.id.bancoBtn -> {
+                    copy(banco.text.toString())
+                }
+                R.id.nipBtn -> {
+                    copy(nip.text.toString())
+                }
             }
         }
+    }
+
+    private fun copy(text: String){
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip: ClipData = ClipData.newPlainText("simple text",text)
+        Toast.makeText(
+            applicationContext,
+            "'"+text+"' copiado en el clipboard",
+            Toast.LENGTH_SHORT
+        ).show()
+        clipboard.setPrimaryClip(clip)
     }
 
     private fun setComponents(t: Tarjeta) {

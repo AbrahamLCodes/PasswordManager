@@ -1,9 +1,12 @@
 package portafolio.apps.passwordmanager.adapters
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,9 +20,11 @@ import portafolio.apps.passwordmanager.datamodel.Correo
 import portafolio.apps.passwordmanager.formactivities.FormCorreo
 import portafolio.apps.passwordmanager.formviewsactivities.ViewCorreo
 
-class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
-    private var items: List<Correo> = ArrayList()
+    private lateinit var items: MutableList<Correo>
+    private lateinit var itemsCopy: MutableList<Correo>
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return CorreoViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -27,9 +32,7 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 parent,
                 false
             )
-
         )
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -45,8 +48,42 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun submitList(correoList: List<Correo>) {
-        items = correoList
+        items = ArrayList(correoList)
+        itemsCopy = ArrayList(correoList)
     }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                var filteredList: MutableList<Correo> = ArrayList()
+
+                if (constraint == null || constraint.isEmpty()) {
+                    filteredList.addAll(itemsCopy)
+                } else {
+                    val filterPattern = constraint.toString().toLowerCase().trim()
+                    for (item: Correo in itemsCopy) {
+                        if (item.getNombre().toLowerCase().contains(filterPattern) ||
+                                item.getCorreo().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item)
+                        }
+                    }
+                }
+
+                val results = FilterResults()
+                results.values = filteredList
+                return results
+            }
+
+            override fun publishResults(charSequence: CharSequence?, filterResults: FilterResults) {
+                items.clear()
+                items.addAll(filterResults.values as ArrayList<Correo>)
+                notifyDataSetChanged()
+
+            }
+        }
+    }
+
 
     inner class CorreoViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -61,6 +98,7 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 intent.apply {
                     putExtra("correo", items.get(position))
                 }
+                Log.d("FECHA DE CORREO", items.get(position).getFecha())
                 itemView.context.startActivity(intent)
             }
 
@@ -97,7 +135,7 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         adapter = CorreosFragment.correoAdapter
 
                     }
-
+                    db.close()
                 }.show()
                 return@setOnLongClickListener true
             }
@@ -107,21 +145,18 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(correo: Correo) {
             asunto.setText(correo.getNombre())
             this.correo.setText(correo.getCorreo())
-           if(correo.getCorreo().contains("gmail",ignoreCase = true)){
-               image.setImageResource(R.drawable.ic_gmail)
-           }
-            if(correo.getCorreo().contains("yahoo",ignoreCase = true)){
+            if (correo.getCorreo().contains("gmail", ignoreCase = true)) {
+                image.setImageResource(R.drawable.ic_gmail)
+            }
+            if (correo.getCorreo().contains("yahoo", ignoreCase = true)) {
                 image.setImageResource(R.drawable.ic_yahoo)
             }
-            if(correo.getCorreo().contains("outlook",ignoreCase = true)){
+            if (correo.getCorreo().contains("outlook", ignoreCase = true)) {
                 image.setImageResource(R.drawable.ic_outlook)
             }
-            if(correo.getCorreo().contains("hotmail",ignoreCase = true)){
+            if (correo.getCorreo().contains("hotmail", ignoreCase = true)) {
                 image.setImageResource(R.drawable.ic_email)
             }
-
-
         }
     }
-
 }

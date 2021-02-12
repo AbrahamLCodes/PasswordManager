@@ -125,6 +125,7 @@ class FormCuenta :
                 goToView(co)
             }
         }
+        db.close()
     }
 
     private fun goToView(c: Cuenta) {
@@ -181,6 +182,7 @@ class FormCuenta :
             db.close()
             finish()
         }
+        db.close()
     }
 
     private fun checkFields(): Boolean {
@@ -236,7 +238,7 @@ class FormCuenta :
     }
 
     private fun getStringDate(): String {
-        val sdf = SimpleDateFormat("yyyy/MM/dd")
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         return sdf.format(Date()).replace("/", "-")
     }
 

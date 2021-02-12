@@ -26,6 +26,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import io.github.yavski.fabspeeddial.FabSpeedDial
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.activities.ui.main.SectionsPagerAdapter
+import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.formactivities.*
 import kotlin.properties.Delegates
 
@@ -37,7 +38,9 @@ class HomeTabActivity : AppCompatActivity(),
     private lateinit var sideMenu: NavigationView
     private lateinit var menu: MaterialToolbar
     private lateinit var logOutbtn: Button
-    private var tab by Delegates.notNull<Int>()
+    private lateinit var sectionsPagerAdapter: SectionsPagerAdapter
+    private lateinit var viewPager: ViewPager
+    private lateinit var tabs: TabLayout
 
     companion object {
         lateinit var username : String
@@ -49,9 +52,9 @@ class HomeTabActivity : AppCompatActivity(),
 
         username = intent.getStringExtra("username").toString()
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        val viewPager: ViewPager = findViewById(R.id.view_pager)
-        val tabs: TabLayout = findViewById(R.id.tabs)
+        sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+        viewPager = findViewById(R.id.view_pager)
+        tabs = findViewById(R.id.tabs)
         viewPager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(viewPager)
         var currenttab = 0
@@ -102,8 +105,6 @@ class HomeTabActivity : AppCompatActivity(),
         ).show()
     }
 
-
-
     override fun onPrepareMenu(p0: NavigationMenu?): Boolean {
         return true
     }
@@ -120,11 +121,21 @@ class HomeTabActivity : AppCompatActivity(),
                     return true
                 }
                 R.id.cuentaItem -> {
-                    startActivity(
-                        Intent(this, FormCuenta::class.java).apply {
-                            putExtra("username", intent.getStringExtra("username"))
-                        }
-                    )
+                    val db = DBController(applicationContext)
+                    if(db.getRowCount("CORREOS") > 0){
+                        startActivity(
+                            Intent(this, FormCuenta::class.java).apply {
+                                putExtra("username", intent.getStringExtra("username"))
+                            }
+                        )
+                    } else {
+                        Toast.makeText(
+                            applicationContext,
+                            "Si quieres registrar algo sin correo, ve a la pestaña de Contraseñas",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        viewPager.setCurrentItem(2)
+                    }
                 }
                 R.id.contraseniaItem -> {
                     startActivity(

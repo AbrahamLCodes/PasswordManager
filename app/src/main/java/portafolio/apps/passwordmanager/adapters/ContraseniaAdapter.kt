@@ -4,6 +4,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,10 +17,12 @@ import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Contrasenia
 import portafolio.apps.passwordmanager.formactivities.FormContrasenia
 import portafolio.apps.passwordmanager.formviewsactivities.ViewContrasenia
+import java.util.ArrayList
 
-class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
-    private var items: List<Contrasenia> = ArrayList()
+    private lateinit var items: MutableList<Contrasenia>
+    private lateinit var itemsCopy: MutableList<Contrasenia>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ContraseniaViewHolder(
@@ -42,8 +46,38 @@ class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return items.size
     }
 
-    fun submitList(correoList: List<Contrasenia>) {
-        items = correoList
+    fun submitList(contraseniaList: List<Contrasenia>) {
+        items = ArrayList(contraseniaList)
+        itemsCopy = ArrayList(contraseniaList)
+    }
+
+    override fun getFilter(): Filter {
+        return object  : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                var filteredList : MutableList<Contrasenia> = ArrayList()
+
+                if(constraint == null || constraint.isEmpty()){
+                    filteredList.addAll(itemsCopy)
+                } else {
+                    val filterPattern = constraint.toString().toLowerCase().trim()
+                    for(item: Contrasenia in itemsCopy){
+                        if (item.getAsunto().toLowerCase().contains(filterPattern)){
+                            filteredList.add(item)
+                        }
+                    }
+                }
+
+                val results = FilterResults()
+                results.values = filteredList
+                return results
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                items.clear()
+                items.addAll(results!!.values as ArrayList<Contrasenia>)
+                notifyDataSetChanged()
+            }
+        }
     }
 
     inner class ContraseniaViewHolder constructor(itemView: View) :
@@ -95,6 +129,7 @@ class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         layoutManager = GridLayoutManager(itemView.context, 1)
                         adapter = ContraseniasFragment.contraseniaAdapter
                     }
+                    db.close()
                 }.show()
                 return@setOnLongClickListener true
             }

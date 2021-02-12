@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.SearchView
@@ -14,9 +15,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.adapters.ContraseniaAdapter
+import portafolio.apps.passwordmanager.adapters.CorreoAdapter
 import portafolio.apps.passwordmanager.database.DBController
 
-class ContraseniasFragment (username: String): Fragment() {
+class ContraseniasFragment (username: String): Fragment(), SearchView.OnQueryTextListener {
 
     private lateinit var search: SearchView
     private var mContext: Context? = null
@@ -56,13 +58,25 @@ class ContraseniasFragment (username: String): Fragment() {
         mContext = null
     }
 
+    override fun onQueryTextChange(newText: String?): Boolean {
+        contraseniaAdapter.filter.filter(newText)
+        return false
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return false
+    }
+
     private fun initComponents(v: View) {
         search = v.findViewById(R.id.search)
         recycler = v.findViewById(R.id.recycler)
         CorreosFragment.button = v.findViewById(R.id.btnDrop)
         CorreosFragment.button.setOnClickListener { v: View ->
-            showMenu(v, R.menu.popup_menu)
+            showMenu(v, R.menu.popup_contrasenias)
         }
+
+        search.setOnQueryTextListener(this)
+        search.imeOptions = EditorInfo.IME_ACTION_DONE
         setRecyclerData()
     }
 
@@ -71,6 +85,20 @@ class ContraseniasFragment (username: String): Fragment() {
         popup.menuInflater.inflate(popupMenu, popup.menu)
 
         popup.setOnMenuItemClickListener { menuItem: MenuItem ->
+            when(menuItem.itemId){
+                R.id.o1 -> {
+                    orderRecyclerData(username, "ASUNTO", "ASC")
+                }
+                R.id.o2 -> {
+                    orderRecyclerData(username, "ASUNTO", "DESC")
+                }
+                R.id.o3 -> {
+                    orderRecyclerData(username, "FECHA", "DESC")
+                }
+                R.id.o4 -> {
+                    orderRecyclerData(username, "FECHA","ASC")
+                }
+            }
             true
         }
         popup.setOnDismissListener {
@@ -78,6 +106,20 @@ class ContraseniasFragment (username: String): Fragment() {
         }
         // Show the popup menu.
         popup.show()
+    }
+
+    private fun orderRecyclerData(username: String, asunto: String, asc: String) {
+        contraseniaAdapter = ContraseniaAdapter()
+        val db = DBController(mContext!!)
+        contraseniaAdapter.submitList(
+            db.sortContrasenias(username, asunto, asc)
+        )
+
+        recycler.apply {
+            layoutManager = GridLayoutManager(mContext, 1)
+            adapter = contraseniaAdapter
+        }
+        db.close()
     }
 
     private fun setRecyclerData() {
@@ -94,5 +136,6 @@ class ContraseniasFragment (username: String): Fragment() {
             layoutManager = GridLayoutManager(mContext, 1)
             adapter = contraseniaAdapter
         }
+        db.close()
     }
 }

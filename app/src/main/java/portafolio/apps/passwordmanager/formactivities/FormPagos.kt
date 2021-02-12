@@ -139,6 +139,7 @@ class FormPagos :
                 goToView(ta)
             }
         }
+        db.close()
     }
 
     private fun goToView(t: Tarjeta) {
@@ -198,6 +199,7 @@ class FormPagos :
             db.close()
             finish()
         }
+        db.close()
     }
 
     private fun checkFields(): Boolean {
@@ -263,7 +265,7 @@ class FormPagos :
     }
 
     private fun getStringDate(): String {
-        val sdf = SimpleDateFormat("yyyy/MM/dd")
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         return sdf.format(Date()).replace("/", "-")
     }
 
@@ -316,7 +318,7 @@ class FormPagos :
         } else {
             insert = true
         }
-        anio.addTextChangedListener(object : TextWatcher{
+        anio.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -334,7 +336,8 @@ class FormPagos :
                     }
                 } else if (working.length == 4 && before == 0) {
                     val enteredYear = working
-                    val currentYear = Calendar.getInstance().get(Calendar.YEAR) //getting last 2 digits of current year i.e. 2018 % 100 = 18
+                    val currentYear = Calendar.getInstance()
+                        .get(Calendar.YEAR) //getting last 2 digits of current year i.e. 2018 % 100 = 18
                     if (Integer.parseInt(enteredYear) < currentYear) {
                         isValid = false
                     }
@@ -363,12 +366,12 @@ class FormPagos :
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.wtf("",""+s!!.length)
+                Log.wtf("", "" + s!!.length)
             }
 
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString() != current) {
-                    val userInput = s.toString().replace(nonDigits,"")
+                    val userInput = s.toString().replace(nonDigits, "")
                     if (userInput.length <= 16) {
                         current = userInput.chunked(4).joinToString(" ")
                         s!!.filters = arrayOfNulls<InputFilter>(0)
@@ -376,10 +379,7 @@ class FormPagos :
                     s!!.replace(0, s.length, current, 0, current.length)
                 }
             }
-
-
         }
         )
-
     }
 }

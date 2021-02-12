@@ -101,6 +101,7 @@ class FormNota :
                 goToView(no)
             }
         }
+        db.close()
 
     }
 
@@ -174,7 +175,7 @@ class FormNota :
     }
 
     private fun getStringDate(): String {
-        val sdf = SimpleDateFormat("yyyy/MM/dd")
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         return sdf.format(Date()).replace("/", "-")
     }
 

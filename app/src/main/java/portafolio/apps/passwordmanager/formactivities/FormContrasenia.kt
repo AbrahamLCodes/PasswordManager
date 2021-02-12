@@ -107,6 +107,7 @@ class FormContrasenia :
                 goToView(co)
             }
         }
+        db.close()
     }
 
     private fun goToView(c: Contrasenia) {
@@ -152,6 +153,7 @@ class FormContrasenia :
             ).show()
             finish()
         }
+        db.close()
     }
 
     private fun checkFields(): Boolean {
@@ -194,7 +196,7 @@ class FormContrasenia :
     }
 
     private fun getStringDate(): String {
-        val sdf = SimpleDateFormat("yyyy/MM/dd")
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         return sdf.format(Date()).replace("/", "-")
     }
 

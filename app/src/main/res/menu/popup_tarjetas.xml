@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/o1"
+        android:icon="@drawable/ic_clipboard"
+        android:title="A-Z (Asunto)" />
+    <item android:id="@+id/o2"
+        android:title="Z-A (Asunto)" />
+    <item android:id="@+id/o3"
+        android:icon="@drawable/ic_clipboard"
+        android:title="A-Z (Banco)" />
+    <item android:id="@+id/o4"
+        android:title="Z-A (Banco)" />
+    <item android:id="@+id/o5"
+        android:title="Más Reciente" />
+    <item android:id="@+id/o6"
+        android:title="Más Antiguo" />
+</menu>
