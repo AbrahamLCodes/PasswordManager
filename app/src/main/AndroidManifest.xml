@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="portafolio.apps.passwordmanager">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,52 +11,63 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordManager">
+        <activity android:name=".formactivities.FormUsuario" />
         <activity
             android:name=".activities.HomeTabActivity"
+            android:configChanges="orientation"
             android:label="@string/title_activity_home_tab"
-            android:theme="@style/Theme.PasswordManager.NoActionBar"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PasswordManager.NoActionBar" />
+        <activity
+            android:name=".formviewsactivities.ViewContrasenia"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".formviewsactivities.ViewContrasenia"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".formviewsactivities.ViewPagos"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".formviewsactivities.ViewPagos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".formviewsactivities.ViewNotas"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".formviewsactivities.ViewNotas"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".formviewsactivities.ViewCuentas"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".formviewsactivities.ViewCuentas"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".formviewsactivities.ViewCorreo"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".formviewsactivities.ViewCorreo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".formactivities.FormNota"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".formactivities.FormNota"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".formactivities.FormPagos"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".formactivities.FormPagos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".formactivities.FormContrasenia"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".formactivities.FormContrasenia"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.MainActivity"
-            android:windowSoftInputMode="adjustNothing"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".formactivities.FormCuenta"
+        <activity
+            android:name=".formactivities.FormCuenta"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".formactivities.FormCorreo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".formactivities.FormCorreo"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

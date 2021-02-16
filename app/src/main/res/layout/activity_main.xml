@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:weightSum="2"
+    android:background="@drawable/ic_backgroundfinal"
     tools:context=".activities.MainActivity">
-
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/ic_backgroundfinal" />
-
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,9 +26,7 @@
                 android:layout_margin="10dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -57,12 +47,10 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_marginTop="10dp"
                     app:srcCompat="@drawable/logo" />
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -71,38 +59,33 @@
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="true"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
                 <LinearLayout
                     android:id="@+id/form"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
+                    android:layout_margin="10dp"
                     android:background="@layout/shape_input"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textView"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/helvetica"
-                        android:text="Bienvenido !"
+                        android:text="¡Bienvenido!"
                         android:textColor="#023678"
-                        android:textSize="15pt"
+                        android:textSize="25sp"
                         android:textStyle="normal" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="50dp"
+                        android:layout_marginHorizontal="20dp"
                         android:layout_marginVertical="10dp"
                         android:hint="Usuario"
                         app:boxBackgroundColor="@color/white">
@@ -113,7 +96,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/helvetica"
-                            android:inputType="text" />
+                            android:inputType="textCapSentences" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,8 +104,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="50dp"
-                        android:layout_marginVertical="20dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginVertical="10dp"
                         android:hint="Contraseña"
                         app:boxBackgroundColor="@color/white"
                         app:endIconMode="password_toggle">
@@ -142,10 +125,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginVertical="20dp"
+                        android:layout_marginVertical="10dp"
                         android:backgroundTint="@color/white"
                         android:fontFamily="@font/helvetica"
-                        android:padding="20dp"
+                        android:padding="15dp"
                         android:text="iniciar sesion"
                         android:textColor="#02377C"
                         android:textSize="15sp"
@@ -154,17 +137,23 @@
                         app:strokeColor="#3B3B3B"
                         app:strokeWidth="1dp" />
 
+                    <TextView
+                        android:id="@+id/recuperacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/helvetica"
+                        android:gravity="center"
+                        android:text="@string/recuperar"
+                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textView3"
@@ -173,7 +162,7 @@
                     android:fontFamily="@font/helvetica"
                     android:gravity="center"
                     android:text="¿No tienes usuario local?"
-                    android:textSize="8pt" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/registrarBtn"
@@ -183,10 +172,8 @@
                     android:gravity="center"
                     android:text="@string/registrate"
                     android:textColor="#0096C7"
-                    android:textSize="10pt" />
+                    android:textSize="24sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

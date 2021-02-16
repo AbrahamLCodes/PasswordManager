@@ -9,4 +9,7 @@
     <string name="title_activity_home_tab">HomeTabActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="correoInst">El e-mail te lo pedimos para que recuperes tu contraseña en caso de que
+    la olvides</string>
+    <string name="recuperar"><u>¿Olvidaste tu contraseña? Click aquí</u></string>
 </resources>

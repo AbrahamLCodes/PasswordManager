@@ -7,10 +7,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.R
-import portafolio.apps.passwordmanager.fragments.SignUpFragment
+import portafolio.apps.passwordmanager.formactivities.FormUsuario
+import portafolio.apps.passwordmanager.fragments.RecuperacionFragment
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -20,13 +20,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val loginBtn: Button = findViewById(R.id.loginBtn)
-        val registerBtn: TextView = findViewById(R.id.registrarBtn)
-
-        user = findViewById(R.id.usuario)
-        pass = findViewById(R.id.contra)
-        loginBtn.setOnClickListener(this)
-        registerBtn.setOnClickListener(this)
+        initComponents()
     }
 
     override fun onBackPressed() {
@@ -34,11 +28,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         builder.setTitle("Salir de la App")
         builder.setMessage("¿Seguro que desea salir de la App?")
 
-        builder.setPositiveButton("Salir") { dialog, which ->
+        builder.setPositiveButton("Salir") { _, _ ->
             moveTaskToBack(true)
         }
 
-        builder.setNegativeButton("Cancelar") { dialog, which ->
+        builder.setNegativeButton("Cancelar") { _, _ ->
             //Do no thing
         }
 
@@ -49,8 +43,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (v != null) {
             when (v.id) {
                 R.id.registrarBtn -> {
-                    val sf = SignUpFragment()
-                    sf.show(supportFragmentManager, "Registrar")
+                    startActivity(Intent(this, FormUsuario::class.java))
                 }
                 R.id.loginBtn -> {
                     val db = DBController(applicationContext)
@@ -60,6 +53,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         incorrectUser()
                     }
                     db.close()
+                }
+                R.id.recuperacion -> {
+                    val rf = RecuperacionFragment()
+                    rf.show(supportFragmentManager, "Recuperar cuenta")
                 }
             }
         }
@@ -77,6 +74,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             "Usuario o contraseña equivocados",
             Toast.LENGTH_SHORT
         ).show()
+    }
+
+    private fun initComponents() {
+        val loginBtn: Button = findViewById(R.id.loginBtn)
+        val registerBtn: TextView = findViewById(R.id.registrarBtn)
+        val recuperacion = findViewById<TextView>(R.id.recuperacion)
+
+        user = findViewById(R.id.usuario)
+        pass = findViewById(R.id.contra)
+
+        loginBtn.setOnClickListener(this)
+        registerBtn.setOnClickListener(this)
+        recuperacion.setOnClickListener(this)
     }
 
     private fun screenWidth(): Int {

@@ -36,13 +36,14 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
     }
 
     //Method to insert a user. The name and password is passed by value in parameters
-    fun insertUsuario(nombre: String, contrasenia: String) {
+    fun insertUsuario(nombre: String, contrasenia: String, correo: String) {
         val db = writableDatabase
         if (db != null) {
             db.execSQL(
                 "INSERT INTO USUARIOS VALUES (" +
-                        "'" + nombre + "','"
-                        + contrasenia + "')"
+                        "'" + nombre + "'," +
+                        "'" + contrasenia + "'," +
+                        "'" + correo + "')"
             )
         }
         db.close()
@@ -268,6 +269,24 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         if (cursor.moveToFirst()) {
             do {
                 if (name.equals(cursor.getString(0)) && password.equals(cursor.getString(1))) {
+                    Log.d("ESTADO DE LA VALIDACION", "CHIDOOO WEEE")
+                    found = true
+                }
+            } while (cursor.moveToNext() && !found)
+        }
+        return found
+    }
+
+    fun findUsuarioByName(name: String): Boolean {
+        val cursor: Cursor = readableDatabase.rawQuery(
+            "SELECT * FROM USUARIOS WHERE NOMBRE = '$name'",
+            null
+        )
+        var found = false
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (name.equals(cursor.getString(0))) {
                     Log.d("ESTADO DE LA VALIDACION", "CHIDOOO WEEE")
                     found = true
                 }
@@ -503,7 +522,7 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         return list
     }
 
-    fun correoContains(subString: String){
+    fun correoContains(subString: String) {
 
     }
 

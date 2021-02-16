@@ -6,7 +6,8 @@ class CreateDB {
         fun createUsuarios(): String {
             return "CREATE TABLE USUARIOS(" +
                     "NOMBRE TEXT NOT NULL PRIMARY KEY," +
-                    "CONTRASENIA TEXT NOT NULL)"
+                    "CONTRASENIA TEXT NOT NULL," +
+                    "CORREO TEXT NOT NULL)"
         }
 
         fun createCorreos(): String {
