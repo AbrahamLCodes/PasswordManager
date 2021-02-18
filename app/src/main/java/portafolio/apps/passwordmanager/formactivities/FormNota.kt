@@ -9,8 +9,10 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.appbar.MaterialToolbar
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Nota
+import portafolio.apps.passwordmanager.datamodel.Usuario
 import portafolio.apps.passwordmanager.formviewsactivities.ViewNotas
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -23,16 +25,28 @@ class FormNota :
     private lateinit var title: EditText
     private lateinit var body: EditText
     private var insert = false
+    private var userIntent: Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_nota)
+        userIntent = intent.getSerializableExtra("userObject") as? Usuario
         initComponents()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (userIntent!!.getChecked() == 1) {
+            finish()
+        }
     }
 
     override fun onBackPressed() {
         if (insert) {
-            super.onBackPressed()
+            startActivity(Intent(this, HomeTabActivity::class.java).apply {
+                putExtra("userObject", userIntent)
+            })
+            finish()
         } else {
             val no = intent.getSerializableExtra("nota") as? Nota
             val noUpdated = intent.getSerializableExtra("notaupdated") as? Nota
@@ -116,6 +130,7 @@ class FormNota :
                     n.getFecha()
                 )
             )
+            putExtra("userObject", userIntent)
         }
         startActivity(intent)
         finish()
@@ -124,9 +139,10 @@ class FormNota :
     private fun save() {
         val db = DBController(applicationContext)
         var correcto = true
+        val usuario = intent.getSerializableExtra("userObject") as? Usuario
         try {
             db.insertNota(
-                intent.getStringExtra("username")!!,
+                usuario!!.getNombre(),
                 title!!.text.toString(),
                 body!!.text.toString(),
                 getStringDate()
@@ -147,7 +163,7 @@ class FormNota :
                 "La nota se ha guardado exitosamente",
                 Toast.LENGTH_SHORT
             ).show()
-            finish()
+            onBackPressed()
         }
         db.close()
     }

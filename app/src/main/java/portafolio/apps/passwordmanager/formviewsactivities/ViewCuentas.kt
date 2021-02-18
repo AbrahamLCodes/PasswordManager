@@ -11,7 +11,9 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
 import portafolio.apps.passwordmanager.datamodel.Cuenta
+import portafolio.apps.passwordmanager.datamodel.Usuario
 import portafolio.apps.passwordmanager.formactivities.FormCuenta
 
 class ViewCuentas :
@@ -27,11 +29,27 @@ class ViewCuentas :
     private lateinit var correo: TextView
     private lateinit var correoBtn: ImageButton
     private lateinit var back: ImageButton
+    private var userIntent: Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_cuentas)
+        userIntent = intent.getSerializableExtra("userObject") as? Usuario
         initComponents()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if(userIntent!!.getChecked() == 1){
+            finish()
+        }
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, HomeTabActivity::class.java).apply {
+            putExtra("userObject", userIntent)
+        })
+        finish()
     }
 
     override fun onClick(v: View?) {
@@ -46,12 +64,14 @@ class ViewCuentas :
                         startActivity(Intent(this, FormCuenta::class.java).apply {
                             putExtra("cuentaupdated", c)
                             putExtra("username", c!!.getNomUsuario())
+                            putExtra("userObject", userIntent)
                         })
                     } else {
                         val c = intent.getSerializableExtra("cuenta") as? Cuenta
                         startActivity(Intent(this, FormCuenta::class.java).apply {
                             putExtra("cuenta", c)
                             putExtra("username", c!!.getNomUsuario())
+                            putExtra("userObject", userIntent)
                         })
                     }
                     finish()

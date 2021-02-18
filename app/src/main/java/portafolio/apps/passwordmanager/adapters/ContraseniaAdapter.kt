@@ -91,6 +91,7 @@ class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filt
                 val intent = Intent(itemView.context, ViewContrasenia::class.java)
                 intent.apply {
                     putExtra("contrasenia", items.get(position))
+                    putExtra("userObject", HomeTabActivity.usuarioIntent)
                 }
                 itemView.context.startActivity(intent)
             }

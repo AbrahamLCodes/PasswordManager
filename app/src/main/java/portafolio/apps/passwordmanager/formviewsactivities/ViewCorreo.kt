@@ -13,8 +13,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
 import portafolio.apps.passwordmanager.datamodel.Contrasenia
 import portafolio.apps.passwordmanager.datamodel.Correo
+import portafolio.apps.passwordmanager.datamodel.Usuario
 import portafolio.apps.passwordmanager.formactivities.FormCorreo
 
 class ViewCorreo :
@@ -30,11 +32,30 @@ class ViewCorreo :
     private lateinit var back: ImageView
     private lateinit var editar: ImageButton
 
+    companion object {
+        var userIntent: Usuario? = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_correo)
+
+        userIntent = intent.getSerializableExtra("userObject") as? Usuario
         initComponents()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if(userIntent!!.getChecked() == 1){
+            finish()
+        }
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, HomeTabActivity::class.java).apply {
+            putExtra("userObject", userIntent!!)
+        })
+        finish()
     }
 
     override fun onClick(v: View?) {
@@ -47,10 +68,14 @@ class ViewCorreo :
                     if (intent.getSerializableExtra("correoupdated") != null) {
                         startActivity(Intent(this, FormCorreo::class.java).apply {
                             putExtra("correoupdated", intent.getSerializableExtra("correoupdated"))
+                            putExtra("userObject", userIntent)
+                            putExtra("userObject", userIntent)
                         })
                     } else {
                         startActivity(Intent(this, FormCorreo::class.java).apply {
                             putExtra("correo", intent.getSerializableExtra("correo"))
+                            putExtra("userObject", userIntent)
+                            putExtra("userObject", userIntent)
                         })
                     }
                     finish()

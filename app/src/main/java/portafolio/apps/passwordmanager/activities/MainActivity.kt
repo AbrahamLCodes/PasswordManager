@@ -10,17 +10,22 @@ import androidx.appcompat.app.AlertDialog
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.formactivities.FormUsuario
-import portafolio.apps.passwordmanager.fragments.RecuperacionFragment
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    var user: EditText? = null
-    var pass: EditText? = null
+    private lateinit var user: EditText
+    private lateinit var pass: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initComponents()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        user.setText("")
+        pass.setText("")
     }
 
     override fun onBackPressed() {
@@ -54,17 +59,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     }
                     db.close()
                 }
-                R.id.recuperacion -> {
-                    val rf = RecuperacionFragment()
-                    rf.show(supportFragmentManager, "Recuperar cuenta")
-                }
             }
         }
     }
 
     private fun nextActivity() {
+        val db = DBController(applicationContext)
         startActivity(Intent(this, HomeTabActivity::class.java).apply {
-            putExtra("username", user?.text.toString())
+            putExtra("username", user.text.toString())
+            putExtra("userObject", db.selectUsuario(user.text.toString(), pass.text.toString()))
         })
     }
 
@@ -79,14 +82,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun initComponents() {
         val loginBtn: Button = findViewById(R.id.loginBtn)
         val registerBtn: TextView = findViewById(R.id.registrarBtn)
-        val recuperacion = findViewById<TextView>(R.id.recuperacion)
 
         user = findViewById(R.id.usuario)
         pass = findViewById(R.id.contra)
 
         loginBtn.setOnClickListener(this)
         registerBtn.setOnClickListener(this)
-        recuperacion.setOnClickListener(this)
     }
 
     private fun screenWidth(): Int {

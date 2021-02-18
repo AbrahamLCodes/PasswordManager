@@ -9,8 +9,10 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.appbar.MaterialToolbar
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Correo
+import portafolio.apps.passwordmanager.datamodel.Usuario
 import portafolio.apps.passwordmanager.formviewsactivities.ViewCorreo
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -25,23 +27,35 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
     private lateinit var guardar: Button
     private lateinit var cancelar: Button
     private var insert = false
+    private var userIntent : Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_correo)
+        userIntent = intent.getSerializableExtra("userObject") as? Usuario
         initComponents()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if(userIntent!!.getChecked() == 1){
+            finish()
+        }
     }
 
     override fun onBackPressed() {
         if (insert) {
-            super.onBackPressed()
+            startActivity(Intent(this, HomeTabActivity::class.java).apply {
+                putExtra("userObject", userIntent)
+            })
+            finish()
         } else {
             val co = intent.getSerializableExtra("correo") as? Correo
             val co2 = intent.getSerializableExtra("correoupdated") as? Correo
             if (co == null) {
                 goToView(co2!!)
             } else if (co2 == null) {
-                goToView(co!!)
+                goToView(co)
             }
         }
     }
@@ -127,6 +141,7 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
                     co.getFecha()
                 )
             )
+            putExtra("userObject", userIntent)
         }
 
         startActivity(intent)
@@ -136,12 +151,13 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
     private fun insert() {
         val db = DBController(applicationContext)
         var good = true
+        val userObject = intent.getSerializableExtra("userObject") as? Usuario
         try {
             db.insertCorreo(
-                intent.getStringExtra("username")!!,
-                asunto!!.text.toString(),
-                correo!!.text.toString(),
-                contrasenia!!.text.toString(),
+                userObject!!.getNombre(),
+                asunto.text.toString(),
+                correo.text.toString(),
+                contrasenia.text.toString(),
                 getStringDate()
             )
         } catch (ex: Exception) {
@@ -155,7 +171,7 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
                 "El correo '" + correo!!.text.toString() + "' ha sido guardado correctamente",
                 Toast.LENGTH_SHORT
             ).show()
-            finish()
+            onBackPressed()
         } else {
             Toast.makeText(
                 applicationContext,

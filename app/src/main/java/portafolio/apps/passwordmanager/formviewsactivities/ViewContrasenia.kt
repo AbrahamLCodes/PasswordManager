@@ -11,7 +11,9 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
 import portafolio.apps.passwordmanager.datamodel.Contrasenia
+import portafolio.apps.passwordmanager.datamodel.Usuario
 import portafolio.apps.passwordmanager.formactivities.FormContrasenia
 
 class ViewContrasenia :
@@ -21,13 +23,29 @@ class ViewContrasenia :
     private lateinit var asunto: TextView
     private lateinit var asuntoBtn: ImageButton
     private lateinit var contrasenia: TextView
-   private lateinit var contraseniaBtn: ImageButton
+    private lateinit var contraseniaBtn: ImageButton
     private lateinit var back: ImageButton
+    private var userIntent: Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_contrasenia)
+        userIntent = intent.getSerializableExtra("userObject") as? Usuario
         initComponents()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if(userIntent!!.getChecked() == 1){
+            finish()
+        }
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, HomeTabActivity::class.java).apply {
+            putExtra("userObject", userIntent)
+        })
+        finish()
     }
 
     override fun onClick(v: View?) {
@@ -42,12 +60,14 @@ class ViewContrasenia :
                         startActivity(Intent(this, FormContrasenia::class.java).apply {
                             putExtra("contraseniaupdated", c)
                             putExtra("username", c!!.getNomusuario())
+                            putExtra("userObject", userIntent)
                         })
                     } else {
                         val c = intent.getSerializableExtra("contrasenia") as? Contrasenia
                         startActivity(Intent(this, FormContrasenia::class.java).apply {
                             putExtra("contrasenia", c)
                             putExtra("username", c!!.getNomusuario())
+                            putExtra("userObject", userIntent)
                         })
                     }
                     finish()
@@ -62,12 +82,12 @@ class ViewContrasenia :
         }
     }
 
-    private fun copy(text: String){
+    private fun copy(text: String) {
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip: ClipData = ClipData.newPlainText("simple text",text)
+        val clip: ClipData = ClipData.newPlainText("simple text", text)
         Toast.makeText(
             applicationContext,
-            "'"+text+"' copiado en el clipboard",
+            "'" + text + "' copiado en el clipboard",
             Toast.LENGTH_SHORT
         ).show()
         clipboard.setPrimaryClip(clip)

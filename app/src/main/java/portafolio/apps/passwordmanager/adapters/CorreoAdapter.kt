@@ -97,6 +97,7 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
                 val intent = Intent(itemView.context, ViewCorreo::class.java)
                 intent.apply {
                     putExtra("correo", items.get(position))
+                    putExtra("userObject", HomeTabActivity.usuarioIntent)
                 }
                 Log.d("FECHA DE CORREO", items.get(position).getFecha())
                 itemView.context.startActivity(intent)

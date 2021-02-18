@@ -18,12 +18,14 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/formUserTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="Nuevo Usuario"
                 android:textColor="#0096C7"
+                android:fontFamily="@font/helvetica"
                 android:textSize="25sp" />
 
 
@@ -38,6 +40,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/usuario"
                     android:layout_width="match_parent"
+                    android:fontFamily="@font/helvetica"
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"
                     android:inputType="textCapSentences" />
@@ -57,6 +60,7 @@
                     android:id="@+id/password1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica"
                     android:background="#FFFFFF"
                     android:inputType="textPassword" />
 
@@ -67,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:hint="Confrimar contraseña"
+                android:hint="Confirmar contraseña"
                 android:padding="15dp"
 
                 app:endIconMode="password_toggle">
@@ -77,51 +81,41 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"
+                    android:fontFamily="@font/helvetica"
                     android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Cerrar sesión cuando se minimiza la App o el dispositivo está en espera (Más seguro)"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_weight="5"/>
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/correoInst"
+                android:fontFamily="@font/helvetica"
+                android:text="\n¡Guarda bien tu información de inicio de sesión!"
                 android:textSize="15sp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:hint="E-mail (Para recuperación de usuario)"
-                android:padding="15dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/correo1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:inputType="textEmailAddress" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:hint="Confirmar e-mail"
-                android:padding="15dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/correo2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:inputType="textEmailAddress" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -140,6 +134,7 @@
                     android:paddingHorizontal="10dp"
                     android:text="Registrar"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/helvetica"
                     android:textSize="16sp"
                     app:rippleColor="#0096C7" />
 
@@ -152,6 +147,7 @@
                     android:layout_marginVertical="10dp"
                     android:gravity="center"
                     android:text="Cancelar"
+                    android:fontFamily="@font/helvetica"
                     android:textColor="#f56042"
                     android:textSize="16sp"
                     app:rippleColor="#f56042" />

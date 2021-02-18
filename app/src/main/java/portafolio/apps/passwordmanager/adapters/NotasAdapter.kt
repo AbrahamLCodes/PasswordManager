@@ -95,6 +95,7 @@ class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
                 val intent = Intent(itemView.context, ViewNotas::class.java)
                 intent.apply {
                     putExtra("nota", items.get(position))
+                    putExtra("userObject", HomeTabActivity.usuarioIntent)
                 }
                 itemView.context.startActivity(intent)
             }

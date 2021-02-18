@@ -26,19 +26,19 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
         var fragment: Fragment? = null
         when (position) {
             0 -> {
-                fragment = CorreosFragment(HomeTabActivity.username)
+                fragment = CorreosFragment(HomeTabActivity.usuarioIntent!!.getNombre())
             }
             1 -> {
-                fragment = CuentasFragment(HomeTabActivity.username)
+                fragment = CuentasFragment(HomeTabActivity.usuarioIntent!!.getNombre())
             }
             2 -> {
-                fragment = ContraseniasFragment(HomeTabActivity.username)
+                fragment = ContraseniasFragment(HomeTabActivity.usuarioIntent!!.getNombre())
             }
             3 -> {
-                fragment = NotasFragment(HomeTabActivity.username)
+                fragment = NotasFragment(HomeTabActivity.usuarioIntent!!.getNombre())
             }
             4 -> {
-                fragment = TarjetasFragment(HomeTabActivity.username)
+                fragment = TarjetasFragment(HomeTabActivity.usuarioIntent!!.getNombre())
             }
         }
         return  fragment!!

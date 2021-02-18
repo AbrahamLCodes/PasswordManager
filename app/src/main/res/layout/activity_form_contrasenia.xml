@@ -14,6 +14,7 @@
         android:background="#023E8A"
         app:navigationIcon="@drawable/key_24px"
         app:title="Añade una Contraseña"
+        android:fontFamily="@font/helvetica"
         app:titleTextColor="@color/white" />
 
     <ScrollView
@@ -51,6 +52,7 @@
                         android:id="@+id/nomUsuario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/helvetica"
                         android:inputType="textCapSentences" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -75,6 +77,7 @@
                         android:id="@+id/contrasenia"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:fontFamily="@font/helvetica"
                         android:inputType="textPassword" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -91,6 +94,7 @@
                         android:id="@+id/contrasenia1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:fontFamily="@font/helvetica"
                         android:inputType="textPassword" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -109,6 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/helvetica"
                     android:text="Guardar" />
 
                 <com.google.android.material.button.MaterialButton
@@ -119,6 +124,7 @@
                     android:layout_marginBottom="20dp"
                     android:backgroundTint="@color/white"
                     android:text="Cerrar"
+                    android:fontFamily="@font/helvetica"
                     android:textColor="@color/black"
                     app:strokeColor="#8E8E8E"
                     app:strokeWidth="1dp" />

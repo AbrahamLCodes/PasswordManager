@@ -3,36 +3,28 @@ package portafolio.apps.passwordmanager.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
-import androidx.core.view.get
-import androidx.core.view.iterator
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.internal.NavigationMenu
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.tabs.TabLayoutMediator
 import io.github.yavski.fabspeeddial.FabSpeedDial
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.activities.ui.main.SectionsPagerAdapter
 import portafolio.apps.passwordmanager.database.DBController
+import portafolio.apps.passwordmanager.datamodel.Usuario
 import portafolio.apps.passwordmanager.formactivities.*
-import kotlin.properties.Delegates
+import portafolio.apps.passwordmanager.sidemenuactivities.OptionsActivity
 
 class HomeTabActivity : AppCompatActivity(),
     FabSpeedDial.MenuListener,
-    NavigationView.OnNavigationItemSelectedListener{
+    NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawer: DrawerLayout
     private lateinit var sideMenu: NavigationView
@@ -43,13 +35,19 @@ class HomeTabActivity : AppCompatActivity(),
     private lateinit var tabs: TabLayout
 
     companion object {
-        lateinit var username : String
+        lateinit var username: String
+        var usuarioIntent: Usuario? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_tab)
 
+        usuarioIntent = intent.getSerializableExtra("userObject") as? Usuario
+        val db = DBController(applicationContext)
+        usuarioIntent =
+            db.selectUsuario(usuarioIntent!!.getNombre(), usuarioIntent!!.getContrasenia())
+        db.close()
         username = intent.getStringExtra("username").toString()
 
         sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
@@ -59,34 +57,32 @@ class HomeTabActivity : AppCompatActivity(),
         tabs.setupWithViewPager(viewPager)
         var currenttab = 0
         val tabsnum = tabs.tabCount
-        Log.d("mira","!!!!!"+tabsnum)
 
 
 
-        while (currenttab < tabsnum+1){
-            when(currenttab){
-                0->{
+        while (currenttab < tabsnum + 1) {
+            when (currenttab) {
+                0 -> {
                     val tab = tabs.getTabAt(0)
                     tab?.icon = resources.getDrawable(R.drawable.fabcorreo)
                     tab?.text = "correos"
                 }
-                1-> {
+                1 -> {
                     val tab = tabs.getTabAt(1)
                     tab?.icon = resources.getDrawable(R.drawable.fabpassword)
                     tab?.text = "cuentas"
-
                 }
-                2->{
+                2 -> {
                     val tab = tabs.getTabAt(2)
                     tab?.icon = resources.getDrawable(R.drawable.key_24px)
                     tab?.text = "contraseñas"
                 }
-                3-> {
+                3 -> {
                     val tab = tabs.getTabAt(3)
                     tab?.icon = resources.getDrawable(R.drawable.fabnotas)
                     tab?.text = "notas"
                 }
-                4->{
+                4 -> {
                     val tab = tabs.getTabAt(4)
                     tab?.icon = resources.getDrawable(R.drawable.fabtarjetas)
                     tab?.text = "pagos"
@@ -97,12 +93,29 @@ class HomeTabActivity : AppCompatActivity(),
         initComponents()
     }
 
+
+    override fun onStop() {
+        super.onStop()
+        if (usuarioIntent!!.getChecked() == 1) {
+            finish()
+        }
+    }
+
+
     override fun onBackPressed() {
-        Toast.makeText(
-            applicationContext,
-            "No le des pa atras we",
-            Toast.LENGTH_SHORT
-        ).show()
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Cerrar Sesión")
+        builder.setMessage("¿Seguro que desea cerrar sesión?")
+
+        builder.setPositiveButton("Salir") { _, _ ->
+            finish()
+        }
+
+        builder.setNegativeButton("Cancelar") { _, _ ->
+            //Do no thing
+        }
+
+        builder.show()
     }
 
     override fun onPrepareMenu(p0: NavigationMenu?): Boolean {
@@ -115,19 +128,21 @@ class HomeTabActivity : AppCompatActivity(),
                 R.id.correoItem -> {
                     startActivity(
                         Intent(this, FormCorreo::class.java).apply {
-                            putExtra("username", intent.getStringExtra("username"))
+                            putExtra("userObject", usuarioIntent)
                         }
                     )
-                    return true
+                    finish()
                 }
                 R.id.cuentaItem -> {
                     val db = DBController(applicationContext)
-                    if(db.getRowCount("CORREOS") > 0){
+                    if (db.getRowCount("CORREOS") > 0) {
                         startActivity(
                             Intent(this, FormCuenta::class.java).apply {
-                                putExtra("username", intent.getStringExtra("username"))
+                                putExtra("userObject", usuarioIntent)
+                                putExtra("username", usuarioIntent!!.getNombre())
                             }
                         )
+                        finish()
                     } else {
                         Toast.makeText(
                             applicationContext,
@@ -136,31 +151,35 @@ class HomeTabActivity : AppCompatActivity(),
                         ).show()
                         viewPager.setCurrentItem(2)
                     }
+                    finish()
                 }
                 R.id.contraseniaItem -> {
                     startActivity(
                         Intent(this, FormContrasenia::class.java).apply {
-                            putExtra("username", intent.getStringExtra("username"))
+                            putExtra("userObject", usuarioIntent)
                         }
                     )
+                    finish()
                 }
                 R.id.notaItem -> {
                     startActivity(
                         Intent(this, FormNota::class.java).apply {
-                            putExtra("username", intent.getStringExtra("username"))
+                            putExtra("userObject", usuarioIntent)
                         }
                     )
+                    finish()
                 }
                 R.id.tarjetaItem -> {
                     startActivity(
                         Intent(this, FormPagos::class.java).apply {
-                            putExtra("username", intent.getStringExtra("username"))
+                            putExtra("userObject", usuarioIntent)
                         }
                     )
+                    finish()
                 }
             }
         }
-        return false
+        return true
     }
 
     override fun onMenuClosed() {
@@ -169,25 +188,30 @@ class HomeTabActivity : AppCompatActivity(),
 
     override fun onNavigationItemSelected(it: MenuItem): Boolean {
         when (it.itemId) {// it comes from an embedded parameter of the Listener
-            R.id.creditItem -> {
-                Toast.makeText(
-                    applicationContext,
-                    "a prro",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+            R.id.optionItem -> {
+                startActivity(Intent(this, OptionsActivity::class.java).apply {
+                    putExtra("userObject", usuarioIntent)
+                })
+                finish()
             }
-            R.id.infoItem -> {
+            R.id.helpItem -> {
                 Toast.makeText(
                     applicationContext,
-                    "Info Item",
+                    "Ayuda",
                     Toast.LENGTH_SHORT
                 ).show()
             }
             R.id.rateItem -> {
                 Toast.makeText(
                     applicationContext,
-                    "Rate Item",
+                    "Calificanos",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            R.id.creditItem -> {
+                Toast.makeText(
+                    applicationContext,
+                    "Creditos",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -199,32 +223,26 @@ class HomeTabActivity : AppCompatActivity(),
         val headerView = sideMenu.getHeaderView(0)
         // Setting header username TextView
         val hu: TextView = headerView.findViewById(R.id.headerUser)
-        hu.setText("Usuario: " + intent.getStringExtra("username"))
+        val user = intent.getSerializableExtra("userObject") as? Usuario
+        hu.setText("Usuario: " + user!!.getNombre())
     }
 
-    private fun initComponents(){
+    private fun initComponents() {
         drawer = findViewById(R.id.drawer)
         sideMenu = findViewById(R.id.sideMenu)
         sideMenu.bringToFront() // This line makes the SideMenu clickeable
         menu = findViewById(R.id.menu)
         logOutbtn = findViewById(R.id.btnCerrar)
-        logOutbtn.setOnClickListener{
-            Toast.makeText(
-                applicationContext,
-                "log out",
-                Toast.LENGTH_SHORT
-            ).show()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+        logOutbtn.setOnClickListener {
+            onBackPressed()
         }
-        menu.setNavigationOnClickListener{
-            if(drawer.isDrawerOpen(GravityCompat.START)){
+        menu.setNavigationOnClickListener {
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START)
             } else {
                 drawer.openDrawer(GravityCompat.START)
             }
         }
-
 
         sideMenu.setNavigationItemSelectedListener(this)
         userHeader()

@@ -11,8 +11,10 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
 import portafolio.apps.passwordmanager.datamodel.Contrasenia
 import portafolio.apps.passwordmanager.datamodel.Nota
+import portafolio.apps.passwordmanager.datamodel.Usuario
 import portafolio.apps.passwordmanager.formactivities.FormContrasenia
 import portafolio.apps.passwordmanager.formactivities.FormNota
 
@@ -25,11 +27,27 @@ class ViewNotas :
     private lateinit var body: TextView
     private lateinit var bodyBtn: ImageButton
     private lateinit var back: ImageButton
+    private var userIntent : Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_notas)
+        userIntent = intent.getSerializableExtra("userObject") as? Usuario
         initComponents()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if(userIntent!!.getChecked() == 1){
+            finish()
+        }
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, HomeTabActivity::class.java).apply {
+            putExtra("userObject", userIntent)
+        })
+        finish()
     }
 
     override fun onClick(v: View?) {
@@ -44,12 +62,14 @@ class ViewNotas :
                         startActivity(Intent(this, FormNota::class.java).apply {
                             putExtra("notaupdated", c)
                             putExtra("username", c!!.getNomusuario())
+                            putExtra("userObject", userIntent)
                         })
                     } else {
                         val c = intent.getSerializableExtra("nota") as? Nota
                         startActivity(Intent(this, FormNota::class.java).apply {
                             putExtra("nota", c)
                             putExtra("username", c!!.getNomusuario())
+                            putExtra("userObject", userIntent)
                         })
                     }
                     finish()

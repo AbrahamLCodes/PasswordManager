@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <group android:checkableBehavior="single">
-
-
         <item
-            android:id="@+id/infoItem"
-            android:icon="@drawable/infovector"
-            android:title="Info" />
-
+            android:id="@+id/optionItem"
+            android:icon="@drawable/item_options_foreground"
+            android:title="Configuración de la cuenta" />
+        <item
+            android:id="@+id/helpItem"
+            android:icon="@drawable/help_icon_foreground"
+            android:title="Ayuda"/>
         <item
             android:id="@+id/rateItem"
             android:icon="@drawable/ratevector"
-            android:title="Calificanos" />
+            android:title="Califícanos" />
         <item
             android:id="@+id/creditItem"
             android:icon="@drawable/homevector"
-            android:title="Creditos" />
-
-
-
+            android:title="Créditos" />
     </group>
 </menu>

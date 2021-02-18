@@ -12,8 +12,10 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
 import portafolio.apps.passwordmanager.datamodel.Contrasenia
 import portafolio.apps.passwordmanager.datamodel.Tarjeta
+import portafolio.apps.passwordmanager.datamodel.Usuario
 import portafolio.apps.passwordmanager.formactivities.FormContrasenia
 import portafolio.apps.passwordmanager.formactivities.FormPagos
 
@@ -36,11 +38,27 @@ class ViewPagos :
     private lateinit var nip: TextView
     private lateinit var nipBtn: ImageButton
     private lateinit var back: ImageButton
+    private var userIntent: Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_pagos)
+        userIntent = intent.getSerializableExtra("userObject") as? Usuario
         initComponents()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if(userIntent!!.getChecked() == 1){
+            finish()
+        }
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, HomeTabActivity::class.java).apply {
+            putExtra("userObject", userIntent)
+        })
+        finish()
     }
 
     override fun onClick(v: View?) {
@@ -55,12 +73,14 @@ class ViewPagos :
                         startActivity(Intent(this, FormPagos::class.java).apply {
                             putExtra("tarjetaupdated", t)
                             putExtra("username", t!!.getNomusuario())
+                            putExtra("userObject", userIntent)
                         })
                     } else {
                         val t = intent.getSerializableExtra("tarjeta") as? Tarjeta
                         startActivity(Intent(this, FormPagos::class.java).apply {
                             putExtra("tarjeta", t)
                             putExtra("username", t!!.getNomusuario())
+                            putExtra("userObject", userIntent)
                         })
                     }
                     finish()

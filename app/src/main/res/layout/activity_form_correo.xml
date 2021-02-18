@@ -14,6 +14,7 @@
         android:background="#023E8A"
         app:navigationIcon="@drawable/ic_mail_24px"
         app:title="Añade un Correo"
+        android:fontFamily="@font/helvetica"
         app:titleTextColor="@color/white">
 
     </com.google.android.material.appbar.MaterialToolbar>
@@ -34,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="23dp"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/helvetica"
                 android:text="Nombre o Asunto" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -47,6 +49,7 @@
                     android:id="@+id/nomUsuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica"
                     android:inputType="textCapSentences" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -58,20 +61,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="23dp"
                 android:text="Correo"
-
-                />
+                android:fontFamily="@font/helvetica" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
+                android:fontFamily="@font/helvetica"
                 android:hint="Correo electronico">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/correo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica"
                     android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -81,6 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="23dp"
+                android:fontFamily="@font/helvetica"
                 android:text="Contraseña " />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -89,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:hint="Contraseña"
+                android:fontFamily="@font/helvetica"
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -96,8 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-
-                    />
+                    android:fontFamily="@font/helvetica" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,6 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="23dp"
+                android:fontFamily="@font/helvetica"
                 android:text="Repetir Contraseña " />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -114,12 +120,14 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:hint="Contraseña"
+                android:fontFamily="@font/helvetica"
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/contrasenia1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica"
                     android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -129,6 +137,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/helvetica"
                 android:text="guardar" />
 
             <com.google.android.material.button.MaterialButton
@@ -138,13 +147,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/helvetica"
                 android:text="Cerrar"
-                android:textColor="#023E8A">
-
-            </com.google.android.material.button.MaterialButton>
-
+                android:textColor="#023E8A"/>
         </TableLayout>
     </ScrollView>
-
-
 </LinearLayout>

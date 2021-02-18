@@ -101,6 +101,7 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
                 val intent = Intent(itemView.context, ViewCuentas::class.java)
                 intent.apply {
                     putExtra("cuenta", items.get(position))
+                    putExtra("userObject", HomeTabActivity.usuarioIntent)
                 }
                 Log.d("CUENTA FECHA", items.get(position).getFecha())
                 itemView.context.startActivity(intent)

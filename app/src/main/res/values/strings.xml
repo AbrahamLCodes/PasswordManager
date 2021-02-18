@@ -12,4 +12,8 @@
     <string name="correoInst">El e-mail te lo pedimos para que recuperes tu contraseña en caso de que
     la olvides</string>
     <string name="recuperar"><u>¿Olvidaste tu contraseña? Click aquí</u></string>
+    <string name="advertencia">El objetivo de esta App es no subir tus datos a internet por ningún motivo o circunstancia.
+    Por lo tanto, no hay manera de recuperar la contraseña si es que se te olvida. Busca la manera de guardar bien la
+    información de inicio de sesión.</string>
+
 </resources>

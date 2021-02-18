@@ -9,12 +9,13 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputLayout
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Tarjeta
+import portafolio.apps.passwordmanager.datamodel.Usuario
 import portafolio.apps.passwordmanager.formviewsactivities.ViewPagos
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,6 +34,7 @@ class FormPagos :
     private lateinit var nip: EditText
     private lateinit var guardarBtn: Button
     private var insert = false
+    private var userIntent: Usuario? = null
     private val meses = listOf(
         "01",
         "02",
@@ -51,13 +53,23 @@ class FormPagos :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_pagos)
+        userIntent = intent.getSerializableExtra("userObject") as? Usuario
         initComponents()
+    }
 
+    override fun onStop() {
+        super.onStop()
+        if(userIntent!!.getChecked() == 1){
+            finish()
+        }
     }
 
     override fun onBackPressed() {
         if (insert) {
-            super.onBackPressed()
+            startActivity(Intent(this, HomeTabActivity::class.java).apply {
+                putExtra("userObject", userIntent)
+            })
+            finish()
         } else {
             val ta = intent.getSerializableExtra("tarjeta") as? Tarjeta
             val taUpdated = intent.getSerializableExtra("tarjetaupdated") as? Tarjeta
@@ -159,6 +171,7 @@ class FormPagos :
                     t.getFecha()
                 )
             )
+            putExtra("userObject", userIntent)
         }
         startActivity(intent)
         finish()
@@ -167,9 +180,10 @@ class FormPagos :
     private fun save() {
         val db = DBController(applicationContext)
         var correcto = true
+        val usuario = intent.getSerializableExtra("userObject") as? Usuario
         try {
             db.insertTarjeta(
-                intent.getStringExtra("username")!!,
+                usuario!!.getNombre(),
                 asunto!!.text.toString(),
                 titular!!.text.toString(),
                 ntarjeta!!.text.toString(),
@@ -197,7 +211,7 @@ class FormPagos :
                 Toast.LENGTH_LONG
             ).show()
             db.close()
-            finish()
+            onBackPressed()
         }
         db.close()
     }

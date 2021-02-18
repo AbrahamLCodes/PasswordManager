@@ -36,14 +36,14 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
     }
 
     //Method to insert a user. The name and password is passed by value in parameters
-    fun insertUsuario(nombre: String, contrasenia: String, correo: String) {
+    fun insertUsuario(nombre: String, contrasenia: String, keepSigned: Int) {
         val db = writableDatabase
         if (db != null) {
             db.execSQL(
                 "INSERT INTO USUARIOS VALUES (" +
                         "'" + nombre + "'," +
                         "'" + contrasenia + "'," +
-                        "'" + correo + "')"
+                        "'" + keepSigned + "')"
             )
         }
         db.close()
@@ -258,20 +258,28 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         return list
     }
 
+    fun selectUsuario(nomusuario: String, contrasenia: String): Usuario{
+        val cursor = readableDatabase.rawQuery("SELECT * FROM USUARIOS WHERE  NOMBRE = '$nomusuario' AND CONTRASENIA = '$contrasenia'", null)
+        cursor.moveToFirst()
+        return Usuario(
+            cursor.getString(0),
+            cursor.getString(1),
+            cursor.getInt(2)
+        )
+    }
+
     // Returns true if a user is found or false if is not found
     fun findUsuario(name: String, password: String): Boolean {
-        val cursor: Cursor = readableDatabase.rawQuery(
-            "SELECT * FROM USUARIOS",
+        val cursor = readableDatabase.rawQuery(
+            "SELECT * FROM USUARIOS WHERE NOMBRE = '$name' AND CONTRASENIA = '$password'",
             null
         )
         var found = false
 
         if (cursor.moveToFirst()) {
             do {
-                if (name.equals(cursor.getString(0)) && password.equals(cursor.getString(1))) {
-                    Log.d("ESTADO DE LA VALIDACION", "CHIDOOO WEEE")
-                    found = true
-                }
+                Log.d("ESTADO DE LA VALIDACION", "CHIDOOO WEEE")
+                found = true
             } while (cursor.moveToNext() && !found)
         }
         return found
@@ -293,6 +301,18 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
             } while (cursor.moveToNext() && !found)
         }
         return found
+    }
+
+    fun updateUsuario(oldnom : String, newnom: String, pass: String, checked: Int){
+        val db = writableDatabase
+        db.execSQL("UPDATE USUARIOS SET NOMBRE = '$newnom', CONTRASENIA = '$pass', KEEPSIGNED = $checked WHERE NOMBRE = '$oldnom'")
+        db.close()
+    }
+
+    fun toggleSigned(nomusuario: String, checked: Int){
+        val db = writableDatabase
+        db.execSQL("UPDATE USUARIOS SET KEEPSIGNED = $checked WHERE (NOMBRE = '$nomusuario')")
+        db.close()
     }
 
     fun updateCorreo(
@@ -522,8 +542,9 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         return list
     }
 
-    fun correoContains(subString: String) {
-
+    fun updateUserTable(oldnom: String, newnom: String, tableName: String){
+        val db = readableDatabase
+        db.execSQL("UPDATE $tableName SET NOMUSUARIO = '$newnom' WHERE NOMUSUARIO = '$oldnom'")
     }
 
     fun getRowCount(tableName: String): Long {
@@ -545,4 +566,5 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
 
         return cursor.columnCount
     }
+
 }

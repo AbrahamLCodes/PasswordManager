@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputLayout
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Cuenta
+import portafolio.apps.passwordmanager.datamodel.Usuario
 import portafolio.apps.passwordmanager.formviewsactivities.ViewCuentas
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -28,6 +30,7 @@ class FormCuenta :
     private lateinit var contrasenia1: EditText
     private lateinit var guardarBtn: Button
     private var insert = false
+    private var userIntent : Usuario? = null
     private val categoriaItems = listOf(
         "Red Social",
         "Plataforma de Gaming",
@@ -41,12 +44,23 @@ class FormCuenta :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_cuentas)
+        userIntent = intent.getSerializableExtra("userObject") as? Usuario
         initComponents()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if(userIntent!!.getChecked() == 1){
+            finish()
+        }
     }
 
     override fun onBackPressed() {
         if (insert) {
-            super.onBackPressed()
+            startActivity(Intent(this, HomeTabActivity::class.java).apply {
+                putExtra("userObject", userIntent)
+            })
+            finish()
         } else {
             val co = intent.getSerializableExtra("cuenta") as? Cuenta
             val co2 = intent.getSerializableExtra("cuentaupdated") as? Cuenta
@@ -142,6 +156,7 @@ class FormCuenta :
                     c.getFecha()
                 )
             )
+            putExtra("userObject", userIntent)
         }
         startActivity(intent)
         finish()
@@ -150,9 +165,10 @@ class FormCuenta :
     private fun save() {
         val db = DBController(applicationContext)
         var correcto = true
+        val usuario = intent.getSerializableExtra("userObject") as? Usuario
         try {
             db.insertCuenta(
-                intent.getStringExtra("username")!!,
+                usuario!!.getNombre(),
                 correoDrop.editText!!.text.toString(),
                 website.text.toString(),
                 contrasenia.text.toString(),
@@ -180,7 +196,7 @@ class FormCuenta :
                 Toast.LENGTH_LONG
             ).show()
             db.close()
-            finish()
+            onBackPressed()
         }
         db.close()
     }

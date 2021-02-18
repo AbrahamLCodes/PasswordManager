@@ -12,8 +12,10 @@ import androidx.core.graphics.drawable.DrawableCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputLayout
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.activities.HomeTabActivity
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Contrasenia
+import portafolio.apps.passwordmanager.datamodel.Usuario
 import portafolio.apps.passwordmanager.formviewsactivities.ViewContrasenia
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -28,16 +30,28 @@ class FormContrasenia :
     private lateinit var contrasenia1: EditText
     private lateinit var guardarBtn: Button
     private var insert = false
+    private var userIntent: Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_contrasenia)
+        userIntent = intent.getSerializableExtra("userObject") as? Usuario
         initComponents()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if(userIntent!!.getChecked() == 1){
+            finish()
+        }
     }
 
     override fun onBackPressed() {
         if (insert) {
-            super.onBackPressed()
+            startActivity(Intent(this, HomeTabActivity::class.java).apply {
+                putExtra("userObject", userIntent)
+            })
+            finish()
         } else {
             val co = intent.getSerializableExtra("contrasenia") as? Contrasenia
             val coUpdated = intent.getSerializableExtra("contraseniaupdated") as? Contrasenia
@@ -121,6 +135,7 @@ class FormContrasenia :
                     c.getFecha()
                 )
             )
+            putExtra("userObject", userIntent)
         }
         startActivity(intent)
         finish()
@@ -129,11 +144,12 @@ class FormContrasenia :
     private fun save() {
         val db = DBController(applicationContext)
         var correcto = true
+        val usuario = intent.getSerializableExtra("userObject") as? Usuario
         try {
             db.insertContrasenia(
-                intent.getStringExtra("username")!!,
-                nomUsuario!!.text.toString(),
-                contrasenia1!!.text.toString(),
+                usuario!!.getNombre(),
+                nomUsuario.text.toString(),
+                contrasenia1.text.toString(),
                 getStringDate()
             )
         } catch (ex: Exception) {
@@ -151,13 +167,13 @@ class FormContrasenia :
                 "Contraseña de '" + nomUsuario!!.text.toString() + "' guardada exitosamente",
                 Toast.LENGTH_LONG
             ).show()
-            finish()
+            onBackPressed()
         }
         db.close()
     }
 
     private fun checkFields(): Boolean {
-        if (nomUsuario!!.text.toString().equals("")) {
+        if (nomUsuario.text.toString().equals("")) {
             Toast.makeText(
                 applicationContext, "Introduce un nombre/asunto", Toast.LENGTH_SHORT
             ).show()

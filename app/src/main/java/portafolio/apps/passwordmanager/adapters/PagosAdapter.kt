@@ -101,6 +101,7 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
                 val intent = Intent(itemView.context, ViewPagos::class.java)
                 intent.apply {
                     putExtra("tarjeta", items.get(position))
+                    putExtra("userObject", HomeTabActivity.usuarioIntent)
                 }
                 itemView.context.startActivity(intent)
             }
