@@ -114,13 +114,16 @@ class ViewCuentas :
         correoBtn = findViewById(R.id.correoBtn)
         back = findViewById(R.id.back)
         val editar = findViewById<ImageButton>(R.id.editar)
+        val categoria = findViewById<TextView>(R.id.categoria)
 
         val cuenta = intent.getSerializableExtra("cuenta") as? Cuenta
+
         if (cuenta != null) {
             sitio.text = cuenta.getWebsite()
             usuario.text = cuenta.getNickname()
             contrasenia.text = cuenta.getContrasenia()
             correo.text = cuenta.getCorreo()
+            categoria.text = cuenta.getCategoria()
         }
 
         val cuentaUpdated = intent.getSerializableExtra("cuentaupdated") as? Cuenta

@@ -52,16 +52,16 @@ class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filt
     }
 
     override fun getFilter(): Filter {
-        return object  : Filter() {
+        return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                var filteredList : MutableList<Contrasenia> = ArrayList()
+                var filteredList: MutableList<Contrasenia> = ArrayList()
 
-                if(constraint == null || constraint.isEmpty()){
+                if (constraint == null || constraint.isEmpty()) {
                     filteredList.addAll(itemsCopy)
                 } else {
                     val filterPattern = constraint.toString().toLowerCase().trim()
-                    for(item: Contrasenia in itemsCopy){
-                        if (item.getAsunto().toLowerCase().contains(filterPattern)){
+                    for (item: Contrasenia in itemsCopy) {
+                        if (item.getAsunto().toLowerCase().contains(filterPattern)) {
                             filteredList.add(item)
                         }
                     }
@@ -99,39 +99,40 @@ class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filt
                 val position: Int = adapterPosition
                 MaterialAlertDialogBuilder(itemView.context).setTitle(
                     "Contraseña: " + asunto.text.toString().toUpperCase()
-                ).setMessage("Que desea hacer?").setNeutralButton("Ver") { dialog, which ->
-                    val intent = Intent(itemView.context, ViewContrasenia::class.java)
-                    intent.apply {
-                        putExtra("contrasenia", items.get(position))
-                    }
-                    itemView.context.startActivity(intent)
-                }.setPositiveButton("editar") { dialog, which ->
-                    val intent2 = Intent(itemView.context, FormContrasenia::class.java)
-                    intent2.apply {
-                        putExtra("contraseniaupdated", items.get(position))
-                        itemView.context.startActivity(intent2)
-                    }
-                }.setNegativeButton("elminar") { dialog, which ->
+                ).setMessage("¿Qué desea hacer?")
+                    .setNeutralButton("Ver") { dialog, which ->
+                        val intent = Intent(itemView.context, ViewContrasenia::class.java)
+                        intent.apply {
+                            putExtra("contrasenia", items.get(position))
+                        }
+                        itemView.context.startActivity(intent)
+                    }.setPositiveButton("Editar") { dialog, which ->
+                        val intent2 = Intent(itemView.context, FormContrasenia::class.java)
+                        intent2.apply {
+                            putExtra("contraseniaupdated", items.get(position))
+                            itemView.context.startActivity(intent2)
+                        }
+                    }.setNegativeButton("Eliminar") { dialog, which ->
 
-                    // Eliminar
-                    val db = DBController(itemView.context)
-                    db.deleteContrasenia(
-                        items[position].getNomusuario(),
-                        items[position].getAsunto()
-                    )
-
-                    ContraseniasFragment.contraseniaAdapter.submitList(
-                        db.customContraseniaSelect(
-                            "NOMUSUARIO",
-                            HomeTabActivity.username
+                        // Eliminar
+                        val db = DBController(itemView.context)
+                        db.deleteContrasenia(
+                            items[position].getNomusuario(),
+                            items[position].getAsunto()
                         )
-                    )
-                    ContraseniasFragment.recycler.apply {
-                        layoutManager = GridLayoutManager(itemView.context, 1)
-                        adapter = ContraseniasFragment.contraseniaAdapter
-                    }
-                    db.close()
-                }.show()
+
+                        ContraseniasFragment.contraseniaAdapter.submitList(
+                            db.customContraseniaSelect(
+                                "NOMUSUARIO",
+                                HomeTabActivity.username
+                            )
+                        )
+                        ContraseniasFragment.recycler.apply {
+                            layoutManager = GridLayoutManager(itemView.context, 1)
+                            adapter = ContraseniasFragment.contraseniaAdapter
+                        }
+                        db.close()
+                    }.show()
                 return@setOnLongClickListener true
             }
         }

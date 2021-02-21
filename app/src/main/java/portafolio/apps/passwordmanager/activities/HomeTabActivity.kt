@@ -2,7 +2,6 @@ package portafolio.apps.passwordmanager.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +19,7 @@ import portafolio.apps.passwordmanager.activities.ui.main.SectionsPagerAdapter
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Usuario
 import portafolio.apps.passwordmanager.formactivities.*
+import portafolio.apps.passwordmanager.sidemenuactivities.InfoActivity
 import portafolio.apps.passwordmanager.sidemenuactivities.OptionsActivity
 
 class HomeTabActivity : AppCompatActivity(),
@@ -135,7 +135,7 @@ class HomeTabActivity : AppCompatActivity(),
                 }
                 R.id.cuentaItem -> {
                     val db = DBController(applicationContext)
-                    if (db.getRowCount("CORREOS") > 0) {
+                    if (db.getRowCount(usuarioIntent!!.getNombre(),"CORREOS") > 0) {
                         startActivity(
                             Intent(this, FormCuenta::class.java).apply {
                                 putExtra("userObject", usuarioIntent)
@@ -151,7 +151,6 @@ class HomeTabActivity : AppCompatActivity(),
                         ).show()
                         viewPager.setCurrentItem(2)
                     }
-                    finish()
                 }
                 R.id.contraseniaItem -> {
                     startActivity(
@@ -194,27 +193,13 @@ class HomeTabActivity : AppCompatActivity(),
                 })
                 finish()
             }
-            R.id.helpItem -> {
-                Toast.makeText(
-                    applicationContext,
-                    "Ayuda",
-                    Toast.LENGTH_SHORT
-                ).show()
+            R.id.infoItem -> {
+                startActivity(Intent(this, InfoActivity::class.java).apply {
+                    putExtra("userObject", usuarioIntent)
+                })
+                finish()
             }
-            R.id.rateItem -> {
-                Toast.makeText(
-                    applicationContext,
-                    "Calificanos",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            R.id.creditItem -> {
-                Toast.makeText(
-                    applicationContext,
-                    "Creditos",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+
         }
         return true
     }

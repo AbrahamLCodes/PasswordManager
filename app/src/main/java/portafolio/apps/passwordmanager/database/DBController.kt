@@ -169,6 +169,18 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         return list
     }
 
+    fun getCountFromTable(nomusuario: String, tableName: String, where: String, like: String): Int{
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM $tableName WHERE (NOMUSUARIO = '$nomusuario' AND $where = '$like')", null)
+        var i = 0
+        if(cursor.moveToFirst()){
+            do{
+                i++
+            }while (cursor.moveToNext())
+        }
+        return i
+    }
+
     fun customMainCuentaSelect(where: String, like: String): MutableList<Cuenta> {
         val db = readableDatabase
         val cursor = db.rawQuery("SELECT * FROM CUENTAS WHERE $where = '$like'", null)
@@ -324,6 +336,15 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
     ) {
         val db = writableDatabase
         db?.execSQL("UPDATE CORREOS SET ASUNTO = '$asunto', CORREO = '$correoNew', CONTRASENIA = '$contrasenia' WHERE (NOMUSUARIO = '$nomusuario' AND CORREO = '$correoOld')")
+        if(correoOld != correoNew){
+            updateCorreoFromCuenta(correoNew,nomusuario)
+        }
+        db.close()
+    }
+
+    private fun updateCorreoFromCuenta(correo: String, nomusuario: String){
+        val db = writableDatabase
+        db?.execSQL("UPDATE CUENTAS SET CORREO = '$correo' WHERE NOMUSUARIO = '$nomusuario'")
         db.close()
     }
 
@@ -410,6 +431,23 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
     fun deleteTarjetas(nomusuario: String, asunto: String) {
         val db = writableDatabase
         db?.execSQL("DELETE FROM TARJETAS WHERE (NOMUSUARIO = '$nomusuario' AND ASUNTO = '$asunto')")
+        db.close()
+    }
+
+    fun deleteByUsuario(nomusuario: String, tableName: String){
+        val db = writableDatabase
+        db.execSQL("DELETE FROM $tableName WHERE NOMUSUARIO = '$nomusuario'")
+        db.close()
+    }
+
+    fun deleteUsuario(nomusuario: String){
+        deleteByUsuario(nomusuario,"CORREOS")
+        deleteByUsuario(nomusuario,"CUENTAS")
+        deleteByUsuario(nomusuario,"CONTRASENIAS")
+        deleteByUsuario(nomusuario,"NOTAS")
+        deleteByUsuario(nomusuario,"TARJETAS")
+        val db = writableDatabase
+        db.execSQL("DELETE FROM USUARIOS WHERE NOMBRE = '$nomusuario'")
         db.close()
     }
 
@@ -547,11 +585,17 @@ class DBController(context: Context) : SQLiteOpenHelper(context, "passDB", null,
         db.execSQL("UPDATE $tableName SET NOMUSUARIO = '$newnom' WHERE NOMUSUARIO = '$oldnom'")
     }
 
-    fun getRowCount(tableName: String): Long {
+    fun getRowCount(username: String, tableName: String): Int {
         val db = readableDatabase
-        val count = DatabaseUtils.queryNumEntries(db, tableName)
+        val cursor = db.rawQuery("SELECT * FROM $tableName WHERE NOMUSUARIO = '$username'", null)
+        var i = 0
+        if(cursor.moveToFirst()){
+            do{
+                i++
+            }while (cursor.moveToNext())
+        }
         db.close()
-        return count
+        return i
     }
 
     fun getColumnCount(tableName: String): Int {

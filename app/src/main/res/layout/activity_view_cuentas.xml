@@ -16,9 +16,9 @@
 
         <ImageButton
             android:id="@+id/back"
-            android:backgroundTint="#00000000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#00000000"
             android:src="@drawable/arrow" />
 
         <TextView
@@ -65,18 +65,18 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/sitio"
-                    android:drawableStart="@drawable/ic_red_mundial"
-                    android:drawablePadding="10dp"
-                    app:drawableTint="@color/black"
                     style="@style/TextAppearance.AppCompat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
+                    android:drawableStart="@drawable/ic_red_mundial"
+                    android:drawablePadding="10dp"
                     android:fontFamily="@font/helvetica"
                     android:gravity="center_vertical"
                     android:text="Sitio"
                     android:textIsSelectable="true"
                     android:textSize="15sp"
+                    app:drawableTint="@color/black"
 
                     />
 
@@ -91,28 +91,28 @@
 
 
             </TableRow>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/grey_font"
-                />
+                android:background="@color/grey_font" />
 
             <TableRow>
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:drawableStart="@drawable/fabcuenta"
-                    android:drawablePadding="10dp"
-                    app:drawableTint="@color/black"
                     android:id="@+id/usuario"
                     style="@style/TextAppearance.AppCompat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
+                    android:drawableStart="@drawable/fabcuenta"
+                    android:drawablePadding="10dp"
                     android:fontFamily="@font/helvetica"
                     android:gravity="center_vertical"
                     android:text="Usuario o Nombre"
                     android:textIsSelectable="true"
                     android:textSize="15sp"
+                    app:drawableTint="@color/black"
 
                     />
 
@@ -126,26 +126,27 @@
                     android:clickable="true"
                     android:src="@drawable/ic_content_copy_24px" />
             </TableRow>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/grey_font"
-                />
+                android:background="@color/grey_font" />
+
             <TableRow>
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:drawableStart="@drawable/key_24px"
-                    android:drawablePadding="10dp"
-                    app:drawableTint="@color/black"
                     android:id="@+id/contrasenia"
                     style="@style/TextAppearance.AppCompat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
+                    android:drawableStart="@drawable/key_24px"
+                    android:drawablePadding="10dp"
                     android:fontFamily="@font/helvetica"
                     android:gravity="center_vertical"
                     android:text="Contraseña "
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    app:drawableTint="@color/black" />
 
                 <ImageButton
                     android:id="@+id/contraseniaBtn"
@@ -157,27 +158,27 @@
                     android:src="@drawable/ic_content_copy_24px" />
 
             </TableRow>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/grey_font"
-                />
+                android:background="@color/grey_font" />
 
             <TableRow>
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:drawableStart="@drawable/fabcorreo"
-                    android:drawablePadding="10dp"
-                    app:drawableTint="@color/black"
                     android:id="@+id/correo"
                     style="@style/TextAppearance.AppCompat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="25sp"
+                    android:drawableStart="@drawable/fabcorreo"
+                    android:drawablePadding="10dp"
                     android:fontFamily="@font/helvetica"
                     android:gravity="center_vertical"
                     android:text="Correo electronico"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    app:drawableTint="@color/black" />
 
                 <ImageButton
                     android:id="@+id/correoBtn"
@@ -189,13 +190,25 @@
                     android:src="@drawable/ic_content_copy_24px" />
 
             </TableRow>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/grey_font"
-                />
+                android:background="@color/grey_font" />
 
+            <TableRow>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/categoria"
+                    style="@style/TextAppearance.AppCompat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="25sp"
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center_vertical"
+                    android:text="categoria"
+                    android:textSize="15sp"
+                    app:drawableTint="@color/black" />
+            </TableRow>
         </TableLayout>
     </ScrollView>
-
 </LinearLayout>

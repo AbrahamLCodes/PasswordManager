@@ -34,7 +34,6 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
                 false
             )
         )
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -91,7 +90,6 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
     ) : RecyclerView.ViewHolder(itemView) {
         val titular: TextView = itemView.findViewById(R.id.titular)
         val ntarjeta: TextView = itemView.findViewById(R.id.cuentaNum)
-        val nip: TextView = itemView.findViewById(R.id.nip)
         val cad: TextView = itemView.findViewById(R.id.cad)
         val image: ImageView = itemView.findViewById(R.id.imgViewCard)
 
@@ -109,19 +107,19 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
                 val position: Int = adapterPosition
                 MaterialAlertDialogBuilder(itemView.context).setTitle(
                     "Cuenta: " + titular.text.toString().toUpperCase()
-                ).setMessage("Que desea hacer?").setNeutralButton("Ver") { dialog, which ->
+                ).setMessage("¿Qué desea hacer?").setNeutralButton("Ver") { dialog, which ->
                     val intent = Intent(itemView.context, ViewPagos::class.java)
                     intent.apply {
                         putExtra("tarjeta", items.get(position))
                     }
                     itemView.context.startActivity(intent)
-                }.setPositiveButton("editar") { dialog, which ->
+                }.setPositiveButton("Editar") { dialog, which ->
                     val intent2 = Intent(itemView.context, FormPagos::class.java)
                     intent2.apply {
                         putExtra("tarjetaupdated", items.get(position))
                         itemView.context.startActivity(intent2)
                     }
-                }.setNegativeButton("elminar") { dialog, which ->
+                }.setNegativeButton("Eliminar") { dialog, which ->
                     // Eliminar
                     val db = DBController(itemView.context)
                     db.deleteTarjetas(
@@ -148,7 +146,6 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
         fun bind(tarjeta: Tarjeta) {
             titular.setText(tarjeta.getTitular())
             ntarjeta.setText(tarjeta.getNtarjeta())
-            nip.setText(tarjeta.getCodseg())
             cad.setText(tarjeta.getCadM() + "/" + tarjeta.getCadY())
             if(tarjeta.getBanco().contains("santander", ignoreCase = true)){
                 image.setImageResource(R.drawable.ic_icons8_santander)
@@ -174,9 +171,7 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
             }
             if(tarjeta.getBanco().contains("banorte", ignoreCase = true)){
                 image.setImageResource(R.drawable.ic_banorte_73512)
-
                 image.scaleType = ImageView.ScaleType.CENTER_CROP
-
             }
         }
     }

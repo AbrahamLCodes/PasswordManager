@@ -21,9 +21,9 @@
         android:shadowDx="-3"
         android:shadowDy="-3"
         android:shadowRadius="1"
-        android:text="Password Manager"
+        android:text="Administra tus contraseñas de manera segura y local"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/headerUser"
@@ -37,6 +37,5 @@
         android:shadowRadius="1"
         android:text="Usuario:"
         android:textColor="@color/white"
-        android:textSize="13sp" />
-
+        android:textSize="15sp" />
 </LinearLayout>

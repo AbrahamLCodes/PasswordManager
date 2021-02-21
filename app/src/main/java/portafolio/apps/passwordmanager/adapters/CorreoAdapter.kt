@@ -5,16 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.activities.HomeTabActivity
 import portafolio.apps.passwordmanager.activities.tabfragments.CorreosFragment
+import portafolio.apps.passwordmanager.activities.tabfragments.CuentasFragment
 import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Correo
 import portafolio.apps.passwordmanager.formactivities.FormCorreo
@@ -56,7 +54,7 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
         return object : Filter() {
 
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                var filteredList: MutableList<Correo> = ArrayList()
+                val filteredList: MutableList<Correo> = ArrayList()
 
                 if (constraint == null || constraint.isEmpty()) {
                     filteredList.addAll(itemsCopy)
@@ -64,7 +62,8 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
                     val filterPattern = constraint.toString().toLowerCase().trim()
                     for (item: Correo in itemsCopy) {
                         if (item.getNombre().toLowerCase().contains(filterPattern) ||
-                                item.getCorreo().toLowerCase().contains(filterPattern)) {
+                            item.getCorreo().toLowerCase().contains(filterPattern)
+                        ) {
                             filteredList.add(item)
                         }
                     }
@@ -92,55 +91,94 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
         val image: ImageView = itemView.findViewById(R.id.imgViewCard)
 
         init {
-            itemView.setOnClickListener { v: View ->
-                val position: Int = adapterPosition
+            itemView.setOnClickListener {
                 val intent = Intent(itemView.context, ViewCorreo::class.java)
                 intent.apply {
-                    putExtra("correo", items.get(position))
+                    putExtra("correo", items[adapterPosition])
                     putExtra("userObject", HomeTabActivity.usuarioIntent)
                 }
-                Log.d("FECHA DE CORREO", items.get(position).getFecha())
+                Log.d("FECHA DE CORREO", items[adapterPosition].getFecha())
                 itemView.context.startActivity(intent)
             }
 
-
             itemView.setOnLongClickListener { v: View ->
-                val position: Int = adapterPosition
                 MaterialAlertDialogBuilder(itemView.context).setTitle(
                     "Correo: " + asunto.text.toString().toUpperCase()
-                ).setMessage("Que desea hacer?").setNeutralButton("Ver") { dialog, which ->
-                    val intent = Intent(itemView.context, ViewCorreo::class.java)
-                    intent.apply {
-                        putExtra("correo", items.get(position))
-                    }
-                    itemView.context.startActivity(intent)
-                }.setPositiveButton("editar") { dialog, which ->
-                    val intent2 = Intent(itemView.context, FormCorreo::class.java)
-                    intent2.apply {
-                        putExtra("correoupdated", items.get(position))
-                        itemView.context.startActivity(intent2)
-                    }
-                }.setNegativeButton("elminar") { dialog, which ->
-
-                    // Eliminar
-                    val db = DBController(itemView.context)
-                    db.deleteCorreo(items[position].getCorreo(), items[position].getNomusuario())
-                    CorreosFragment.correoAdapter.submitList(
-                        db.customCorreoSelect(
-                            "NOMUSUARIO",
-                            HomeTabActivity.username
-                        )
-                    )
-                    CorreosFragment.recycler.apply {
-                        layoutManager = GridLayoutManager(itemView.context, 1)
-                        adapter = CorreosFragment.correoAdapter
-
-                    }
-                    db.close()
-                }.show()
+                ).setMessage("¿Qué desea hacer?")
+                    .setNeutralButton("Ver") { _, _ ->
+                        goToView()
+                    }.setPositiveButton("Editar") { _, _ ->
+                        goToEditar()
+                    }.setNegativeButton("Eliminar") { _, _ ->
+                        eliminar()
+                    }.show()
                 return@setOnLongClickListener true
             }
+        }
 
+        private fun goToView() {
+            val intent = Intent(itemView.context, ViewCorreo::class.java)
+            intent.apply {
+                putExtra("correo", items[adapterPosition])
+            }
+            itemView.context.startActivity(intent)
+        }
+
+        private fun goToEditar() {
+            val intent2 = Intent(itemView.context, FormCorreo::class.java)
+            intent2.apply {
+                putExtra("correoupdated", items[adapterPosition])
+                itemView.context.startActivity(intent2)
+            }
+        }
+
+        private fun eliminar() {
+
+            val bd = DBController(itemView.context)
+            MaterialAlertDialogBuilder(itemView.context).setTitle(
+                "¿Seguro que desea eliminar este correo?"
+            ).setMessage(
+                "Se eliminaran " + bd.getCountFromTable(
+                    items[adapterPosition].getNomusuario(),
+                    "CUENTAS",
+                    "CORREO",
+                    items[adapterPosition].getCorreo()
+                ) + " cuentas ligadas a este correo"
+            )
+                .setPositiveButton("Eliminar") { _, _ ->
+                    delete()
+                }.setNegativeButton("Cancelar") { _, _ ->
+                }.show()
+
+        }
+
+        private fun delete() {
+            val db = DBController(itemView.context)
+            db.deleteCorreo(
+                items[adapterPosition].getCorreo(),
+                items[adapterPosition].getNomusuario()
+            )
+            CorreosFragment.correoAdapter.submitList(
+                db.customCorreoSelect(
+                    "NOMUSUARIO",
+                    HomeTabActivity.usuarioIntent!!.getNombre()
+                )
+            )
+            CuentasFragment.cuentaAdapter.submitList(
+                db.customMainCuentaSelect(
+                    "NOMUSUARIO",
+                    HomeTabActivity.usuarioIntent!!.getNombre()
+                )
+            )
+            CorreosFragment.recycler.apply {
+                layoutManager = GridLayoutManager(itemView.context, 1)
+                adapter = CorreosFragment.correoAdapter
+            }
+            CuentasFragment.recycler.apply {
+                layoutManager = GridLayoutManager(itemView.context, 1)
+                adapter = CuentasFragment.cuentaAdapter
+            }
+            db.close()
         }
 
         fun bind(correo: Correo) {

@@ -9,16 +9,21 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import portafolio.apps.passwordmanager.R
+import portafolio.apps.passwordmanager.database.DBController
 import portafolio.apps.passwordmanager.datamodel.Usuario
 import portafolio.apps.passwordmanager.formactivities.FormUsuario
+import java.lang.Exception
 
-class ConfirmUserDialog(userObject: Usuario) : AppCompatDialogFragment(), View.OnClickListener {
+class ConfirmUserDialog(userObject: Usuario, editar: Boolean) : AppCompatDialogFragment(),
+    View.OnClickListener {
 
     private val userObject = userObject
     private lateinit var usuario: EditText
     private lateinit var contrasenia: EditText
+    private var editar = editar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,12 +44,16 @@ class ConfirmUserDialog(userObject: Usuario) : AppCompatDialogFragment(), View.O
             when (v.id) {
                 R.id.verificar -> {
                     if (verifiyUser()) {
-                        startActivity(Intent(activity, FormUsuario::class.java).apply {
-                            putExtra("userObject", userObject)
-                        })
-                        activity!!.finish()
+                        if (editar) {
+                            startActivity(Intent(activity, FormUsuario::class.java).apply {
+                                putExtra("userObject", userObject)
+                            })
+                            activity!!.finish()
+                        } else {
+                            showAlertBox()
+                        }
                     } else {
-                        Toast.makeText(context,"Datos incorrectos", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Datos incorrectos", Toast.LENGTH_SHORT).show()
                     }
                 }
                 R.id.cancelar -> {
@@ -52,6 +61,51 @@ class ConfirmUserDialog(userObject: Usuario) : AppCompatDialogFragment(), View.O
                 }
             }
         }
+    }
+
+    private fun showAlertBox() {
+        val builder = AlertDialog.Builder(context!!)
+        val db = DBController(context!!)
+
+        val correosCount = db.getRowCount(userObject.getNombre(), "CORREOS")
+        val cuentasCount = db.getRowCount(userObject.getNombre(), "CUENTAS")
+        val contraseniasCount = db.getRowCount(userObject.getNombre(), "CONTRASENIAS")
+        val notasCount = db.getRowCount(userObject.getNombre(), "NOTAS")
+        val tarjetasCount = db.getRowCount(userObject.getNombre(), "TARJETAS")
+
+        builder.setTitle("Eliminar usuario")
+        builder.setMessage(
+            "¿Seguro que quieres eliminar el usuario?\n\nSe eliminarán:\n" +
+                    correosCount + " correo(s)\n" + cuentasCount + " cuenta(s)\n" + contraseniasCount + " contraseña(s)\n" +
+                    notasCount + " nota(s)\n" + tarjetasCount + " tarjeta(s)"
+        )
+
+        builder.setPositiveButton("Eliminar") { _, _ ->
+            var eliminado = true
+
+            try {
+                db.deleteUsuario(userObject.getNombre())
+            } catch (ex: Exception) {
+                eliminado = false
+                ex.printStackTrace()
+            }
+
+            if (eliminado) {
+                dialog!!.dismiss()
+                activity!!.finish()
+                Toast.makeText(
+                    context!!,
+                    "Se ha eliminado el usuario '" + userObject.getNombre() + "' exitosamente",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+        builder.setNegativeButton("Cancelar") { _, _ ->
+            //Do no thing
+        }
+
+        builder.show()
     }
 
     private fun verifiyUser(): Boolean {

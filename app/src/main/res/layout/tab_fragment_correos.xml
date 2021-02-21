@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".activities.ui.main.PlaceholderFragment">
 
-
     <SearchView
         android:id="@+id/search"
         android:layout_width="match_parent"
@@ -44,5 +43,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"
-        android:padding="10dp"></androidx.recyclerview.widget.RecyclerView>
+        android:padding="10dp"/>
 </LinearLayout>

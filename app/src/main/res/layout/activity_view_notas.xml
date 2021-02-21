@@ -114,11 +114,8 @@
                         android:backgroundTint="#00FFFFFF"
                         android:clickable="true"
                         android:src="@drawable/ic_content_copy_24px" />
-
                 </TableRow>
-
             </TableLayout>
-
         </TableLayout>
     </ScrollView>
 </LinearLayout>

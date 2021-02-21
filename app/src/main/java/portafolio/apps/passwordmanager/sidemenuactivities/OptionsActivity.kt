@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import portafolio.apps.passwordmanager.R
 import portafolio.apps.passwordmanager.activities.HomeTabActivity
 import portafolio.apps.passwordmanager.database.DBController
@@ -40,7 +41,7 @@ class OptionsActivity : AppCompatActivity(), View.OnClickListener {
         db.toggleSigned(nombreTxt.text.toString(), keepSigned)
         db.close()
         startActivity(Intent(this, HomeTabActivity::class.java).apply {
-            putExtra("userObject", usuario )
+            putExtra("userObject", usuario)
         })
         finish()
     }
@@ -51,10 +52,13 @@ class OptionsActivity : AppCompatActivity(), View.OnClickListener {
                 R.id.checkBox -> {
                 }
                 R.id.editar -> {
-                    ConfirmUserDialog(usuario!!).show(supportFragmentManager,"Verificación")
+                    ConfirmUserDialog(usuario!!, true).show(supportFragmentManager, "Verificación")
                 }
                 R.id.cancel -> {
                     onBackPressed()
+                }
+                R.id.eliminar -> {
+                    ConfirmUserDialog(usuario!!, false).show(supportFragmentManager, "Verificación")
                 }
             }
         }
@@ -67,6 +71,7 @@ class OptionsActivity : AppCompatActivity(), View.OnClickListener {
 
         val editar = findViewById<Button>(R.id.editar)
         val cancel = findViewById<Button>(R.id.cancel)
+        val eliminar = findViewById<Button>(R.id.eliminar)
 
         usuario = intent.getSerializableExtra("userObject") as? Usuario
         nombreTxt.setText(usuario!!.getNombre())
@@ -76,5 +81,6 @@ class OptionsActivity : AppCompatActivity(), View.OnClickListener {
         checkBox.setOnClickListener(this)
         editar.setOnClickListener(this)
         cancel.setOnClickListener(this)
+        eliminar.setOnClickListener(this)
     }
 }

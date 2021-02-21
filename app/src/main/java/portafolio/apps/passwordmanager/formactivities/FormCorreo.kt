@@ -27,7 +27,7 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
     private lateinit var guardar: Button
     private lateinit var cancelar: Button
     private var insert = false
-    private var userIntent : Usuario? = null
+    private var userIntent: Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
 
     override fun onStop() {
         super.onStop()
-        if(userIntent!!.getChecked() == 1){
+        if (userIntent!!.getChecked() == 1) {
             finish()
         }
     }
@@ -111,13 +111,18 @@ class FormCorreo : AppCompatActivity(), View.OnClickListener {
 
         } catch (ex: Exception) {
             ex.printStackTrace()
+            Toast.makeText(
+                applicationContext,
+                "Este correo ya ha sido registrado anteriormente",
+                Toast.LENGTH_SHORT
+            ).show()
             good = false
         }
 
         if (good) {
             Toast.makeText(
                 applicationContext,
-                "El correo '" + correo!!.text.toString() + "' ha sido actualizado correctamente",
+                "El correo '" + correo.text.toString() + "' ha sido actualizado correctamente",
                 Toast.LENGTH_SHORT
             ).show()
             if (co == null) {

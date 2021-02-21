@@ -301,7 +301,6 @@ class FormCuenta :
         //Adapter for categoriaDrop
         val adapter = ArrayAdapter(this, R.layout.item_dropdown_menu, categoriaItems)
         (categoriaDrop.editText as? AutoCompleteTextView)?.setAdapter(adapter)
-        categoriaDrop.editText!!.isEnabled = false
 
         //Adapter for correoDrop
         // Getting rows from CORREOS database table
@@ -317,15 +316,12 @@ class FormCuenta :
         }
         val adapterCorreo = ArrayAdapter(this, R.layout.item_dropdown_menu, correoItems)
         (correoDrop.editText as? AutoCompleteTextView)?.setAdapter(adapterCorreo)
-        correoDrop.editText!!.isEnabled = false
 
         val cu = intent.getSerializableExtra("cuenta") as? Cuenta
         val cu2 = intent.getSerializableExtra("cuentaupdated") as? Cuenta
 
         if (cu != null || cu2 != null) {
             insert = false
-            categoriaDrop.editText!!.isEnabled = true
-            correoDrop.editText!!.isEnabled = true
             if (cu == null) {
                 setComponents(cu2!!)
             } else if (cu2 == null) {
@@ -334,6 +330,5 @@ class FormCuenta :
         } else {
             insert = true
         }
-
     }
 }

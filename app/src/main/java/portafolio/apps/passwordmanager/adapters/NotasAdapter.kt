@@ -55,11 +55,11 @@ class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
     }
 
     override fun getFilter(): Filter {
-        return object  : Filter() {
+        return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 var filteredList: MutableList<Nota> = ArrayList()
 
-                if(constraint == null || constraint.isEmpty()){
+                if (constraint == null || constraint.isEmpty()) {
                     filteredList.addAll(itemsCopy)
                 } else {
                     val filterPattern = constraint.toString().toLowerCase().trim()
@@ -87,7 +87,6 @@ class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
     ) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.title)
         val body: TextView = itemView.findViewById(R.id.body)
-        val card: MaterialCardView = itemView.findViewById(R.id.card_view)
 
         init {
             itemView.setOnClickListener { v: View ->
@@ -103,19 +102,19 @@ class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
                 val position: Int = adapterPosition
                 MaterialAlertDialogBuilder(itemView.context).setTitle(
                     "Nota: " + title.text.toString().toUpperCase()
-                ).setMessage("Que desea hacer?").setNeutralButton("Ver") { dialog, which ->
+                ).setMessage("¿Qué desea hacer?").setNeutralButton("Ver") { dialog, which ->
                     val intent = Intent(itemView.context, ViewNotas::class.java)
                     intent.apply {
                         putExtra("nota", items.get(position))
                     }
                     itemView.context.startActivity(intent)
-                }.setPositiveButton("editar") { dialog, which ->
+                }.setPositiveButton("Editar") { dialog, which ->
                     val intent2 = Intent(itemView.context, FormNota::class.java)
                     intent2.apply {
                         putExtra("notaupdated", items.get(position))
                         itemView.context.startActivity(intent2)
                     }
-                }.setNegativeButton("elminar") { dialog, which ->
+                }.setNegativeButton("Eliminar") { dialog, which ->
                     // Eliminar
                     val db = DBController(itemView.context)
                     db.deleteNotas(
@@ -143,7 +142,6 @@ class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
         fun bind(nota: Nota) {
             title.setText(nota.getAsunto())
             body.setText(nota.getNota())
-            card.strokeColor =  Color.parseColor("#ec4646")
         }
     }
 }

@@ -91,7 +91,7 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
     ) : RecyclerView.ViewHolder(itemView) {
         val asunto: TextView = itemView.findViewById(R.id.nomUsuario)
         val username: TextView = itemView.findViewById(R.id.correo)
-        val contrasenia: TextView = itemView.findViewById(R.id.contrasenia)
+        val categoria: TextView = itemView.findViewById(R.id.categoria)
         val image: ImageView = itemView.findViewById(R.id.imgViewCard)
 
 
@@ -110,14 +110,14 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
                 val position: Int = adapterPosition
                 MaterialAlertDialogBuilder(itemView.context).
                 setTitle("Cuenta: "+asunto.text.toString().toUpperCase()).
-                setMessage("Que desea hacer?").
+                setMessage("¿Qué desea hacer?").
                 setNeutralButton("Ver"){
                         dialog, which -> val intent = Intent(itemView.context, ViewCuentas::class.java)
                     intent.apply {
                         putExtra("cuenta", items.get(position))
                     }
                     itemView.context.startActivity(intent)
-                }.setPositiveButton("editar"){
+                }.setPositiveButton("Editar"){
                         dialog, which ->
                     val intent2 = Intent(itemView.context, FormCuenta::class.java)
                     intent2. apply {
@@ -125,7 +125,7 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
                         putExtra("username", items.get(position).getNomUsuario())
                         itemView.context.startActivity(intent2)
                     }
-                }.setNegativeButton("elminar"){
+                }.setNegativeButton("Eliminar"){
                         dialog, which ->
                     // Eliminar
                     val db = DBController(itemView.context)
@@ -157,7 +157,7 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
         fun bind(cuenta: Cuenta) {
             asunto.setText(cuenta.getWebsite())
             username.setText(cuenta.getNickname())
-            contrasenia.setText(cuenta.getContrasenia())
+            categoria.setText(cuenta.getCategoria())
             if(cuenta.getWebsite().contains("youtube",ignoreCase = true)){
                 image.setImageResource(R.drawable.ic_youtube)
             }

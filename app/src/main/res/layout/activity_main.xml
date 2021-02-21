@@ -127,7 +127,7 @@
                         android:backgroundTint="@color/white"
                         android:fontFamily="@font/helvetica"
                         android:padding="15dp"
-                        android:text="iniciar sesion"
+                        android:text="iniciar sesión"
                         android:textColor="#02377C"
                         android:textSize="15sp"
                         android:textStyle="bold"
