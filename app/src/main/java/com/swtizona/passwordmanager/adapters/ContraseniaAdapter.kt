@@ -117,6 +117,7 @@ class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filt
             val intent = Intent(itemView.context, ViewContrasenia::class.java)
             intent.apply {
                 putExtra("contrasenia", items[adapterPosition])
+                putExtra("userObject", HomeTabActivity.usuarioIntent)
             }
             itemView.context.startActivity(intent)
             (itemView.context as Activity).finish()
@@ -126,9 +127,10 @@ class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filt
             val intent2 = Intent(itemView.context, FormContrasenia::class.java)
             intent2.apply {
                 putExtra("contraseniaupdated", items[adapterPosition])
-                itemView.context.startActivity(intent2)
-                (itemView.context as Activity).finish()
+                putExtra("userObject", HomeTabActivity.usuarioIntent)
             }
+            itemView.context.startActivity(intent2)
+            (itemView.context as Activity).finish()
         }
 
         private fun eliminar() {
@@ -141,7 +143,8 @@ class ContraseniaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filt
                     "CUENTAS",
                     "CORREO",
                     items[adapterPosition].getContrasenia()
-                ) + " cuentas ligadas a este correo")
+                ) + " cuentas ligadas a este correo"
+            )
                 .setPositiveButton("Eliminar") { _, _ ->
                     delete()
                 }.setNegativeButton("Cancelar") { _, _ ->

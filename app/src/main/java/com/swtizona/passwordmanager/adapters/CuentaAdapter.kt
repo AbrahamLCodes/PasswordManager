@@ -27,7 +27,7 @@ import java.util.ArrayList
 class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private lateinit var items: MutableList<Cuenta>
-    private lateinit var itemsCopy : MutableList<Cuenta>
+    private lateinit var itemsCopy: MutableList<Cuenta>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return CuentaViewHolder(
@@ -57,18 +57,19 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
     }
 
     override fun getFilter(): Filter {
-        return object  : Filter(){
+        return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filteredList: MutableList<Cuenta> = ArrayList()
 
-                if(constraint == null || constraint.isEmpty()){
+                if (constraint == null || constraint.isEmpty()) {
                     filteredList.addAll(itemsCopy)
                 } else {
                     val filterPattern = constraint.toString().toLowerCase().trim()
-                    for (item: Cuenta in itemsCopy){
+                    for (item: Cuenta in itemsCopy) {
                         if (
                             item.getWebsite().toLowerCase().contains(filterPattern)
-                            || item.getCorreo().toLowerCase().contains(filterPattern)){
+                            || item.getCorreo().toLowerCase().contains(filterPattern)
+                        ) {
                             filteredList.add(item)
                         }
                     }
@@ -76,7 +77,7 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
 
                 val results = FilterResults()
                 results.values = filteredList
-                return  results
+                return results
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
@@ -92,12 +93,12 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
     ) : RecyclerView.ViewHolder(itemView) {
         val asunto: TextView = itemView.findViewById(R.id.nomUsuario)
         val username: TextView = itemView.findViewById(R.id.correo)
-        val categoria: TextView = itemView.findViewById(R.id.categoria)
-        val image: ImageView = itemView.findViewById(R.id.imgViewCard)
+        private val categoria: TextView = itemView.findViewById(R.id.categoria)
+        private val image: ImageView = itemView.findViewById(R.id.imgViewCard)
 
 
         init {
-            itemView.setOnClickListener { v: View ->
+            itemView.setOnClickListener {
                 val position: Int = adapterPosition
                 val intent = Intent(itemView.context, ViewCuentas::class.java)
                 intent.apply {
@@ -109,53 +110,70 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
                 (itemView.context as Activity).finish()
 
             }
-            itemView.setOnLongClickListener{
-                val position: Int = adapterPosition
-                MaterialAlertDialogBuilder(itemView.context).
-                setTitle("Cuenta: "+asunto.text.toString().toUpperCase()).
-                setMessage("¿Qué desea hacer?").
-                setNeutralButton("Ver"){
-                        _, _ -> val intent = Intent(itemView.context, ViewCuentas::class.java)
-                    intent.apply {
-                        putExtra("cuenta", items[position])
-                    }
-                    itemView.context.startActivity(intent)
-                    (itemView.context as Activity).finish()
-                }.setPositiveButton("Editar"){
-                        _, _ ->
-                    val intent2 = Intent(itemView.context, FormCuenta::class.java)
-                    intent2. apply {
-                        putExtra("cuenta", items[position])
-                        putExtra("username", items[position].getNomUsuario())
-                        itemView.context.startActivity(intent2)
-                        (itemView.context as Activity).finish()
-                    }
-                }.setNegativeButton("Eliminar"){
-                        _, _ ->
-                    // Eliminar
-                    val db = DBController(itemView.context)
-                    db.deleteCuenta(
-                        items[position].getNomUsuario(),
-                        items[position].getCorreo(),
-                        items[position].getWebsite()
-                    )
-
-                    CuentasFragment.cuentaAdapter.submitList(
-                        db.customMainCuentaSelect(
-                            "NOMUSUARIO",
-                            HomeTabActivity.username
-                        )
-                    )
-                    CuentasFragment.recycler.apply {
-                        layoutManager = GridLayoutManager(itemView.context, 1)
-                        adapter = CuentasFragment.cuentaAdapter
-
-                    }
-                    db.close()
-                }.
-                show()
+            itemView.setOnLongClickListener {
+                MaterialAlertDialogBuilder(itemView.context).setTitle(
+                    "Cuenta: " + asunto.text.toString().toUpperCase()
+                ).setMessage("¿Qué desea hacer?").setNeutralButton("Ver") { _, _ ->
+                    goToView()
+                }.setPositiveButton("Editar") { _, _ ->
+                    goToEditar()
+                }.setNegativeButton("Eliminar") { _, _ ->
+                    eliminar()
+                }.show()
                 return@setOnLongClickListener true
             }
+        }
+
+        private fun goToView() {
+            val intent = Intent(itemView.context, ViewCuentas::class.java)
+            intent.apply {
+                putExtra("cuenta", items[adapterPosition])
+                putExtra("userObject", HomeTabActivity.usuarioIntent)
+            }
+            itemView.context.startActivity(intent)
+            (itemView.context as Activity).finish()
+        }
+
+        private fun goToEditar() {
+            val intent2 = Intent(itemView.context, FormCuenta::class.java)
+            intent2.apply {
+                putExtra("cuenta", items[adapterPosition])
+                putExtra("username", items[adapterPosition].getNomUsuario())
+                putExtra("userObject", HomeTabActivity.usuarioIntent)
+            }
+            itemView.context.startActivity(intent2)
+            (itemView.context as Activity).finish()
+        }
+
+        private fun eliminar() {
+            MaterialAlertDialogBuilder(itemView.context)
+                .setTitle("Eliminar Cuenta")
+                .setMessage("¿Seguro que quiere eliminar la cuenta?")
+                .setPositiveButton("Eliminar") { _, _ ->
+                    delete()
+                }.setNegativeButton("Cancelar") { _, _ ->
+                }.show()
+        }
+
+        private fun delete() {
+            val db = DBController(itemView.context)
+            db.deleteCuenta(
+                items[adapterPosition].getNomUsuario(),
+                items[adapterPosition].getCorreo(),
+                items[adapterPosition].getWebsite()
+            )
+
+            CuentasFragment.cuentaAdapter.submitList(
+                db.customMainCuentaSelect(
+                    "NOMUSUARIO",
+                    HomeTabActivity.username
+                )
+            )
+            CuentasFragment.recycler.apply {
+                layoutManager = GridLayoutManager(itemView.context, 1)
+                adapter = CuentasFragment.cuentaAdapter
+            }
+            db.close()
         }
 
         @RequiresApi(Build.VERSION_CODES.O)
@@ -163,25 +181,30 @@ class CuentaAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
             asunto.text = cuenta.getWebsite()
             username.text = cuenta.getNickname()
             categoria.text = cuenta.getCategoria()
-            if(cuenta.getWebsite().contains("youtube",ignoreCase = true)){
+            if (cuenta.getWebsite().contains("youtube", ignoreCase = true)) {
                 image.setImageResource(R.drawable.ic_youtube)
             }
-            if(cuenta.getWebsite().contains("steam",ignoreCase = true)){
+            if (cuenta.getWebsite().contains("steam", ignoreCase = true)) {
                 image.setImageResource(R.drawable.ic_steam_logo)
             }
-            if(cuenta.getWebsite().contains("facebook",ignoreCase = true)){
+            if (cuenta.getWebsite().contains("facebook", ignoreCase = true)) {
                 image.setImageResource(R.drawable.ic_facebook)
             }
-            if(cuenta.getWebsite().contains("playstation",ignoreCase = true) ||cuenta.getWebsite().contains("psn",ignoreCase = true)){
+            if (cuenta.getWebsite()
+                    .contains("playstation", ignoreCase = true) || cuenta.getWebsite()
+                    .contains("psn", ignoreCase = true)
+            ) {
                 image.setImageResource(R.drawable.ic_playstation)
             }
-            if(cuenta.getWebsite().contains("xbox",ignoreCase = true)){
+            if (cuenta.getWebsite().contains("xbox", ignoreCase = true)) {
                 image.setImageResource(R.drawable.ic_xbox)
             }
-            if(cuenta.getWebsite().contains("twitch",ignoreCase = true)){
+            if (cuenta.getWebsite().contains("twitch", ignoreCase = true)) {
                 image.setImageResource(R.drawable.ic_twitch)
             }
-            if(cuenta.getWebsite().contains("league",ignoreCase = true)|| cuenta.getWebsite().contains("lol",ignoreCase = true)){
+            if (cuenta.getWebsite().contains("league", ignoreCase = true) || cuenta.getWebsite()
+                    .contains("lol", ignoreCase = true)
+            ) {
                 image.setImageResource(R.drawable.ic_league)
             }
         }

@@ -103,44 +103,69 @@ class NotasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
                 MaterialAlertDialogBuilder(itemView.context).setTitle(
                     "Nota: " + title.text.toString().toUpperCase()
                 ).setMessage("¿Qué desea hacer?").setNeutralButton("Ver") { _, _ ->
-                    val intent = Intent(itemView.context, ViewNotas::class.java)
-                    intent.apply {
-                        putExtra("nota", items[position])
-                    }
-                    itemView.context.startActivity(intent)
-                    (itemView.context as Activity).finish()
-
+                    goToView()
                 }.setPositiveButton("Editar") { _, _ ->
-                    val intent2 = Intent(itemView.context, FormNota::class.java)
-                    intent2.apply {
-                        putExtra("notaupdated", items[position])
-                        itemView.context.startActivity(intent2)
-                        (itemView.context as Activity).finish()
-
-                    }
+                    goToEditar()
                 }.setNegativeButton("Eliminar") { _, _ ->
-                    // Eliminar
-                    val db = DBController(itemView.context)
-                    db.deleteNotas(
-                        items[position].getNomusuario(),
-                        items[position].getAsunto()
-                    )
-
-                    NotasFragment.notasAdapter.submitList(
-                        db.customNotaSelect(
-                            "NOMUSUARIO",
-                            HomeTabActivity.username
-                        )
-                    )
-                    NotasFragment.recycler.apply {
-                        layoutManager = GridLayoutManager(itemView.context, 1)
-                        adapter = NotasFragment.notasAdapter
-
-                    }
-                    db.close()
+                    eliminar()
                 }.show()
                 return@setOnLongClickListener true
             }
+        }
+
+        private fun goToView() {
+            val intent = Intent(itemView.context, ViewNotas::class.java)
+            intent.apply {
+                putExtra("nota", items[adapterPosition])
+                putExtra("userObject", HomeTabActivity.usuarioIntent)
+            }
+            itemView.context.startActivity(intent)
+            (itemView.context as Activity).finish()
+        }
+
+        private fun goToEditar() {
+            val intent2 = Intent(itemView.context, FormNota::class.java)
+            intent2.apply {
+                putExtra("notaupdated", items[adapterPosition])
+                putExtra("username", items[adapterPosition].getNomusuario())
+                putExtra("userObject", HomeTabActivity.usuarioIntent)
+            }
+            itemView.context.startActivity(intent2)
+            (itemView.context as Activity).finish()
+        }
+
+        private fun eliminar() {
+            MaterialAlertDialogBuilder(itemView.context)
+                .setTitle(
+                    "Eliminar Cuenta"
+                )
+                .setMessage("¿Seguro que quiere eliminar la cuenta?")
+                .setPositiveButton("Eliminar") { _, _ ->
+                    delete()
+                }.setNegativeButton("Cancelar") { _, _ ->
+                }.show()
+        }
+
+        private fun delete() {
+            // Eliminar
+            val db = DBController(itemView.context)
+            db.deleteNotas(
+                items[adapterPosition].getNomusuario(),
+                items[adapterPosition].getAsunto()
+            )
+
+            NotasFragment.notasAdapter.submitList(
+                db.customNotaSelect(
+                    "NOMUSUARIO",
+                    HomeTabActivity.username
+                )
+            )
+            NotasFragment.recycler.apply {
+                layoutManager = GridLayoutManager(itemView.context, 1)
+                adapter = NotasFragment.notasAdapter
+
+            }
+            db.close()
         }
 
         fun bind(nota: Nota) {

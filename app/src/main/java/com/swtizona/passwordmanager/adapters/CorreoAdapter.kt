@@ -90,7 +90,7 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
 
         val asunto: TextView = itemView.findViewById(R.id.nomUsuario)
         val correo: TextView = itemView.findViewById(R.id.correo)
-        val image: ImageView = itemView.findViewById(R.id.imgViewCard)
+        private val image: ImageView = itemView.findViewById(R.id.imgViewCard)
 
         init {
             itemView.setOnClickListener {
@@ -99,7 +99,6 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
                     putExtra("correo", items[adapterPosition])
                     putExtra("userObject", HomeTabActivity.usuarioIntent)
                 }
-                Log.d("FECHA DE CORREO", items[adapterPosition].getFecha())
                 itemView.context.startActivity(intent)
                 (itemView.context as Activity).finish()
             }
@@ -123,6 +122,7 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
             val intent = Intent(itemView.context, ViewCorreo::class.java)
             intent.apply {
                 putExtra("correo", items[adapterPosition])
+                putExtra("userObject", HomeTabActivity.usuarioIntent)
             }
             itemView.context.startActivity(intent)
             (itemView.context as Activity).finish()
@@ -132,9 +132,10 @@ class CorreoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterabl
             val intent2 = Intent(itemView.context, FormCorreo::class.java)
             intent2.apply {
                 putExtra("correoupdated", items[adapterPosition])
-                itemView.context.startActivity(intent2)
-                (itemView.context as Activity).finish()
+                putExtra("userObject", HomeTabActivity.usuarioIntent)
             }
+            itemView.context.startActivity(intent2)
+            (itemView.context as Activity).finish()
         }
 
         private fun eliminar() {

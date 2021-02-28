@@ -89,13 +89,13 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
     inner class PagosViewHolder constructor(
         itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
-        val titular: TextView = itemView.findViewById(R.id.titular)
-        val ntarjeta: TextView = itemView.findViewById(R.id.cuentaNum)
-        val cad: TextView = itemView.findViewById(R.id.cad)
-        val image: ImageView = itemView.findViewById(R.id.imgViewCard)
+        private val titular: TextView = itemView.findViewById(R.id.titular)
+        private val ntarjeta: TextView = itemView.findViewById(R.id.cuentaNum)
+        private val cad: TextView = itemView.findViewById(R.id.cad)
+        private val image: ImageView = itemView.findViewById(R.id.imgViewCard)
 
         init {
-            itemView.setOnClickListener { v: View ->
+            itemView.setOnClickListener {
                 val position: Int = adapterPosition
                 val intent = Intent(itemView.context, ViewPagos::class.java)
                 intent.apply {
@@ -106,45 +106,71 @@ class PagosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable
                 (itemView.context as Activity).finish()
             }
             itemView.setOnLongClickListener {
-                val position: Int = adapterPosition
-                MaterialAlertDialogBuilder(itemView.context).setTitle(
-                    "Cuenta: " + titular.text.toString().toUpperCase()
-                ).setMessage("¿Qué desea hacer?").setNeutralButton("Ver") { _, _ ->
-                    val intent = Intent(itemView.context, ViewPagos::class.java)
-                    intent.apply {
-                        putExtra("tarjeta", items[position])
-                    }
-                    itemView.context.startActivity(intent)
-                    (itemView.context as Activity).finish()
-                }.setPositiveButton("Editar") { _, _ ->
-                    val intent2 = Intent(itemView.context, FormPagos::class.java)
-                    intent2.apply {
-                        putExtra("tarjetaupdated", items[position])
-                        itemView.context.startActivity(intent2)
-                        (itemView.context as Activity).finish()
-                    }
-                }.setNegativeButton("Eliminar") { _, _ ->
-                    // Eliminar
-                    val db = DBController(itemView.context)
-                    db.deleteTarjetas(
-                        items[position].getNomusuario(),
-                        items[position].getAsunto()
-                    )
-
-                    TarjetasFragment.tarjetasAdapter.submitList(
-                        db.customTarjetaSelect(
-                            "NOMUSUARIO",
-                            HomeTabActivity.username
-                        )
-                    )
-                    TarjetasFragment.recycler.apply {
-                        layoutManager = GridLayoutManager(itemView.context, 1)
-                        adapter = TarjetasFragment.tarjetasAdapter
-                    }
-                    db.close()
-                }.show()
+                MaterialAlertDialogBuilder(itemView.context)
+                    .setTitle(titular.text.toString().toUpperCase())
+                    .setMessage("¿Qué desea hacer?")
+                    .setNeutralButton("Ver") { _, _ ->
+                        goToView()
+                    }.setPositiveButton("Editar") { _, _ ->
+                        goToEditar()
+                    }.setNegativeButton("Eliminar") { _, _ ->
+                        eliminar()
+                    }.show()
                 return@setOnLongClickListener true
             }
+        }
+
+        private fun goToView() {
+            val intent = Intent(itemView.context, ViewPagos::class.java)
+            intent.apply {
+                putExtra("tarjeta", items[adapterPosition])
+                putExtra("userObject", HomeTabActivity.usuarioIntent)
+            }
+            itemView.context.startActivity(intent)
+            (itemView.context as Activity).finish()
+        }
+
+        private fun goToEditar() {
+            val intent2 = Intent(itemView.context, FormPagos::class.java)
+            intent2.apply {
+                putExtra("tarjetaupdated", items[adapterPosition])
+                putExtra("userObject", HomeTabActivity.usuarioIntent)
+            }
+            itemView.context.startActivity(intent2)
+            (itemView.context as Activity).finish()
+        }
+
+        private fun eliminar() {
+            MaterialAlertDialogBuilder(itemView.context)
+                .setTitle(
+                    "Eliminar Cuenta"
+                )
+                .setMessage("¿Seguro que quiere eliminar la cuenta?")
+                .setPositiveButton("Eliminar") { _, _ ->
+                    delete()
+                }.setNegativeButton("Cancelar") { _, _ ->
+                }.show()
+        }
+
+        private fun delete() {
+            // Eliminar
+            val db = DBController(itemView.context)
+            db.deleteTarjetas(
+                items[adapterPosition].getNomusuario(),
+                items[adapterPosition].getAsunto()
+            )
+
+            TarjetasFragment.tarjetasAdapter.submitList(
+                db.customTarjetaSelect(
+                    "NOMUSUARIO",
+                    HomeTabActivity.username
+                )
+            )
+            TarjetasFragment.recycler.apply {
+                layoutManager = GridLayoutManager(itemView.context, 1)
+                adapter = TarjetasFragment.tarjetasAdapter
+            }
+            db.close()
         }
 
         fun bind(tarjeta: Tarjeta) {
