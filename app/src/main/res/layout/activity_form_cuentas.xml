@@ -26,6 +26,17 @@
             android:layout_height="match_parent"
             android:stretchColumns="1">
 
+            <TextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Esta sección sirve para registrar tus cuentas. Para mayor organización de la
+información, siempre se tiene que elegir un correo ya registrado en esta App. Ejemplo de cuentas que puedes registrar:
+Facebook, Instagram, Moodle, Steam, Twitter, etc." />
+
             <com.google.android.material.textview.MaterialTextView
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="wrap_content"

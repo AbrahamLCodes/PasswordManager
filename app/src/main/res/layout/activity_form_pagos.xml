@@ -26,6 +26,18 @@
             android:layout_height="match_parent"
             android:stretchColumns="1">
 
+            <TextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Aquí puedes registrar tus tarjetas, para que tengas a la mano toda la información en tu celular
+de manera segura y que no tengas que buscar tus tarjetas al momento de realizar compras en internet. Tu información
+no se sube por ninguna manera a internet." />
+
+
             <com.google.android.material.textview.MaterialTextView
                 style="@style/TextAppearance.AppCompat"
                 android:layout_width="wrap_content"
@@ -150,7 +162,7 @@
                         android:id="@+id/mes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none" />
+                        android:inputType="number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -166,7 +178,7 @@
                         android:id="@+id/anio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="4"
+                        android:maxLength="2"
                         android:inputType="number" />
 
                 </com.google.android.material.textfield.TextInputLayout>

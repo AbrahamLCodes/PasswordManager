@@ -6,7 +6,7 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.HomeTabActivity">
+    tools:context=".mainactivities.HomeTabActivity">
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/sideMenu"

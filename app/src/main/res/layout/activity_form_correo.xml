@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#023E8A"
+        android:fontFamily="@font/helvetica"
         app:navigationIcon="@drawable/ic_mail_24px"
         app:title="Añade un Correo"
-        android:fontFamily="@font/helvetica"
         app:titleTextColor="@color/white">
 
     </com.google.android.material.appbar.MaterialToolbar>
@@ -28,6 +28,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:stretchColumns="1">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Esta sección sirve para registrar tus correos. Por ejemplo: Correo Institucional,
+Correo personal, Correo laboral, etc." />
 
             <com.google.android.material.textview.MaterialTextView
                 style="@style/TextAppearance.AppCompat"
@@ -60,8 +70,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="23dp"
-                android:text="Correo"
-                android:fontFamily="@font/helvetica" />
+                android:fontFamily="@font/helvetica"
+                android:text="Correo" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -93,16 +103,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:hint="Contraseña"
                 android:fontFamily="@font/helvetica"
+                android:hint="Contraseña"
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/contrasenia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:fontFamily="@font/helvetica" />
+                    android:fontFamily="@font/helvetica"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,8 +129,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:hint="Contraseña"
                 android:fontFamily="@font/helvetica"
+                android:hint="Contraseña"
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -149,7 +159,7 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/helvetica"
                 android:text="Cerrar"
-                android:textColor="#023E8A"/>
+                android:textColor="#023E8A" />
         </TableLayout>
     </ScrollView>
 </LinearLayout>

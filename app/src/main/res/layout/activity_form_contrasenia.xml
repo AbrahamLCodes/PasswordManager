@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#023E8A"
+        android:fontFamily="@font/helvetica"
         app:navigationIcon="@drawable/key_24px"
         app:title="Añade una Contraseña"
-        android:fontFamily="@font/helvetica"
         app:titleTextColor="@color/white" />
 
     <ScrollView
@@ -39,7 +39,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/helvetica"
                     android:gravity="center"
-                    android:text="Ingresa el sitio o pagina web de donde es la contraseña" />
+                    android:text="Esta sección está hecha para guardar la contraseña de algo que no
+requiera las propiedades de una cuenta. Por ejemplo: Modems, Autos, Inicio de Windows, bloqueo del celular, etc." />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -123,8 +124,8 @@
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginBottom="20dp"
                     android:backgroundTint="@color/white"
-                    android:text="Cerrar"
                     android:fontFamily="@font/helvetica"
+                    android:text="Cerrar"
                     android:textColor="@color/black"
                     app:strokeColor="#8E8E8E"
                     app:strokeWidth="1dp" />

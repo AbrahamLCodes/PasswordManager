@@ -1,20 +1,9 @@
 <resources>
-    <string name="app_name">PasswordManager</string>
-
-    <string name="usuario">Usuario</string>
+    <string name="app_name">Administrador seguro de contraseñas</string>
     <string name="registrate"><u>Registrate</u></string>
-    <string name="error"><u>Año invalido</u></string>
-    <string name="open">Open Side Menu</string>
-    <string name="close">Close Side Menu</string>
     <string name="title_activity_home_tab">HomeTabActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="correoInst">El e-mail te lo pedimos para que recuperes tu contraseña en caso de que
-    la olvides</string>
-    <string name="recuperar"><u>¿Olvidaste tu contraseña? Click aquí</u></string>
     <string name="advertencia">El objetivo de esta App es no subir tus datos a internet por ningún motivo o circunstancia.
     Por lo tanto, no hay manera de recuperar la contraseña si es que se te olvida. Busca la manera de guardar bien la
     información de inicio de sesión.</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
