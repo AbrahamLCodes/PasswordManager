@@ -5,12 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/Widget.MaterialComponents.CardView"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="14dp"
     android:backgroundTint="@color/light_font"
     android:clickable="true"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="5dp"
     app:cardElevation="1dp"
     app:strokeColor="#D7918C8C"
     app:strokeWidth="1dp">
@@ -19,13 +19,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="1"
+       >
 
         <ImageView
             android:id="@+id/imgViewCard"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
             android:layout_margin="6dp"
+            android:layout_weight=".7"
             app:srcCompat="@drawable/mail_svg_black" />
 
         <View
@@ -35,8 +37,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="5dp"
+            android:layout_weight=".3"
+            android:weightSum="2"
             android:gravity="center|center_horizontal"
             android:orientation="vertical"
             android:padding="1dp">
@@ -44,8 +48,8 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/nomUsuario"
                 android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:layout_margin="3dp"
                 android:clickable="false"
                 android:fontFamily="@font/helvetica"
                 android:gravity="center|start"
@@ -54,9 +58,10 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/correo"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="3dp"
+
                 android:clickable="false"
                 android:fontFamily="@font/helvetica"
                 android:gravity="center|start"

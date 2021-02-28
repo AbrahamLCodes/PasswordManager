@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="5dp"
     app:cardElevation="1dp"
     app:strokeColor="#D7939292"
     app:strokeWidth="1dp">
@@ -20,7 +20,7 @@
         <ImageView
             android:id="@+id/imgViewCard"
             android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_height="100dp"
             android:layout_margin="6dp"
             app:srcCompat="@drawable/ic_nota" />
 
